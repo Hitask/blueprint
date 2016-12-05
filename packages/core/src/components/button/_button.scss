@@ -50,10 +50,6 @@ Styleguide components.button.css
   @include pt-button-base();
   @include pt-button-height($pt-button-height);
 
-  &:disabled {
-    cursor: not-allowed;
-  }
-
   &.pt-fill {
     width: 100%;
   }
@@ -89,7 +85,7 @@ Styleguide components.button.css
     @include pt-icon();
 
     margin-right: $button-icon-spacing;
-    color: $pt-icon-color;
+    color: $button-icon-color;
   }
 
   /*
@@ -126,7 +122,7 @@ Styleguide components.button.css
 
   #{$icon-classes} {
     margin-right: $button-icon-spacing;
-    color: $pt-icon-color;
+    color: $button-icon-color;
 
     &.pt-align-right {
       margin-right: 0;
@@ -153,8 +149,8 @@ Styleguide components.button.css
   }
 
   &:disabled,
-  &[class*="pt-intent-"] {
-    // disabled and intent button icon should use same color as text
+	&.pt-minimal {
+    // disabled, minimal and intent button icon should use same color as text
     // stylelint-disable declaration-no-important
     &::before {
       color: inherit !important;
@@ -222,17 +218,20 @@ Styleguide components.button.css
 %pt-button-link {
   text-align: center;
   text-decoration: none;
-  transition: none;
 
   &,
   &:hover,
   &:active {
     // override global 'a' styles
-    color: $pt-text-color;
+    color: $button-color-hover;
   }
 
   &.pt-disabled {
     color: $button-color-disabled;
+
+		&:active {
+			box-shadow: none;
+		}
   }
 }
 
