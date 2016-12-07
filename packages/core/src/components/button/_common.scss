@@ -36,8 +36,8 @@ $button-intent-box-shadow: 0 1px 1px rgba($black, 0.2);
 $dark-button-intent-border-color: rgba($black, 0.6);
 $dark-button-intent-box-shadow: 0 1px 1px rgba($black, 0.2);
 
-$button-background-color: $turquoise;
-$button-background-color-hover: $turquoise_lighter;
+$button-background-color: $turquoise4;
+$button-background-color-hover: $turquoise5;
 $button-background-color-active: $button-background-color-hover;
 $button-background-color-disabled: rgba($light-gray1, 0.5);
 $button-background-color-active-disabled: rgba($light-gray2, 0.4);
@@ -74,6 +74,8 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
   padding: $button-padding;
   vertical-align: middle;
   font-size: $pt-font-size;
+	outline: none;
+	user-select: none;
 	transition: background-color $pt-transition-ease $pt-transition-duration, color $pt-transition-ease $pt-transition-duration;
 }
 
@@ -85,7 +87,6 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 }
 
 @mixin pt-button() {
-	outline: none;
   color: $button-color;
 	background-color: $button-background-color;
 
@@ -99,7 +100,6 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 
   &:disabled {
     background-color: $button-background-color-disabled;
-    cursor: not-allowed;
     color: $button-color-disabled;
 		box-shadow: none;
   }

@@ -50,6 +50,10 @@ Styleguide components.button.css
   @include pt-button-base();
   @include pt-button-height($pt-button-height);
 
+	&:disabled {
+		cursor: not-allowed;
+ 	}
+ 
   &.pt-fill {
     width: 100%;
   }
