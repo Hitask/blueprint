@@ -32,20 +32,22 @@ $black: #10161a;
 $dark-gray1: #182026;
 $dark-gray2: #202b33;
 $dark-gray3: #293742;
-$dark-gray4: #30404d;
+$dark-gray4: #3d4148; // replace with $softblack: #3d4148;
 $dark-gray5: #394b59;
 
 $gray1: #5c7080;
-$gray2: #738694;
+$gray2: #738694; // replace with $bluegrey: #a2b7c8;
 $gray3: #8a9ba8;
-$gray4: #a7b6c2;
-$gray5: #bfccd6;
+$gray4: #a7b6c2; // replace with $grey_harder: #aebec8;
+$gray5: #8fa2b1;
 
 $light-gray1: #ced9e0;
-$light-gray2: #d8e1e8;
-$light-gray3: #e1e8ed;
+$light-gray2: #d8e1e8; // replace with $bluegrey_ligter: #cfdce5;
+$light-gray3: #e1e8ed; // replace with $grey_lighter: #e1e6ea;
 $light-gray4: #ebf1f5;
-$light-gray5: #f5f8fa;
+$light-gray5: #f5f8fa; // replace with $softwhite: #f5f6f7;
+
+$dark-blue1: #3d445d; // replace with $darkblue: #3d445d;
 
 $white: #ffffff;
 
@@ -74,7 +76,7 @@ Styleguide colors.core
 */
 
 $blue1: #0e5a8a;
-$blue2: #106ba3;
+$blue2: #3875a4;
 $blue3: #137cbd;
 $blue4: #2b95d6;
 $blue5: #48aff0;
@@ -84,48 +86,26 @@ $green2: #0d8050;
 $green3: #0f9960;
 $green4: #15b371;
 $green5: #3dcc91;
+$green6: #3eb365;
 
 $orange1: #a66321;
 $orange2: #bf7326;
-$orange3: #d9822b;
+$orange3: #df8d37;
 $orange4: #f29d49;
 $orange5: #ffb366;
 
 $red1: #a82a2a;
 $red2: #c23030;
-$red3: #db3737;
+$red3: #de4444;
 $red4: #f55656;
 $red5: #ff7373;
+$red6: #f48888;
 
 /* Custom colors
 Extended for HiTask project
 */
 
-$turquoise: #03d2c2;
-$turquoise_lighter: #4ed8c4;
 
-$softpink: #f48888;
-
-$softwhite: #f5f6f7;
-$softblack: #3d4148;
-
-$darkblue: #3d445d;
-
-$bluegrey: #a2b7c8;
-$bluegrey_ligter: #cfdce5;
-$bluegrey_harder: #8fa2b1;
-
-$grey_lighter: #e1e6ea;
-$grey_harder: #aebec8;
-
-$blue: #3875a4;
-$red: #de4444;
-$orange: #df8d37;
-$yellow: #ebbb2b;
-$green: #3eb365;
-$purple: #a36bb2;
-$brown: #9f7642;
-$pink: #e85379;
 
 /*
 Extended colors
@@ -174,8 +154,8 @@ $cobalt5: #669eff;
 $turquoise1: #008075;
 $turquoise2: #00998c;
 $turquoise3: #00b3a4;
-$turquoise4: #14ccbd;
-$turquoise5: #2ee6d6;
+$turquoise4: #03d2c2;
+$turquoise5: #4ed8c4;
 
 $forest1: #1d7324;
 $forest2: #238c2c;
@@ -200,6 +180,14 @@ $sepia2: #7d5125;
 $sepia3: #96622d;
 $sepia4: #b07b46;
 $sepia5: #c99765;
+
+$yellow1: #ebbb2b;
+
+$purple1: #a36bb2;
+
+$brown1: #9f7642;
+
+$pink1: #e85379;
 
 @import "color-aliases";
 

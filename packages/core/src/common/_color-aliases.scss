@@ -189,15 +189,15 @@ consistent color usage across components.
 Styleguide variables.colors
 */
 
-$pt-intent-primary: $blue3;
-$pt-intent-success: $green3;
+$pt-intent-primary: $blue2;
+$pt-intent-success: $green6;
 $pt-intent-warning: $orange3;
 $pt-intent-danger: $red3;
 
 $pt-app-background-color: $light-gray5;
 $pt-dark-app-background-color: $dark-gray3;
 
-$pt-text-color: $dark-gray1;
+$pt-text-color: $dark-gray4;
 $pt-text-color-muted: $gray1;
 $pt-text-color-disabled: rgba($pt-text-color-muted, 0.5);
 $pt-heading-color: $pt-text-color;
