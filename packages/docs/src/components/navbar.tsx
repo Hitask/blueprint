@@ -108,7 +108,7 @@ export class Navbar extends React.Component<INavbarProps, {}> {
     private renderVersionsMenu() {
         const { versions } = this.props;
         if (versions.length === 1) {
-            return <div className="pt-text-muted">v{versions[0].version}</div>;
+            return <div className="pt-text-muted">v{versions[0].version}-custom</div>;
         }
 
         const match = /releases\/([^\/]+)\/dist/.exec(location.href);
