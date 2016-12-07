@@ -58,7 +58,6 @@ export class InputGroupExample extends BaseExample<IInputGroupExampleState> {
             <Tooltip content={`${showPassword ? "Hide" : "Show"} Password`} isDisabled={disabled}>
                 <Button
                     className={Classes.MINIMAL}
-                    intent={Intent.WARNING}
                     disabled={disabled}
                     iconName={showPassword ? "unlock" : "lock"}
                     onClick={this.handleLockClick}

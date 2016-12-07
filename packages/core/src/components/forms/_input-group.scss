@@ -24,7 +24,7 @@ You can place a single `.pt-icon` or `.pt-button.pt-icon-*` on either end of the
 is dictated by the HTML markup: an element specified before the `input` appears on the left edge, and vice versa.
 You do not need to apply sizing classes to the children&mdash;they inherit the size of the parent input.
 
-<div class="pt-callout pt-intent-warning pt-icon-warning-sign">
+<div class="pt-callout pt-icon-warning-sign">
   <h5>Icons only</h5>
   <p>You cannot use buttons with text in the CSS API for input groups. The padding for text inputs in CSS
   cannot accomodate buttons whose width varies due to text content. You should use icons on buttons instead.</p>
@@ -40,18 +40,17 @@ Markup:
 </div>
 <div class="pt-input-group {{.modifier}}">
   <input type="password" class="pt-input" {{:modifier}} placeholder="Enter your password..." />
-  <button class="pt-button pt-minimal pt-intent-warning pt-icon-lock" {{:modifier}}></button>
+  <button class="pt-button pt-minimal pt-icon-lock" {{:modifier}}></button>
 </div>
 <div class="pt-input-group {{.modifier}}">
   <span class="pt-icon pt-icon-search"></span>
   <input type="text" class="pt-input" {{:modifier}} placeholder="Search" />
-  <button class="pt-button pt-minimal pt-intent-primary pt-icon-arrow-right" {{:modifier}}></button>
+  <button class="pt-button pt-minimal pt-icon-arrow-right" {{:modifier}}></button>
 </div>
 
 :disabled - Disabled input. Must be added separately to the <code>&#60;input&#62;</code> and <code>&#60;button&#62;</code>.
 .pt-round - Rounded caps. Button will also be rounded.
 .pt-large - Large group. Children will adjust size accordingly.
-.pt-intent-primary - Primary intent. (All 4 intents are supported.)
 
 Styleguide components.forms.input-group.css
 */
@@ -84,6 +83,13 @@ $input-button-height-large: $pt-button-height;
     &:last-child  { right: 0; }
   }
 
+	.pt-input-action {
+		.pt-button {
+			padding-left: $pt-grid-size;
+			padding-right: $pt-grid-size;
+		}
+	}
+
   .pt-button {
     @include pt-button-height($input-button-height);
     margin: ($pt-input-height - $input-button-height) / 2;
@@ -99,7 +105,7 @@ $input-button-height-large: $pt-button-height;
   }
 
   .pt-tag {
-    margin: $pt-grid-size / 2;
+    margin: ($pt-grid-size / 2 + 3) ($pt-grid-size / 2);
   }
 
   // all buttons go gray in default state and assume their native colors only when hovered
