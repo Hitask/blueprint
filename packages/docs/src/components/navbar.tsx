@@ -48,7 +48,7 @@ export class Navbar extends React.Component<INavbarProps, {}> {
                 <div className="pt-navbar-group">
                     <div className={classNames(Classes.BUTTON_GROUP, Classes.MINIMAL)}>
                         <AnchorButton
-                            href="https://github.com/palantir/blueprint"
+                            href="https://github.com/HiTask/blueprint"
                             target="_blank"
                             text="GitHub"
                         />
