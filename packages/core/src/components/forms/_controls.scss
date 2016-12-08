@@ -10,19 +10,19 @@
 $control-indicator-size: $pt-icon-size-standard;
 $control-indicator-size-large: $pt-icon-size-large;
 
-$control-border-color: $gray5;
-$control-checked-border-color: $control-border-color;
-$control-background-disabled: $button-background-color-disabled;
-$control-background-color: $button-background-color;
-$control-background-color-hover: $button-background-color-hover;
-$control-background-color-active: $button-background-color-active;
+$control-shadow-color: $input-shadow-color;
+$control-background-color: $pt-control-inactive;
+$control-background-color-hover: $pt-control-inactive;
+$control-background-color-active: $pt-control-active;
+$control-background-color-disabled: $pt-control-inactive;
 $dark-control-background-color: $dark-button-background-color;
 $dark-control-background-color-hover: $dark-button-background-color-hover;
 $dark-control-background-color-active: $dark-button-background-color-active;
 
-$control-checked-background-color: $control-checked-border-color;
-$control-checked-background-color-hover: $control-checked-background-color;
-$control-checked-background-color-active: $control-checked-background-color;
+$control-checked-shadow-color: $input-shadow-color-focus;
+$control-checked-background-color: $pt-control-active;
+$control-checked-background-color-hover: $pt-control-active;
+$control-checked-background-color-active: $pt-control-active;
 
 .pt-control {
   display: block;
@@ -62,8 +62,8 @@ $control-checked-background-color-active: $control-checked-background-color;
     height: $control-indicator-size;
     line-height: $control-indicator-size;
     user-select: none;
-		box-shadow: inset border-shadow($pt-drop-shadow-opacity, $control-border-color);
-		transition: box-shadow $pt-transition-duration $pt-transition-ease;
+		box-shadow: inset border-shadow(1, $control-shadow-color);
+		transition: box-shadow $pt-transition-duration $pt-transition-ease, background-color $pt-transition-duration $pt-transition-ease;
 
     &::before {
       position: relative;
@@ -75,7 +75,7 @@ $control-checked-background-color-active: $control-checked-background-color;
 
   &:hover {
     input:not(:disabled) ~ .pt-control-indicator {
-			box-shadow: inset border-shadow(1, $control-border-color);
+			box-shadow: inset border-shadow(1, $control-checked-shadow-color);
     }
   }
 
@@ -84,13 +84,13 @@ $control-checked-background-color-active: $control-checked-background-color;
   }
 
   input:disabled ~ .pt-control-indicator {
-    box-shadow: inset border-shadow(0.5, $control-background-disabled);
-		background-color: rgba($control-background-disabled, 0.5);
+    box-shadow: none;
+		background-color: rgba($control-background-color-disabled, 0.5);
     cursor: not-allowed;
   }
 
 	input:checked ~ .pt-control-indicator {
-    box-shadow: inset border-shadow(1, $control-checked-border-color);
+    box-shadow: inset border-shadow(1, $control-checked-shadow-color);
   }
 
   /*
@@ -158,8 +158,8 @@ $control-checked-background-color-active: $control-checked-background-color;
     }
 
     input:checked ~ .pt-control-indicator {
-			box-shadow: inset border-shadow(1, $control-checked-border-color, 2px);
-			color: $control-checked-border-color;
+			box-shadow: inset border-shadow(1, $control-checked-shadow-color, 2px);
+			color: $control-checked-shadow-color;
 
 			&::before {
 	      content: $pt-icon-small-tick;
@@ -239,12 +239,12 @@ $control-checked-background-color-active: $control-checked-background-color;
     }
 
 		input:checked ~ .pt-control-indicator {
-			box-shadow: inset border-shadow(1, $control-border-color, $radio-indicator-font-size - 0.5);
+			box-shadow: inset border-shadow(1, $control-checked-shadow-color, $radio-indicator-font-size - 0.5);
 	  }
 
 		&.pt-large {
 			input:checked ~ .pt-control-indicator {
-				box-shadow: inset border-shadow(1, $control-border-color, $radio-indicator-font-size-large - 0.5);
+				box-shadow: inset border-shadow(1, $control-checked-shadow-color, $radio-indicator-font-size-large - 0.5);
 		  }
 		}
   }
@@ -300,14 +300,14 @@ $control-checked-background-color-active: $control-checked-background-color;
   $switch-width: $pt-grid-size * 2.8;
   $switch-indicator-margin: $pt-grid-size * 0.2;
 
-  $switch-background-color: rgba($gray4, 0.5);
-  $switch-background-color-hover: rgba($gray2, 0.5);
-  $switch-background-color-active: rgba($gray1, 0.5);
-  $switch-background-color-disabled: $button-background-color-disabled;
+  $switch-background-color: $control-background-color;
+  $switch-background-color-hover: $control-checked-background-color;
+  $switch-background-color-active: $control-checked-background-color-active;
+  $switch-background-color-disabled: rgba($control-background-color-disabled, 0.5);
   $switch-checked-background-color: $control-checked-background-color;
   $switch-checked-background-color-hover: $control-checked-background-color-hover;
   $switch-checked-background-color-active: $control-checked-background-color-active;
-  $switch-checked-background-color-disabled: rgba($blue3, 0.5);
+  $switch-checked-background-color-disabled: rgba($control-checked-background-color, 0.5);
   $dark-switch-background-color: rgba($black, 0.5);
   $dark-switch-background-color-hover: rgba($black, 0.7);
   $dark-switch-background-color-active: rgba($black, 0.9);
@@ -317,7 +317,6 @@ $control-checked-background-color-active: $control-checked-background-color;
   $dark-switch-checked-background-color-active: $blue5;
   $dark-switch-checked-background-color-disabled: rgba($blue1, 0.5);
 
-  $switch-indicator-border: border-shadow($pt-border-shadow-opacity);
   $switch-indicator-background-color: $white;
   $switch-indicator-background-color-disabled: rgba($white, 0.8);
   $dark-switch-indicator-border: border-shadow($pt-dark-border-shadow-opacity);
@@ -334,14 +333,12 @@ $control-checked-background-color-active: $control-checked-background-color;
       background: $switch-background-color;
       width: $switch-width;
       height: $switch-height;
-      transition: background $pt-transition-duration $pt-transition-ease;
 
       &::before {
         display: block;
         top: $switch-indicator-margin;
         left: $switch-indicator-margin;
         border-radius: $switch-height;
-        box-shadow: $switch-indicator-border, $button-box-shadow;
         background: $switch-indicator-background-color;
         background-clip: padding-box;
         width: $switch-height - ($switch-indicator-margin * 2);
@@ -360,14 +357,16 @@ $control-checked-background-color-active: $control-checked-background-color;
 
       &::before {
         left: $switch-width - $switch-height + $switch-indicator-margin;
-        box-shadow: $switch-indicator-border, $button-intent-box-shadow;
       }
     }
 
     &:hover {
-      .pt-control-indicator {
-        background-color: $switch-background-color-hover;
-      }
+			input:not(:disabled) {
+				~ .pt-control-indicator {
+	        box-shadow: none;
+	        background-color: $switch-background-color-hover;
+	      }
+			}
 
       input:checked ~ .pt-control-indicator {
         background-color: $switch-checked-background-color-hover;
@@ -387,10 +386,7 @@ $control-checked-background-color-active: $control-checked-background-color;
 
     input:disabled {
       ~ .pt-control-indicator {
-        background-color: $switch-background-color-disabled;
-
         &::before {
-          box-shadow: none;
           background-color: $switch-indicator-background-color-disabled;
         }
       }

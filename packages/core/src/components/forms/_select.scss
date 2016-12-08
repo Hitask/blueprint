@@ -6,6 +6,8 @@
 @import "../../common/variables";
 @import "../popover/common";
 
+$select-color: $white;
+
 /*
 Selects
 
@@ -41,6 +43,7 @@ Styleguide components.forms.select
   position: relative;
   vertical-align: middle;
   letter-spacing: normal;
+	color: $select-color;
 
   select {
     @extend %pt-select;
@@ -57,6 +60,7 @@ Styleguide components.forms.select
 
   &::after {
     @extend %pt-select-arrow;
+		color: inherit;
   }
 
   &.pt-large {

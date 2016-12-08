@@ -139,6 +139,10 @@ $input-button-height-large: $pt-button-height;
     .pt-icon {
       color: $pt-icon-color-disabled;
     }
+
+		.pt-tag {
+			opacity: 0.5;
+		}
   }
 
   &.pt-large {

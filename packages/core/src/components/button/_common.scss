@@ -11,21 +11,18 @@ $white-transparent: rgba($white, 0);
 $button-color: $white;
 $button-color-hover: $white;
 $button-color-active: $white;
+$button-color-disabled: $pt-text-color-disabled;
 $button-border-width: 0;
 $button-padding: 0 ($pt-grid-size * 2);
 $button-padding-large: 0 ($pt-grid-size * 1.5);
 $button-icon-spacing: ($pt-button-height - $pt-icon-size-standard) / 2;
 $button-icon-spacing-large: ($pt-button-height-large - $pt-icon-size-large) / 2;
-
-$button-icon-color: $button-color;
-
-$button-color-disabled: $pt-text-color-disabled;
 $dark-button-color-disabled: $pt-dark-text-color-disabled;
 
 $button-border-color: rgba($black, 0.1) rgba($black, 0.1) rgba($black, 0.17) rgba($black, 0.1);
 $button-border-color-hover: rgba($black, 0.2) rgba($black, 0.2) rgba($black, 0.27) rgba($black, 0.2);
 $button-border-color-active: rgba($black, 0.35) rgba($black, 0.25) rgba($black, 0.25) rgba($black, 0.25);
-$button-box-shadow: 0 1.5px .5px .8px rgba($black,.2);
+$button-box-shadow: inset 0 1.5px .5px .8px rgba($black,.2);
 $dark-button-border-color: rgba($black, 0.6);
 $dark-button-border-color-hover: rgba($black, 0.8);
 $dark-button-box-shadow: 0 1px 1px rgba($black, 0.2);
@@ -38,7 +35,7 @@ $dark-button-intent-box-shadow: 0 1px 1px rgba($black, 0.2);
 
 $button-background-color: $turquoise4;
 $button-background-color-hover: $turquoise5;
-$button-background-color-active: $button-background-color-hover;
+$button-background-color-active: $turquoise5;
 $button-background-color-disabled: rgba($light-gray1, 0.5);
 $button-background-color-active-disabled: rgba($light-gray2, 0.4);
 $dark-button-background-color: none;
@@ -47,10 +44,14 @@ $dark-button-background-color-active: rgba($black, 0.1);
 $dark-button-background-color-disabled: rgba($light-gray1, 0.1);
 $dark-button-background-color-active-disabled: rgba($light-gray1, 0.2);
 
+$minimal-button-color: $pt-text-color;
+$minimal-button-color-hover: $pt-text-color;
+$minimal-button-color-active: $pt-text-color;
+$minimal-button-color-disabled: $pt-text-color-disabled;
 $minimal-button-divider-width: 1px;
 $minimal-button-background-color: none;
 $minimal-button-background-color-hover: rgba($gray4, 0.3);
-$minimal-button-background-color-active: rgba($gray2, 0.3);
+$minimal-button-background-color-active: rgba($gray4, 0.3);
 $dark-minimal-button-background-color: none;
 $dark-minimal-button-background-color-hover: rgba($gray3, 0.15);
 $dark-minimal-button-background-color-active: rgba($gray3, 0.3);
@@ -113,7 +114,7 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 
 @mixin pt-button-active() {
 	color: $button-color-active;
-  box-shadow: inset $button-box-shadow;
+  box-shadow: $button-box-shadow;
   background-color: $button-background-color-active;
 }
 
@@ -202,18 +203,18 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 
 @mixin pt-button-minimal() {
   background: $minimal-button-background-color;
-	color: $pt-text-color;
+	color: $minimal-button-color;
 
   &:hover {
     background: $minimal-button-background-color-hover;
     text-decoration: none;
-    color: $pt-text-color;
+    color: $minimal-button-color-hover;
   }
 
   &.pt-active,
   &:active {
     background: $minimal-button-background-color-active;
-    color: $pt-text-color;
+    color: $minimal-button-color-active;
   }
 
   &.pt-disabled,
@@ -221,7 +222,7 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
   &:disabled:hover {
     background: inherit;
     cursor: not-allowed;
-    color: $pt-text-color-disabled;
+    color: $minimal-button-color-disabled;
   }
 
   .pt-dark & {
