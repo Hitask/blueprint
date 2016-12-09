@@ -43,13 +43,13 @@ for module in $MODULES; do
 
       # cleanup files and release to github
       find . -mindepth 1 -maxdepth 1 ! -name "index.js" ! -name ".git" ! -name ".gitignore" ! -name "build" ! -name "dist" ! -name "generated" ! -name "coverage" ! -name "README.md" ! -name "node_modules" ! -name "packages" -exec rm -r "{}" \;
-      rm -rf packages/$module/node_modules 
+      rm -rf packages/$module/node_modules
       cp -r packages/$module/* .
       rm -rf packages src test examples .npmignore
       touch .npmignore
       git add .
       # add gitignored
-      git add dist --force 
+      git add dist --force
       git commit -m "Release $TAG_NAME"
       git tag -a $TAG_NAME -m "Release $TAG_NAME"
       git push origin $TAG_NAME
