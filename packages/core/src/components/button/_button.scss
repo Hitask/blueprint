@@ -35,10 +35,6 @@ Markup:
 
 :disabled - Disabled state
 .pt-disabled - Disabled appearance
-.pt-intent-primary - Primary intent
-.pt-intent-success - Success intent
-.pt-intent-warning - Warning intent
-.pt-intent-danger - Danger intent
 .pt-active - Active appearance
 .pt-large - Larger size
 .pt-fill - Fill parent container
@@ -50,9 +46,9 @@ Styleguide components.button.css
   @include pt-button-base();
   @include pt-button-height($pt-button-height);
 
-  &:disabled {
-    cursor: not-allowed;
-  }
+	&:disabled {
+		cursor: not-allowed;
+ 	}
 
   &.pt-fill {
     width: 100%;
@@ -89,7 +85,7 @@ Styleguide components.button.css
     @include pt-icon();
 
     margin-right: $button-icon-spacing;
-    color: $pt-icon-color;
+    color: inherit;
   }
 
   /*
@@ -102,7 +98,7 @@ Styleguide components.button.css
   To adjust margins on right-aligned icons, add the class `pt-align-right` to the icon.
 
   Markup:
-  <button type="button" class="pt-button pt-intent-success">
+  <button type="button" class="pt-button">
     Next step
     <span class="pt-icon-standard pt-icon-arrow-right pt-align-right"></span>
   </button>
@@ -111,7 +107,7 @@ Styleguide components.button.css
     Profile settings
     <span class="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
   </button>
-  <button type="button" class="pt-button pt-intent-danger">
+  <button type="button" class="pt-button">
     Reset
     <span class="pt-icon-standard pt-icon-refresh pt-align-right"></span>
   </button>
@@ -126,7 +122,7 @@ Styleguide components.button.css
 
   #{$icon-classes} {
     margin-right: $button-icon-spacing;
-    color: $pt-icon-color;
+    color: $button-color;
 
     &.pt-align-right {
       margin-right: 0;
@@ -153,8 +149,8 @@ Styleguide components.button.css
   }
 
   &:disabled,
-  &[class*="pt-intent-"] {
-    // disabled and intent button icon should use same color as text
+	&.pt-minimal {
+    // disabled, minimal and intent button icon should use same color as text
     // stylelint-disable declaration-no-important
     &::before {
       color: inherit !important;
@@ -179,10 +175,6 @@ Styleguide components.button.css
   <button type="button" class="pt-button pt-minimal pt-icon-add {{.modifier}}" {{:modifier}}>Button</button>
 
   .pt-disabled - Disabled appearance
-  .pt-intent-primary - Primary intent
-  .pt-intent-success - Success intent
-  .pt-intent-warning - Warning intent
-  .pt-intent-danger - Danger intent
 
   Styleguide components.button.css.minimal
   */
@@ -222,17 +214,20 @@ Styleguide components.button.css
 %pt-button-link {
   text-align: center;
   text-decoration: none;
-  transition: none;
 
   &,
   &:hover,
   &:active {
     // override global 'a' styles
-    color: $pt-text-color;
+    color: $button-color-hover;
   }
 
   &.pt-disabled {
     color: $button-color-disabled;
+
+		&:active {
+			box-shadow: none;
+		}
   }
 }
 

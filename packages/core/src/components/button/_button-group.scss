@@ -45,8 +45,8 @@ Markup:
 </div>
 <br /><br />
 <div class="pt-button-group {{.modifier}}">
-  <button type="button" class="pt-button pt-intent-success">Save</button>
-  <button type="button" class="pt-button pt-intent-success pt-icon-caret-down"></button>
+  <button type="button" class="pt-button">Save</button>
+  <button type="button" class="pt-button pt-icon-caret-down"></button>
 </div>
 
 .pt-large - Use large buttons
@@ -123,6 +123,11 @@ Styleguide components.button-group.css
         // ensure outline is always a rectangle, instead of contouring to bounding box
         outline-style: solid;
       }
+
+			&::before,
+			> .pt-icon-standard {
+				color: inherit;
+			}
 
       &::after {
         @include pt-button-minimal-divider();

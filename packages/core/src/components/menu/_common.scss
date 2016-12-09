@@ -26,8 +26,12 @@ $dark-menu-background-color: $dark-gray4;
   color: inherit;
   user-select: none;
 
+	&.pt-active {
+		transition: background-color $pt-transition-duration $pt-transition-ease;
+	}
+
   &:not(#{$disabled-selector})#{$hover-selector} {
-    background: $pt-intent-primary;
+    background: $pt-main-color-light;
     cursor: pointer;
     color: $white;
   }

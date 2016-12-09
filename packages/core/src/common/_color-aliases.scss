@@ -50,6 +50,17 @@ consistent color usage across components.
       <td>Dark theme application background color</td>
     </tr>
 
+		<tr>
+		  <td><div class="docs-color-bubble alias-control-inactive"></div></td>
+		  <td><code>$pt-control-inactive</code></td>
+		  <td>UI control inactive</td>
+		</tr>
+		<tr>
+		  <td><div class="docs-color-bubble alias-control-active"></div></td>
+		  <td><code>$pt-control-active</code></td>
+		  <td>UI control active</td>
+		</tr>
+
     <tr>
       <td><div class="docs-color-bubble alias-text-color"></div></td>
       <td><code>$pt-text-color</code></td>
@@ -189,16 +200,24 @@ consistent color usage across components.
 Styleguide variables.colors
 */
 
-$pt-intent-primary: $blue3;
-$pt-intent-success: $green3;
+$pt-intent-primary: $blue2;
+$pt-intent-success: $green5;
 $pt-intent-warning: $orange3;
 $pt-intent-danger: $red3;
 
 $pt-app-background-color: $light-gray5;
 $pt-dark-app-background-color: $dark-gray3;
 
-$pt-text-color: $dark-gray1;
-$pt-text-color-muted: $gray1;
+$pt-control-inactive: $light-gray4;
+$pt-control-active: $gray4;
+
+$pt-main-color: $turquoise4;
+$pt-main-color-light: $turquoise5;
+$pt-element-main-color: $gray3;
+
+$pt-text-color: $dark-gray4;
+$pt-text-color-muted: $gray2;
+$pt-text-color-soft: $soft-gray1;
 $pt-text-color-disabled: rgba($pt-text-color-muted, 0.5);
 $pt-heading-color: $pt-text-color;
 $pt-link-color: $blue2;
@@ -213,7 +232,7 @@ $pt-text-selection-color: rgba(125, 188, 255, 0.6);
 $pt-icon-color: $pt-text-color-muted;
 $pt-icon-color-hover: $pt-text-color;
 $pt-icon-color-disabled: $pt-text-color-disabled;
-$pt-icon-color-selected: $pt-intent-primary;
+$pt-icon-color-selected: $pt-text-color;
 $pt-dark-icon-color: $pt-dark-text-color-muted;
 $pt-dark-icon-color-hover: $pt-dark-text-color;
 $pt-dark-icon-color-disabled: $pt-dark-text-color-disabled;

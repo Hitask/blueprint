@@ -25,6 +25,9 @@ module.exports = (gulp) =>{
     // perform a full build of the code and then finish
     gulp.task("build", (done) => rs("clean", "compile", "docs", "webpack-compile-docs", done));
 
+		// perform a full build of the library code only
+		gulp.task("buildlib", (done) => rs("clean", "compile", done));
+
     // build code, run unit tests, terminate
     gulp.task("test", ["karma"]);
 

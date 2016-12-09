@@ -48,7 +48,7 @@ export class Navbar extends React.Component<INavbarProps, {}> {
                 <div className="pt-navbar-group">
                     <div className={classNames(Classes.BUTTON_GROUP, Classes.MINIMAL)}>
                         <AnchorButton
-                            href="https://github.com/palantir/blueprint"
+                            href="https://github.com/HiTask/blueprint"
                             target="_blank"
                             text="GitHub"
                         />
@@ -108,7 +108,7 @@ export class Navbar extends React.Component<INavbarProps, {}> {
     private renderVersionsMenu() {
         const { versions } = this.props;
         if (versions.length === 1) {
-            return <div className="pt-text-muted">v{versions[0].version}</div>;
+            return <div className="pt-text-muted">v{versions[0].version}-custom</div>;
         }
 
         const match = /releases\/([^\/]+)\/dist/.exec(location.href);

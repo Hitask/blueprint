@@ -152,10 +152,14 @@ Weight: 3
 Styleguide components.tabs.js.router
 */
 
-$tab-color-selected: $pt-link-color;
+$tab-color: $pt-text-color-soft;
+$tab-color-hover: $pt-text-color;
+$tab-color-selected: $pt-element-main-color;
 $dark-tab-color-selected: $pt-dark-link-color;
 
+$tab-vertical-selected-background: rgba($pt-element-main-color, .5);
 $tab-indicator-width: 3px;
+$tab-underline-color: rgba($pt-text-color-soft, 0.2);
 
 .pt-tabs.pt-vertical {
   display: flex;
@@ -167,9 +171,18 @@ $tab-indicator-width: 3px;
     flex-direction: column;
     align-items: flex-start;
 
+		&::before {
+			content: none;
+		}
+
     .pt-tab {
       width: 100%;
       padding: 0 $pt-grid-size;
+			line-height: $pt-button-height;
+
+			&[aria-selected="true"] {
+				color: $tab-color-hover;
+		  }
     }
 
     .pt-tab-indicator-wrapper .pt-tab-indicator {
@@ -178,7 +191,7 @@ $tab-indicator-width: 3px;
       bottom: 0;
       left: 0;
       border-radius: $pt-border-radius;
-      background-color: rgba($pt-intent-primary, 0.2);
+      background-color: $tab-vertical-selected-background;
       height: auto;
     }
   }
@@ -202,8 +215,18 @@ $tab-indicator-width: 3px;
   padding: 0;
   list-style: none;
 
+	&::before {
+		content: "";
+		position: absolute;
+		height: 1px;
+		width: 100%;
+		left: 0;
+		bottom: 0;
+		background-color: $tab-underline-color;
+	}
+
   &.pt-large .pt-tab {
-    line-height: $pt-button-height-large;
+    line-height: $pt-button-height-large * 1.5;
     font-size: $pt-font-size-large;
   }
 }
@@ -216,9 +239,10 @@ $tab-indicator-width: 3px;
   cursor: pointer;
   max-width: 100%;
   vertical-align: top;
-  line-height: $pt-button-height;
-  color: $pt-text-color;
+  line-height: $pt-button-height * 1.5;
+  color: $tab-color;
   font-size: $pt-font-size;
+	transition: color $pt-transition-duration $pt-transition-ease;
 
   .pt-tab-indicator-wrapper ~ & {
     // the bottom border is only for static markup, therefore
@@ -229,7 +253,7 @@ $tab-indicator-width: 3px;
   }
 
   &:not(:last-of-type) {
-    margin-right: $pt-grid-size * 2;
+    margin-right: $pt-grid-size * 2.5;
   }
 
   &[aria-disabled="true"] {
@@ -238,13 +262,13 @@ $tab-indicator-width: 3px;
   }
 
   &[aria-selected="true"] {
+		color: $tab-color-selected;
     border-radius: 0;
     box-shadow: inset 0 (-$tab-indicator-width) 0 $tab-color-selected;
   }
 
-  &[aria-selected="true"],
-  &:not([aria-disabled="true"]):hover {
-    color: $tab-color-selected;
+  &:not([aria-disabled="true"]):not([aria-selected="true"]):hover {
+    color: $tab-color-hover;
   }
 
   &:focus {

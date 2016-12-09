@@ -7,6 +7,7 @@
     "bootstrap": "lerna bootstrap",
     "build:landing": "(cd packages/landing; npm run build)",
     "build:gulp": "NODE_ENV='\"production\"' gulp build",
+		"buildlib:gulp": "NODE_ENV='\"production\"' gulp buildlib",
     "build:site": "npm-run-all build:gulp build:landing clean:docs copy:docs copy:landing delete:doc-source-maps",
     "clean:docs": "rm -rf docs && git checkout docs/CNAME",
     "copy:docs": "cp -rf packages/docs/dist docs/docs",
