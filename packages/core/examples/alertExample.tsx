@@ -46,7 +46,7 @@ export class AlertExample extends BaseExample<{}> {
                 <Button onClick={this.handleOpen} text="Open file deletion alert" />
                 <Alert
                     className={this.props.getTheme()}
-                    intent={Intent.PRIMARY}
+                    intent={Intent.DANGER}
                     isOpen={this.state.isOpen}
                     confirmButtonText="Move to Trash"
                     cancelButtonText="Cancel"

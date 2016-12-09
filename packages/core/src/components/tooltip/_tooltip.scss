@@ -80,7 +80,7 @@ appearing at the same time.
 ```
 <Popover content={<h1>Popover!</h1>} position={Position.RIGHT}>
     <Tooltip content="I has a popover!" position={Position.RIGHT}>
-        <button className="pt-button pt-intent-success">Hover and click me</button>
+        <button className="pt-button">Hover and click me</button>
     </Tooltip>
 </Popover>
 ```
@@ -108,6 +108,7 @@ Styleguide components.tooltip.js.svg
     $tooltip-background-color,
     $tooltip-text-color,
     $pt-tooltip-box-shadow,
+		$pt-tooltip-box-shadow-add,
     $pt-drop-shadow-opacity,
     $pt-border-shadow-opacity
   );
@@ -143,6 +144,7 @@ Styleguide components.tooltip.js.svg
       $dark-tooltip-background-color,
       $dark-tooltip-text-color,
       $pt-dark-tooltip-box-shadow,
+			$pt-dark-tooltip-box-shadow-add,
       $pt-dark-drop-shadow-opacity,
       $pt-dark-border-shadow-opacity
     );

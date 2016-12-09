@@ -273,6 +273,7 @@ $popover-width: $pt-grid-size * 35;
     $popover-background-color,
     inherit,
     $pt-popover-box-shadow,
+		$pt-popover-box-shadow-add,
     $pt-drop-shadow-opacity,
     $pt-border-shadow-opacity
   );
@@ -288,11 +289,33 @@ $popover-width: $pt-grid-size * 35;
     border-radius: $pt-border-radius;
   }
 
+	.pt-popover-header {
+		border-top-left-radius: $pt-border-radius;
+		border-top-right-radius: $pt-border-radius;
+		padding: $pt-grid-size * 2;
+		> h1, > h2, > h3, > h4, > h5, > h6 {
+			margin-bottom: 0;
+		}
+	}
+
+	.pt-popover-footer {
+		border-top: 1px solid $pt-thin-lines-color;
+		padding: ($pt-grid-size * 1.5) ($pt-grid-size * 2);
+	}
+
   &.pt-popover-content-sizing {
     .pt-popover-content {
       max-width: $popover-width;
       padding: $pt-grid-size * 2;
     }
+
+		.pt-popover-header {
+			margin: (-$pt-grid-size * 2) (-$pt-grid-size * 2) ($pt-grid-size);
+		}
+
+		.pt-popover-footer {
+			margin: ($pt-grid-size * 1.5) (-$pt-grid-size * 2) (-$pt-grid-size * 2);
+		}
 
     // only inline popovers get a width if this class is applied
     .pt-popover-target & {
@@ -343,6 +366,7 @@ $popover-width: $pt-grid-size * 35;
       $dark-popover-background-color,
       inherit,
       $pt-dark-popover-box-shadow,
+			$pt-dark-popover-box-shadow-add,
       $pt-dark-drop-shadow-opacity,
       $pt-dark-border-shadow-opacity
     );

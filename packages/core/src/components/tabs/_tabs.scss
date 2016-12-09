@@ -157,9 +157,9 @@ $tab-color-hover: $pt-text-color !default;
 $tab-color-selected: $pt-element-main-color !default;
 $dark-tab-color-selected: $pt-dark-link-color !default;
 
-$tab-vertical-selected-background: rgba($pt-element-main-color, .5) !default;
+$tab-vertical-selected-background: rgba($pt-element-main-color, 0.5) !default;
 $tab-indicator-width: 3px !default;
-$tab-underline-color: rgba($pt-text-color-soft, 0.2) !default;
+$tab-underline-color: $pt-thin-lines-color !default;
 
 .pt-tabs.pt-vertical {
   display: flex;
