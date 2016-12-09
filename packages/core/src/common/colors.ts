@@ -40,7 +40,7 @@ export const Colors = {
 
     GRAY1: "#5C7080",
     GRAY2: "#738694",
-    GRAY3: "#8A9BA8",
+    GRAY3: "#A2B8C8",
     GRAY4: "#AEBEC8",
     GRAY5: "#BFCCD6",
 

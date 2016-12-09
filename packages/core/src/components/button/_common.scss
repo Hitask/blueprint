@@ -33,9 +33,9 @@ $button-intent-box-shadow: 0 1px 1px rgba($black, 0.2);
 $dark-button-intent-border-color: rgba($black, 0.6);
 $dark-button-intent-box-shadow: 0 1px 1px rgba($black, 0.2);
 
-$button-background-color: $turquoise4;
-$button-background-color-hover: $turquoise5;
-$button-background-color-active: $turquoise5;
+$button-background-color: $pt-main-color;
+$button-background-color-hover: $pt-main-color-light;
+$button-background-color-active: $pt-main-color-light;
 $button-background-color-disabled: rgba($light-gray1, 0.5);
 $button-background-color-active-disabled: rgba($light-gray2, 0.4);
 $dark-button-background-color: none;
