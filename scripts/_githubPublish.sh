@@ -26,8 +26,8 @@ for module in $MODULES; do
     fi
 
     # VER_TO_PUBLISH=$(echo "console.log(require('./packages/$module/package.json').version)" | node)
-    VER_TO_PUBLISH=$(echo "console.log(require('./package.json').version)" | node)
-    VERSIONS=$(npm info @blueprintjs/$module versions || echo "new_package")
+    VER_TO_PUBLISH=$(git rev-list HEAD --count)
+    # VERSIONS=$(npm info @blueprintjs/$module versions || echo "new_package")
 
     TAG_NAME=$(echo $module)_v$VER_TO_PUBLISH
 
