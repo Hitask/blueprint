@@ -274,8 +274,7 @@ $popover-width: $pt-grid-size * 35;
     inherit,
     $pt-popover-box-shadow,
 		$pt-popover-box-shadow-add,
-    $pt-drop-shadow-opacity,
-    $pt-border-shadow-opacity
+    $pt-drop-shadow-opacity
   );
 
   @include scale-transition();
@@ -367,8 +366,7 @@ $popover-width: $pt-grid-size * 35;
       inherit,
       $pt-dark-popover-box-shadow,
 			$pt-dark-popover-box-shadow-add,
-      $pt-dark-drop-shadow-opacity,
-      $pt-dark-border-shadow-opacity
+      $pt-dark-drop-shadow-opacity
     );
   }
 }

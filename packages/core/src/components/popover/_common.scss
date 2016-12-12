@@ -132,8 +132,8 @@ $dark-popover-background-color: $dark-gray4 !default;
   $text-color,
   $shadows,
 	$shadows-add,
-  $arrow-drop-shadow-opacity,
-  $arrow-border-shadow-opacity
+  $arrow-drop-shadow-opacity: 0,
+  $arrow-border-shadow-opacity: 0
 ) {
   box-shadow: $shadows;
 

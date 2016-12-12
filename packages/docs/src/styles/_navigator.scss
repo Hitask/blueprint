@@ -19,6 +19,13 @@ $navigator-min-width: $pt-grid-size * 22;
   background: $pt-main-color;
   cursor: pointer;
   color: $white;
+	transition: background-color $pt-transition-duration $pt-transition-ease;
+
+	&:hover {
+		// overwrite library color
+		color: $white;
+		background: $pt-main-color-light;
+	}
 }
 
 .pt-menu-item.pt-active,
