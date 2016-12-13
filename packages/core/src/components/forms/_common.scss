@@ -23,31 +23,6 @@ $dark-input-placeholder-color: $pt-dark-text-color-disabled !default;
 $dark-input-background-color-disabled: rgba($light-gray2, 0.1) !default;
 $dark-input-focus-shadow-color: $gray5 !default;
 
-// animating shadows requires the same number of shadows in different states
-@function input-transition-shadow($color: $input-shadow-color, $focus: false, $hover: false) {
-	@if $focus {
-		@return inset border-shadow(1, $color, 2px);
-	}
-	@if $hover {
-	  @return inset border-shadow(1, $color, 1px);
-	}
-	@return inset border-shadow(1, $color, 1px);
-}
-
-@function dark-input-transition-shadow($color: $dark-input-focus-shadow-color, $focus: false) {
-  @if $focus {
-    @return
-      border-shadow(1, $color, 1px),
-      border-shadow(1, $color, 1px), // duplicating to minimize browser antialiasing in dark
-      border-shadow(0.3, $color, 3px);
-  } @else {
-    @return
-      border-shadow(0, $color, 0),
-      border-shadow(0, $color, 0),
-      border-shadow(0, $color, 0);
-  }
-}
-
 @mixin pt-input() {
   outline: none;
   border: none;

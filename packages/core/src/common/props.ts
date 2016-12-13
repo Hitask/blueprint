@@ -93,6 +93,7 @@ const INVALID_PROPS = [
     "rightElement",
     "rightIconName",
     "text",
+		"round",
 ];
 
 /**

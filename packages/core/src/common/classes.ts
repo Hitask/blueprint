@@ -11,6 +11,7 @@ import { Intent } from "./intent";
 export const DARK = "pt-dark";
 export const ACTIVE = "pt-active";
 export const MINIMAL = "pt-minimal";
+export const ROUND = "pt-round";
 export const DISABLED = "pt-disabled";
 export const SMALL = "pt-small";
 export const LARGE = "pt-large";
@@ -33,6 +34,7 @@ export const BREADCRUMBS_COLLAPSED = "pt-breadcrumbs-collapsed";
 
 export const BUTTON = "pt-button";
 export const BUTTON_GROUP = "pt-button-group";
+export const BUTTON_HELPTEXT = "pt-button-helptext"
 
 export const CARD = "pt-card";
 

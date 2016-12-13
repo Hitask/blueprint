@@ -69,12 +69,16 @@ Styleguide components.button.css
 
   Add an icon before the button text with `pt-icon-*` classes.
   You _do not_ need to include an icon sizing class.
+	To modify button to circle view, add `pt-round` class. _Don't insert in round buttons any text directly,_ because in other case they will lose round shape.
+	Use `span` element with `pt-button-helptext` class instead to add tooltips to round buttons.
 
   Markup:
   <button type="button" class="pt-button pt-icon-add">Default button</button>
-  <button type="button" class="pt-button pt-icon-refresh"></button>
-  <button type="button" class="pt-button pt-large pt-icon-add">Large button</button>
-  <button type="button" class="pt-button pt-large pt-icon-refresh"></button>
+	<button type="button" class="pt-button pt-icon-refresh"></button>
+	<button type="button" class="pt-button pt-round pt-icon-refresh"></button>
+	<button type="button" class="pt-button pt-round pt-icon-user">
+	  <span class="pt-button-helptext">Help text</span>
+	</button>
 
   Weight: -1
 
@@ -173,6 +177,7 @@ Styleguide components.button.css
   Markup:
   <a role="button" class="pt-button pt-minimal {{.modifier}}" {{:modifier}} tabindex="0">Anchor</a>
   <button type="button" class="pt-button pt-minimal pt-icon-add {{.modifier}}" {{:modifier}}>Button</button>
+	<button type="button" class="pt-button pt-round pt-minimal pt-icon-add {{.modifier}}" {{:modifier}}></button>
 
   .pt-disabled - Disabled appearance
 
@@ -202,13 +207,18 @@ Styleguide components.button.css
   }
 
   // ensure icon button with no text is a perfect square
-  &[class*="pt-icon-"]:empty {
+  &[class*="pt-icon-"]:empty,
+	&[class*="pt-icon-"].pt-round {
     padding: 0;
 
     &::before {
       margin-right: 0;
     }
   }
+
+	&.pt-round {
+		@include pt-button-round();
+	}
 }
 
 %pt-button-link {
@@ -255,6 +265,9 @@ a.pt-button {
   @extend .pt-button:disabled;
 }
 
+.pt-button-helptext {
+	@include pt-button-helptext();
+}
 
 /*
 JavaScript API

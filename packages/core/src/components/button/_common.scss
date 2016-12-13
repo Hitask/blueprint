@@ -56,6 +56,12 @@ $dark-minimal-button-background-color: none !default;
 $dark-minimal-button-background-color-hover: rgba($gray3, 0.15) !default;
 $dark-minimal-button-background-color-active: rgba($gray3, 0.3) !default;
 
+$icon-button-color: $pt-control-active;
+$icon-button-color-hover: $pt-control-active;
+$icon-button-color-active: $pt-control-active;
+$icon-button-color-disabled: $button-color-disabled;
+$icon-button-background-disabled: $button-background-color-disabled;
+
 // "intent": (default, hover, active colors)
 $button-intents: (
   "primary": ($pt-intent-primary, $blue2, $blue1),
@@ -63,6 +69,31 @@ $button-intents: (
   "warning": ($pt-intent-warning, $orange2, $orange1),
   "danger": ($pt-intent-danger, $red2, $red1)
 );
+
+// animating shadows requires the same number of shadows in different states
+@function input-transition-shadow($color: $input-shadow-color, $focus: false, $hover: false) {
+	@if $focus {
+		@return inset border-shadow(1, $color, 2px);
+	}
+	@if $hover {
+	  @return inset border-shadow(1, $color, 1px);
+	}
+	@return inset border-shadow(1, $color, 1px);
+}
+
+@function dark-input-transition-shadow($color: $dark-input-focus-shadow-color, $focus: false) {
+  @if $focus {
+    @return
+      border-shadow(1, $color, 1px),
+      border-shadow(1, $color, 1px), // duplicating to minimize browser antialiasing in dark
+      border-shadow(0.3, $color, 3px);
+  } @else {
+    @return
+      border-shadow(0, $color, 0),
+      border-shadow(0, $color, 0),
+      border-shadow(0, $color, 0);
+  }
+}
 
 // matches default buttons only -- used to remove border-right in button groups and control groups
 $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*=\"pt-intent-\"]";
@@ -89,18 +120,22 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 
 @mixin pt-button() {
   color: $button-color;
-	background-color: $button-background-color;
+	background: $button-background-color;
 
   &:hover {
     @include pt-button-hover();
   }
 
-  &:active {
+  &:active,
+	&.pt-active {
     @include pt-button-active();
   }
 
-  &:disabled {
-    background-color: $button-background-color-disabled;
+  &:disabled,
+	&.pt-disabled,
+	&.pt-disabled:hover {
+		cursor: not-allowed;
+    background: $button-background-color-disabled;
     color: $button-color-disabled;
 		box-shadow: none;
   }
@@ -109,30 +144,30 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 
 @mixin pt-button-hover() {
 	color: $button-color-hover;
-  background-color: $button-background-color-hover;
+  background: $button-background-color-hover;
 }
 
 @mixin pt-button-active() {
 	color: $button-color-active;
   box-shadow: $button-box-shadow;
-  background-color: $button-background-color-active;
+  background: $button-background-color-active;
 }
 
 @mixin pt-button-intent($default-color, $hover-color, $active-color) {
   color: $white;
-	background-color: $default-color;
+	background: $default-color;
 
   &:hover {
-		background-color: $hover-color;
+		background: $hover-color;
   }
 
   &:active {
     box-shadow: inset $button-intent-box-shadow;
-    background-color: $active-color;
+    background: $active-color;
   }
 
   &:disabled {
-    background-color: rgba($default-color, 0.5);
+    background: rgba($default-color, 0.5);
   }
 }
 
@@ -160,7 +195,7 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
   &:disabled {
     border-color: $dark-button-background-color-disabled;
     box-shadow: none;
-    background-color: $dark-button-background-color-disabled;
+    background: $dark-button-background-color-disabled;
     background-image: none;
     color: $dark-button-color-disabled;
   }
@@ -176,7 +211,7 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 
 @mixin pt-dark-button-active() {
   box-shadow: inset $dark-button-box-shadow;
-  background-color: $dark-button-background-color-active;
+  background: $dark-button-background-color-active;
   background-image: none;
 }
 
@@ -336,4 +371,102 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 
   padding: $button-padding-large;
   font-size: $pt-font-size-large;
+}
+
+@mixin pt-button-round() {
+	position: relative;
+	border-radius: 50%;
+	color: $icon-button-color;
+	background: transparent;
+	box-shadow: input-transition-shadow($icon-button-color, false);
+	transition: box-shadow $pt-transition-duration $pt-transition-ease, background-color $pt-transition-duration $pt-transition-ease, color $pt-transition-duration $pt-transition-ease;
+
+	&:hover,
+	&:active,
+	&.pt-active {
+		color: $icon-button-color-active;
+		background: transparent;
+		box-shadow: input-transition-shadow($icon-button-color-active, true);
+
+		.pt-button-helptext {
+			opacity: 1;
+		}
+	}
+
+	&.pt-large::before {
+		font-size: 18px;
+	}
+
+	&.pt-minimal {
+		box-shadow: none;
+
+		&:hover {
+			box-shadow: none;
+			background: $minimal-button-background-color-hover;
+		}
+
+		&:active {
+			box-shadow: $button-box-shadow;
+			background: $minimal-button-background-color-hover;
+		}
+
+		&:disabled,
+		&.pt-disabled,
+		&.pt-disabled:hover {
+			color: rgba($icon-button-color, 0.5);
+			box-shadow: none;
+			background: transparent;
+		}
+	}
+
+	@each $intent, $colors in $button-intents {
+    &.pt-intent-#{$intent} {
+      @include pt-button-round-intent(
+        map-get($pt-intent-colors, $intent),
+        map-get($pt-intent-text-colors, $intent),
+        map-get($pt-dark-intent-text-colors, $intent)
+      );
+    }
+  }
+}
+
+@mixin pt-button-round-intent($intent-color, $text-color, $dark-text-color) {
+	color: $intent-color;
+
+	&:not(.pt-minimal) {
+		box-shadow: input-transition-shadow($intent-color, false);
+	}
+
+	&:hover,
+  &:active,
+  &.pt-active {
+    color: $intent-color;
+  }
+
+	&:not(.pt-minimal):hover,
+  &:not(.pt-minimal):active,
+  &:not(.pt-minimal).pt-active {
+    box-shadow: input-transition-shadow($intent-color, true);
+  }
+
+  &:disabled,
+  &.pt-disabled,
+	&.pt-disabled:hover {
+    color: rgba($intent-color, 0.5);
+		background: rgba($intent-color, 0.2);
+		box-shadow: none;
+  }
+}
+
+@mixin pt-button-helptext() {
+	display: block;
+	position: absolute;
+  left: -100%;
+  width: 300%;
+  bottom: 100%;
+	padding-bottom: 5px;
+	line-height: $pt-line-height;
+  font-size: $pt-font-size-small;
+	opacity: 0;
+	transition: opacity $pt-transition-duration $pt-transition-ease;
 }
