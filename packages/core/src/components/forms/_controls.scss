@@ -7,22 +7,22 @@
 @import "../../common/variables";
 @import "../button/common";
 
-$control-indicator-size: $pt-icon-size-standard;
-$control-indicator-size-large: $pt-icon-size-large;
+$control-indicator-size: $pt-icon-size-standard !default;
+$control-indicator-size-large: $pt-icon-size-large !default;
 
-$control-shadow-color: $input-shadow-color;
-$control-background-color: $pt-control-inactive;
-$control-background-color-hover: $pt-control-inactive;
-$control-background-color-active: $pt-control-active;
-$control-background-color-disabled: $pt-control-inactive;
-$dark-control-background-color: $dark-button-background-color;
-$dark-control-background-color-hover: $dark-button-background-color-hover;
-$dark-control-background-color-active: $dark-button-background-color-active;
+$control-shadow-color: $input-shadow-color !default;
+$control-background-color: $pt-control-inactive !default;
+$control-background-color-hover: $pt-control-inactive !default;
+$control-background-color-active: $pt-control-active !default;
+$control-background-color-disabled: $pt-control-inactive !default;
+$dark-control-background-color: $dark-button-background-color !default;
+$dark-control-background-color-hover: $dark-button-background-color-hover !default;
+$dark-control-background-color-active: $dark-button-background-color-active !default;
 
-$control-checked-shadow-color: $input-shadow-color-focus;
-$control-checked-background-color: $pt-control-active;
-$control-checked-background-color-hover: $pt-control-active;
-$control-checked-background-color-active: $pt-control-active;
+$control-checked-shadow-color: $input-shadow-color-focus !default;
+$control-checked-background-color: $pt-control-active !default;
+$control-checked-background-color-hover: $pt-control-active !default;
+$control-checked-background-color-active: $pt-control-active !default;
 
 .pt-control {
   display: block;

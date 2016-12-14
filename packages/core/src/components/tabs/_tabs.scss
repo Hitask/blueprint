@@ -152,14 +152,14 @@ Weight: 3
 Styleguide components.tabs.js.router
 */
 
-$tab-color: $pt-text-color-soft;
-$tab-color-hover: $pt-text-color;
-$tab-color-selected: $pt-element-main-color;
-$dark-tab-color-selected: $pt-dark-link-color;
+$tab-color: $pt-text-color-soft !default;
+$tab-color-hover: $pt-text-color !default;
+$tab-color-selected: $pt-element-main-color !default;
+$dark-tab-color-selected: $pt-dark-link-color !default;
 
-$tab-vertical-selected-background: rgba($pt-element-main-color, .5);
-$tab-indicator-width: 3px;
-$tab-underline-color: rgba($pt-text-color-soft, 0.2);
+$tab-vertical-selected-background: rgba($pt-element-main-color, .5) !default;
+$tab-indicator-width: 3px !default;
+$tab-underline-color: rgba($pt-text-color-soft, 0.2) !default;
 
 .pt-tabs.pt-vertical {
   display: flex;
