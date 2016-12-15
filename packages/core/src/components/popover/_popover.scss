@@ -45,11 +45,16 @@ const { Popover, PopoverInteractionKind, Position } = BlueprintComponents;
 export class PopoverExample extends React.Component<{}, {}> {
     public render() {
         let popoverContent = (
-            <div>
-                <h5>Popover Title</h5>
-                <p>...</p>
-                <button className="pt-button pt-popover-dismiss">Dismiss</button>
+          <div>
+            <div className="pt-popover-header">
+              <h6>Popover title</h6>
+              <span className="pt-icon-standard pt-icon-cross pt-popover-dismiss "></span>
             </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <div className="pt-popover-footer">
+              <button className="pt-button pt-popover-dismiss">Dismiss</button>
+            </div>
+          </div>
         );
 
         // popover content gets no padding by default, so we can add the
@@ -61,6 +66,7 @@ export class PopoverExample extends React.Component<{}, {}> {
                      interactionKind={PopoverInteractionKind.CLICK}
                      popoverClassName="pt-popover-content-sizing"
                      position={Position.RIGHT}
+                     popoverClassName="pt-popover-content-sizing"
                      useSmartPositioning={false}>
                 <button className="pt-button pt-intent-primary">Popover Target</button>
             </Popover>
@@ -289,31 +295,52 @@ $popover-width: $pt-grid-size * 35;
   }
 
 	.pt-popover-header {
+		position: relative;
+		background: $pt-app-background-color;
+		text-align: center;
 		border-top-left-radius: $pt-border-radius;
 		border-top-right-radius: $pt-border-radius;
-		padding: $pt-grid-size * 2;
-		> h1, > h2, > h3, > h4, > h5, > h6 {
-			margin-bottom: 0;
+
+		> [class^="pt-icon"] {
+			position: absolute;
+	    cursor: pointer;
+	    top: 50%;
+	    transform: translateY(-50%);
 		}
 	}
 
 	.pt-popover-footer {
+		text-align: center;
 		border-top: 1px solid $pt-thin-lines-color;
-		padding: ($pt-grid-size * 1.5) ($pt-grid-size * 2);
 	}
 
   &.pt-popover-content-sizing {
     .pt-popover-content {
-      max-width: $popover-width;
-      padding: $pt-grid-size * 2;
+			max-width: $popover-width;
+			padding: $pt-grid-size * 2;
     }
 
 		.pt-popover-header {
 			margin: (-$pt-grid-size * 2) (-$pt-grid-size * 2) ($pt-grid-size);
+			padding: ($pt-grid-size * 2) ($pt-grid-size * 4);
+
+			> h1, > h2, > h3, > h4, > h5, > h6 {
+				margin-bottom: 0;
+			}
+
+			> [class^="pt-icon"] {
+		    right: $pt-grid-size * 2;
+			}
 		}
 
 		.pt-popover-footer {
 			margin: ($pt-grid-size * 1.5) (-$pt-grid-size * 2) (-$pt-grid-size * 2);
+			padding: ($pt-grid-size * 1.5) ($pt-grid-size * 2);
+
+			> .pt-button {
+				margin-left: $pt-grid-size * 0.5;
+				margin-right: $pt-grid-size * 0.5;
+			}
 		}
 
     // only inline popovers get a width if this class is applied

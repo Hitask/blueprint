@@ -223,6 +223,7 @@ export class PopoverExample extends BaseExample<IPopoverExampleState> {
             <div>
 								<div className={Classes.POPOVER_HEADER}>
 									<h6>Popover title</h6>
+									<span className={`${Classes.ICON_STANDARD} ${Classes.iconClass('cross')} ${Classes.POPOVER_DISMISS} `} />
 								</div>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit,
