@@ -271,7 +271,7 @@ $popover-width: $pt-grid-size * 35;
 .pt-popover {
   @include popover-sizing(
     $arrow-square-size: 30px,
-    $arrow-offset: 4px,
+    $arrow-offset: 5px,
     $arrow-target-offset: -4px
   );
 
@@ -279,7 +279,6 @@ $popover-width: $pt-grid-size * 35;
     $popover-background-color,
     inherit,
     $pt-popover-box-shadow,
-		$pt-popover-box-shadow-add,
     $pt-drop-shadow-opacity
   );
 
@@ -288,24 +287,29 @@ $popover-width: $pt-grid-size * 35;
   display: inline-block;
   z-index: $pt-z-index-overlay;
   border-radius: $pt-border-radius;
+	border: 1px solid $pt-thin-lines-color;
+	overflow: hidden;
 
   .pt-popover-content {
     position: relative;
-    border-radius: $pt-border-radius;
   }
 
 	.pt-popover-header {
 		position: relative;
 		background: $pt-app-background-color;
 		text-align: center;
-		border-top-left-radius: $pt-border-radius;
-		border-top-right-radius: $pt-border-radius;
 
 		> [class^="pt-icon"] {
 			position: absolute;
 	    cursor: pointer;
 	    top: 50%;
 	    transform: translateY(-50%);
+			opacity: 0.5;
+
+			&:hover,
+			&:active {
+				opacity: 1;
+			}
 		}
 	}
 
@@ -321,7 +325,7 @@ $popover-width: $pt-grid-size * 35;
     }
 
 		.pt-popover-header {
-			margin: (-$pt-grid-size * 2) (-$pt-grid-size * 2) ($pt-grid-size);
+			margin: (-$pt-grid-size * 2) (-$pt-grid-size * 2) ($pt-grid-size * 2);
 			padding: ($pt-grid-size * 2) ($pt-grid-size * 4);
 
 			> h1, > h2, > h3, > h4, > h5, > h6 {
@@ -334,7 +338,7 @@ $popover-width: $pt-grid-size * 35;
 		}
 
 		.pt-popover-footer {
-			margin: ($pt-grid-size * 1.5) (-$pt-grid-size * 2) (-$pt-grid-size * 2);
+			margin: ($pt-grid-size * 2) (-$pt-grid-size * 2) (-$pt-grid-size * 2);
 			padding: ($pt-grid-size * 1.5) ($pt-grid-size * 2);
 
 			> .pt-button {
@@ -392,7 +396,6 @@ $popover-width: $pt-grid-size * 35;
       $dark-popover-background-color,
       inherit,
       $pt-dark-popover-box-shadow,
-			$pt-dark-popover-box-shadow-add,
       $pt-dark-drop-shadow-opacity
     );
   }
