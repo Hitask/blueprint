@@ -56,14 +56,15 @@ $control-checked-background-color-active: $pt-control-active !default;
     left: 0;
     margin: 0;
     border: none;
+    box-shadow: inset border-shadow(1, $control-shadow-color);
     background: none;
     cursor: pointer;
     width: $control-indicator-size;
     height: $control-indicator-size;
     line-height: $control-indicator-size;
+    transition: box-shadow $pt-transition-duration $pt-transition-ease,
+      background-color $pt-transition-duration $pt-transition-ease;
     user-select: none;
-		box-shadow: inset border-shadow(1, $control-shadow-color);
-		transition: box-shadow $pt-transition-duration $pt-transition-ease, background-color $pt-transition-duration $pt-transition-ease;
 
     &::before {
       position: relative;
@@ -75,7 +76,7 @@ $control-checked-background-color-active: $pt-control-active !default;
 
   &:hover {
     input:not(:disabled) ~ .pt-control-indicator {
-			box-shadow: inset border-shadow(1, $control-checked-shadow-color);
+      box-shadow: inset border-shadow(1, $control-checked-shadow-color);
     }
   }
 
@@ -85,11 +86,11 @@ $control-checked-background-color-active: $pt-control-active !default;
 
   input:disabled ~ .pt-control-indicator {
     box-shadow: none;
-		background-color: rgba($control-background-color-disabled, 0.5);
+    background-color: rgba($control-background-color-disabled, 0.5);
     cursor: not-allowed;
   }
 
-	input:checked ~ .pt-control-indicator {
+  input:checked ~ .pt-control-indicator {
     box-shadow: inset border-shadow(1, $control-checked-shadow-color);
   }
 
@@ -158,14 +159,14 @@ $control-checked-background-color-active: $pt-control-active !default;
     }
 
     input:checked ~ .pt-control-indicator {
-			box-shadow: inset border-shadow(1, $control-checked-shadow-color, 2px);
-			color: $control-checked-shadow-color;
+      box-shadow: inset border-shadow(1, $control-checked-shadow-color, 2px);
+      color: $control-checked-shadow-color;
 
-			&::before {
-	      content: $pt-icon-small-tick;
-				color: inherit;
-	    }
-		}
+      &::before {
+        color: inherit;
+        content: $pt-icon-small-tick;
+      }
+    }
   }
 
   /*
@@ -238,15 +239,15 @@ $control-checked-background-color-active: $pt-control-active !default;
       font-size: $radio-indicator-font-size;
     }
 
-		input:checked ~ .pt-control-indicator {
-			box-shadow: inset border-shadow(1, $control-checked-shadow-color, $radio-indicator-font-size - 0.5);
-	  }
+    input:checked ~ .pt-control-indicator {
+      box-shadow: inset border-shadow(1, $control-checked-shadow-color, $radio-indicator-font-size - 0.5);
+    }
 
-		&.pt-large {
-			input:checked ~ .pt-control-indicator {
-				box-shadow: inset border-shadow(1, $control-checked-shadow-color, $radio-indicator-font-size-large - 0.5);
-		  }
-		}
+    &.pt-large {
+      input:checked ~ .pt-control-indicator {
+        box-shadow: inset border-shadow(1, $control-checked-shadow-color, $radio-indicator-font-size-large - 0.5);
+      }
+    }
   }
 
   /*
@@ -361,12 +362,12 @@ $control-checked-background-color-active: $pt-control-active !default;
     }
 
     &:hover {
-			input:not(:disabled) {
-				~ .pt-control-indicator {
-	        box-shadow: none;
-	        background-color: $switch-background-color-hover;
-	      }
-			}
+      input:not(:disabled) {
+        ~ .pt-control-indicator {
+          box-shadow: none;
+          background-color: $switch-background-color-hover;
+        }
+      }
 
       input:checked ~ .pt-control-indicator {
         background-color: $switch-checked-background-color-hover;

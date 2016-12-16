@@ -50,7 +50,9 @@ export class PopoverExample extends React.Component<{}, {}> {
               <h6>Popover title</h6>
               <span className="pt-icon-standard pt-icon-cross pt-popover-dismiss "></span>
             </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.</p>
             <div className="pt-popover-footer">
               <button className="pt-button pt-popover-dismiss">Dismiss</button>
             </div>
@@ -271,8 +273,8 @@ $popover-width: $pt-grid-size * 35;
 .pt-popover {
   @include popover-sizing(
     $arrow-square-size: 30px,
-    $arrow-offset: 5px,
-    $arrow-target-offset: -4px
+    $arrow-offset: 15px,
+    $arrow-target-offset: -12px
   );
 
   @include popover-appearance(
@@ -282,70 +284,78 @@ $popover-width: $pt-grid-size * 35;
     $pt-drop-shadow-opacity
   );
 
-  @include scale-transition();
-
   display: inline-block;
   z-index: $pt-z-index-overlay;
+  border: 1px solid $pt-thin-lines-color;
   border-radius: $pt-border-radius;
-	border: 1px solid $pt-thin-lines-color;
-	overflow: hidden;
+  background: $popover-background-color;
 
   .pt-popover-content {
     position: relative;
+    border-radius: $pt-border-radius;
   }
 
-	.pt-popover-header {
-		position: relative;
-		background: $pt-app-background-color;
-		text-align: center;
+  .pt-popover-header {
+    position: relative;
+    border-top-left-radius: $pt-border-radius;
+    border-top-right-radius: $pt-border-radius;
+    background: $pt-app-background-color;
+    text-align: center;
 
-		> [class^="pt-icon"] {
-			position: absolute;
-	    cursor: pointer;
-	    top: 50%;
-	    transform: translateY(-50%);
-			opacity: 0.5;
+    > [class^="pt-icon"] {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.5;
+      cursor: pointer;
 
-			&:hover,
-			&:active {
-				opacity: 1;
-			}
-		}
-	}
+      &:hover,
+      &:active {
+        opacity: 1;
+      }
+    }
+  }
 
-	.pt-popover-footer {
-		text-align: center;
-		border-top: 1px solid $pt-thin-lines-color;
-	}
+  .pt-popover-footer {
+    border-top: 1px solid $pt-thin-lines-color;
+    border-bottom-left-radius: $pt-border-radius;
+    border-bottom-right-radius: $pt-border-radius;
+    text-align: center;
+  }
 
   &.pt-popover-content-sizing {
     .pt-popover-content {
-			max-width: $popover-width;
-			padding: $pt-grid-size * 2;
+      max-width: $popover-width;
+      padding: $pt-grid-size * 2;
     }
 
-		.pt-popover-header {
-			margin: (-$pt-grid-size * 2) (-$pt-grid-size * 2) ($pt-grid-size * 2);
-			padding: ($pt-grid-size * 2) ($pt-grid-size * 4);
+    .pt-popover-header {
+      margin: (-$pt-grid-size * 2) (-$pt-grid-size * 2) ($pt-grid-size * 2);
+      padding: ($pt-grid-size * 2) ($pt-grid-size * 4);
 
-			> h1, > h2, > h3, > h4, > h5, > h6 {
-				margin-bottom: 0;
-			}
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6 {
+        margin-bottom: 0;
+      }
 
-			> [class^="pt-icon"] {
-		    right: $pt-grid-size * 2;
-			}
-		}
+      > [class^="pt-icon"] {
+        right: $pt-grid-size * 2;
+      }
+    }
 
-		.pt-popover-footer {
-			margin: ($pt-grid-size * 2) (-$pt-grid-size * 2) (-$pt-grid-size * 2);
-			padding: ($pt-grid-size * 1.5) ($pt-grid-size * 2);
+    .pt-popover-footer {
+      margin: ($pt-grid-size * 2) (-$pt-grid-size * 2) (-$pt-grid-size * 2);
+      padding: ($pt-grid-size * 1.5) ($pt-grid-size * 2);
 
-			> .pt-button {
-				margin-left: $pt-grid-size * 0.5;
-				margin-right: $pt-grid-size * 0.5;
-			}
-		}
+      > .pt-button {
+        margin-right: $pt-grid-size * 0.5;
+        margin-left: $pt-grid-size * 0.5;
+      }
+    }
 
     // only inline popovers get a width if this class is applied
     .pt-popover-target & {

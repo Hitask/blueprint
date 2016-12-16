@@ -124,10 +124,10 @@ Styleguide components.button-group.css
         outline-style: solid;
       }
 
-			&::before,
-			> .pt-icon-standard {
-				color: inherit;
-			}
+      &::before,
+      > .pt-icon-standard {
+        color: inherit;
+      }
 
       &::after {
         @include pt-button-minimal-divider();

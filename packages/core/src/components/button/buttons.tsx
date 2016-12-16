@@ -21,8 +21,8 @@ export interface IButtonProps extends IActionProps {
     /** Name of icon (the part after `pt-icon-`) to add to button. */
     rightIconName?: string;
 
-		/** Is button has circle-style */
-		round?: boolean;
+    /** Is button has circle-style */
+    round?: boolean;
 }
 
 export class Button extends React.Component<React.HTMLProps<HTMLButtonElement> & IButtonProps, {}> {
@@ -39,7 +39,7 @@ export class Button extends React.Component<React.HTMLProps<HTMLButtonElement> &
                 ref={elementRef}
             >
                 {maybeRenderText(text, round)}
-								{maybeRenderHelpText(text, round)}
+                {maybeRenderHelpText(text, round)}
                 {children}
                 {maybeRenderRightIcon(rightIconName, round)}
             </button>
@@ -65,7 +65,7 @@ export class AnchorButton extends React.Component<React.HTMLProps<HTMLAnchorElem
                 tabIndex={disabled ? undefined : tabIndex}
             >
                 {maybeRenderText(text, round)}
-								{maybeRenderHelpText(text, round)}
+                {maybeRenderHelpText(text, round)}
                 {children}
                 {maybeRenderRightIcon(rightIconName, round)}
             </a>
@@ -79,9 +79,9 @@ function getButtonClasses(props: IButtonProps) {
     return classNames(
         Classes.BUTTON,
         {
-					[Classes.DISABLED]: props.disabled,
-					[Classes.ROUND]: props.round,
-				},
+          [Classes.DISABLED]: props.disabled,
+          [Classes.ROUND]: props.round,
+        },
         Classes.iconClass(props.iconName),
         Classes.intentClass(props.intent),
         props.className,
@@ -89,13 +89,17 @@ function getButtonClasses(props: IButtonProps) {
 }
 
 function maybeRenderText(text: string, round: boolean) {
-		if (round) return undefined;
+    if (round) {
+      return undefined;
+    }
     return text;
 }
 
 function maybeRenderHelpText(text: string, round: boolean) {
-		if (!round || !text) return undefined;
-		return <span className={Classes.BUTTON_HELPTEXT}>{text}</span>;
+    if (!round || !text) {
+      return undefined;
+    }
+    return <span className={Classes.BUTTON_HELPTEXT}>{text}</span>;
 }
 
 function maybeRenderRightIcon(iconName: string, round: boolean) {

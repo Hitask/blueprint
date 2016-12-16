@@ -18,7 +18,7 @@ export interface IButtonsExampleState {
     intent?: Intent;
     large?: boolean;
     minimal?: boolean;
-		round?: boolean;
+    round?: boolean;
     wiggling?: boolean;
 }
 
@@ -29,14 +29,14 @@ export class ButtonsExample extends BaseExample<IButtonsExampleState> {
         disabled: false,
         large: false,
         minimal: false,
-				round: false,
+        round: false,
         wiggling: false,
     };
 
     private handleDisabledChange = handleBooleanChange((disabled) => this.setState({ disabled }));
     private handleLargeChange = handleBooleanChange((large) => this.setState({ large }));
     private handleMinimalChange = handleBooleanChange((minimal) => this.setState({ minimal }));
-		private handleRoundChange = handleBooleanChange((round) => this.setState({ round }));
+    private handleRoundChange = handleBooleanChange((round) => this.setState({ round }));
     private handleIntentChange = handleNumberChange((intent: Intent) => this.setState({ intent }));
 
     private timeoutId: number;
@@ -48,35 +48,35 @@ export class ButtonsExample extends BaseExample<IButtonsExampleState> {
         });
 
         return <div>
-					<div className="docs-react-example-row">
-						<div className="docs-react-example-column">
-								<code>Button</code><br/><br/><br/>
-								<Button
-										{...removeNonHTMLProps(this.state, INVALID_HTML_PROPS)}
-										className={classNames(classes, { "docs-wiggle": this.state.wiggling })}
-										iconName="refresh"
-										intent={this.state.intent}
-										onClick={this.beginWiggling}
-										round={this.state.round}
-										text="Click to wiggle"
-								/>
-						</div>
-						<div className="docs-react-example-column">
-								<code>AnchorButton</code><br/><br/><br/>
-								<AnchorButton
-										{...removeNonHTMLProps(this.state, INVALID_HTML_PROPS)}
-										className={classes}
-										href="/"
-										iconName="duplicate"
-										intent={this.state.intent}
-										rightIconName="share"
-										round={this.state.round}
-										target="_blank"
-										text="Duplicate this page"
-								/>
-						</div>
-					</div>
-				</div>;
+          <div className="docs-react-example-row">
+            <div className="docs-react-example-column">
+                <code>Button</code><br/><br/><br/>
+                <Button
+                    {...removeNonHTMLProps(this.state, INVALID_HTML_PROPS)}
+                    className={classNames(classes, { "docs-wiggle": this.state.wiggling })}
+                    iconName="refresh"
+                    intent={this.state.intent}
+                    onClick={this.beginWiggling}
+                    round={this.state.round}
+                    text="Click to wiggle"
+                />
+            </div>
+            <div className="docs-react-example-column">
+                <code>AnchorButton</code><br/><br/><br/>
+                <AnchorButton
+                    {...removeNonHTMLProps(this.state, INVALID_HTML_PROPS)}
+                    className={classes}
+                    href="/"
+                    iconName="duplicate"
+                    intent={this.state.intent}
+                    rightIconName="share"
+                    round={this.state.round}
+                    target="_blank"
+                    text="Duplicate this page"
+                />
+            </div>
+          </div>
+        </div>;
     }
 
     protected renderOptions() {
@@ -101,7 +101,7 @@ export class ButtonsExample extends BaseExample<IButtonsExampleState> {
                     label="Minimal"
                     onChange={this.handleMinimalChange}
                 />,
-								<Switch
+                <Switch
                     checked={this.state.round}
                     key="round"
                     label="Round"

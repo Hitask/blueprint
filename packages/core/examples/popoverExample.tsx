@@ -219,19 +219,21 @@ export class PopoverExample extends BaseExample<IPopoverExampleState> {
     }
 
     private getContents(index: number) {
+        const crossIconClass = `${Classes.ICON_STANDARD} ${Classes.iconClass("cross")} ${Classes.POPOVER_DISMISS}`;
+
         return [
             <div>
-								<div className={Classes.POPOVER_HEADER}>
-									<h6>Popover title</h6>
-									<span className={`${Classes.ICON_STANDARD} ${Classes.iconClass('cross')} ${Classes.POPOVER_DISMISS} `} />
-								</div>
+                <div className={Classes.POPOVER_HEADER}>
+                  <h6>Popover title</h6>
+                  <span className={crossIconClass} />
+                </div>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </p>
-								<div className={Classes.POPOVER_FOOTER}>
-									<button className={classNames(Classes.BUTTON, Classes.POPOVER_DISMISS)}>Dismiss</button>
-								</div>
+                <div className={Classes.POPOVER_FOOTER}>
+                  <button className={classNames(Classes.BUTTON, Classes.POPOVER_DISMISS)}>Dismiss</button>
+                </div>
             </div>,
             <div>
                 <label className={Classes.LABEL}>

@@ -83,12 +83,12 @@ $input-button-height-large: $pt-button-height;
     &:last-child  { right: 0; }
   }
 
-	.pt-input-action {
-		.pt-button {
-			padding-left: $pt-grid-size;
-			padding-right: $pt-grid-size;
-		}
-	}
+  .pt-input-action {
+    .pt-button {
+      padding-right: $pt-grid-size;
+      padding-left: $pt-grid-size;
+    }
+  }
 
   .pt-button {
     @include pt-button-height($input-button-height);
@@ -140,9 +140,9 @@ $input-button-height-large: $pt-button-height;
       color: $pt-icon-color-disabled;
     }
 
-		.pt-tag {
-			opacity: 0.5;
-		}
+    .pt-tag {
+      opacity: 0.5;
+    }
   }
 
   &.pt-large {

@@ -45,9 +45,9 @@ $dark-input-focus-shadow-color: $gray5 !default;
     color: $input-placeholder-color;
   }
 
-	&:hover {
-		box-shadow: input-transition-shadow($input-shadow-color-hover, false, true);
-	}
+  &:hover {
+    box-shadow: input-transition-shadow($input-shadow-color-hover, false, true);
+  }
 
   &:focus {
     box-shadow: input-transition-shadow($input-shadow-color-focus, true);

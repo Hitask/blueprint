@@ -221,7 +221,7 @@ Styleguide components.menu.css
 
   &::before,
   &::after,
-	.pt-menu-item-label {
+  .pt-menu-item-label {
     color: $pt-text-color-soft;
   }
 
@@ -237,11 +237,11 @@ Styleguide components.menu.css
       &.pt-intent-#{$intent} {
         color: $color;
 
-				&::before,
-		    &::after,
-				.pt-menu-item-label {
-					color: $color;
-				}
+        &::before,
+        &::after,
+        .pt-menu-item-label {
+          color: $color;
+        }
       }
     }
   }
@@ -254,7 +254,7 @@ Styleguide components.menu.css
 
     &::before,
     &::after,
-		.pt-menu-item-label {
+    .pt-menu-item-label {
       color: $pt-icon-color-disabled;
     }
   }

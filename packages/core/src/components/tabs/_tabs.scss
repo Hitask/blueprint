@@ -171,18 +171,18 @@ $tab-underline-color: $pt-thin-lines-color !default;
     flex-direction: column;
     align-items: flex-start;
 
-		&::before {
-			content: none;
-		}
+    &::before {
+      content: none;
+    }
 
     .pt-tab {
       width: 100%;
       padding: 0 $pt-grid-size;
-			line-height: $pt-button-height;
+      line-height: $pt-button-height;
 
-			&[aria-selected="true"] {
-				color: $tab-color-hover;
-		  }
+      &[aria-selected="true"] {
+        color: $tab-color-hover;
+      }
     }
 
     .pt-tab-indicator-wrapper .pt-tab-indicator {
@@ -215,15 +215,15 @@ $tab-underline-color: $pt-thin-lines-color !default;
   padding: 0;
   list-style: none;
 
-	&::before {
-		content: "";
-		position: absolute;
-		height: 1px;
-		width: 100%;
-		left: 0;
-		bottom: 0;
-		background-color: $tab-underline-color;
-	}
+  &::before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: $tab-underline-color;
+    width: 100%;
+    height: 1px;
+    content: "";
+  }
 
   &.pt-large .pt-tab {
     line-height: $pt-button-height-large * 1.5;
@@ -242,7 +242,7 @@ $tab-underline-color: $pt-thin-lines-color !default;
   line-height: $pt-button-height * 1.5;
   color: $tab-color;
   font-size: $pt-font-size;
-	transition: color $pt-transition-duration $pt-transition-ease;
+  transition: color $pt-transition-duration $pt-transition-ease;
 
   .pt-tab-indicator-wrapper ~ & {
     // the bottom border is only for static markup, therefore
@@ -262,9 +262,9 @@ $tab-underline-color: $pt-thin-lines-color !default;
   }
 
   &[aria-selected="true"] {
-		color: $tab-color-selected;
     border-radius: 0;
     box-shadow: inset 0 (-$tab-indicator-width) 0 $tab-color-selected;
+    color: $tab-color-selected;
   }
 
   &:not([aria-disabled="true"]):not([aria-selected="true"]):hover {

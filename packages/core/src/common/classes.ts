@@ -34,7 +34,7 @@ export const BREADCRUMBS_COLLAPSED = "pt-breadcrumbs-collapsed";
 
 export const BUTTON = "pt-button";
 export const BUTTON_GROUP = "pt-button-group";
-export const BUTTON_HELPTEXT = "pt-button-helptext"
+export const BUTTON_HELPTEXT = "pt-button-helptext";
 
 export const CARD = "pt-card";
 

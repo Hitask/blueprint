@@ -12,7 +12,6 @@ import {
     Button,
     Classes,
     InputGroup,
-    Intent,
     Menu,
     MenuItem,
     Popover,
