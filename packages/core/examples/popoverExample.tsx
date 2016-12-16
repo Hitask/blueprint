@@ -116,6 +116,7 @@ export class PopoverExample extends BaseExample<IPopoverExampleState> {
 
         return (
             <Popover
+                title="Popover title"
                 content={this.getContents(this.state.contentIndex)}
                 constraints={this.state.constraints}
                 popoverClassName={popoverClassName}
@@ -219,14 +220,8 @@ export class PopoverExample extends BaseExample<IPopoverExampleState> {
     }
 
     private getContents(index: number) {
-        const crossIconClass = `${Classes.ICON_STANDARD} ${Classes.iconClass("cross")} ${Classes.POPOVER_DISMISS}`;
-
         return [
             <div>
-                <div className={Classes.POPOVER_HEADER}>
-                  <h6>Popover title</h6>
-                  <span className={crossIconClass} />
-                </div>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
