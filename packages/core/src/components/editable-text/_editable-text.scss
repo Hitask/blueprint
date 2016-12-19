@@ -99,6 +99,15 @@ Styleguide components.editable.multiline
                 box-shadow $pt-transition-duration $pt-transition-ease;
   }
 
+  &.pt-editable-withborder {
+    padding-right: 5px;
+    padding-left: 5px;
+
+    &::before {
+      box-shadow: input-transition-shadow();
+    }
+  }
+
   &:hover::before {
     box-shadow: input-transition-shadow($input-shadow-color-focus), inset 0 0 0 1px $pt-divider-black;
   }
