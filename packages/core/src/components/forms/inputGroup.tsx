@@ -104,7 +104,7 @@ export class InputGroup extends React.Component<HTMLInputProps & IInputGroupProp
             const { clientWidth } = this.rightElement;
             // small threshold to prevent infinite loops
             if (Math.abs(clientWidth - this.state.rightElementWidth) > 2) {
-                this.setState({ rightElementWidth: clientWidth });
+                this.setState({ rightElementWidth: clientWidth + 6 });
             }
         }
     }

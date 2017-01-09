@@ -45,11 +45,14 @@ const { Popover, PopoverInteractionKind, Position } = BlueprintComponents;
 export class PopoverExample extends React.Component<{}, {}> {
     public render() {
         let popoverContent = (
-            <div>
-                <h5>Popover Title</h5>
-                <p>...</p>
-                <button className="pt-button pt-popover-dismiss">Dismiss</button>
+          <div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.</p>
+            <div className="pt-popover-footer">
+              <button className="pt-button pt-popover-dismiss">Dismiss</button>
             </div>
+          </div>
         );
 
         // popover content gets no padding by default, so we can add the
@@ -58,9 +61,11 @@ export class PopoverExample extends React.Component<{}, {}> {
         // a default width for our content if the popover is inline.
         return (
             <Popover content={popoverContent}
+                     title="Popover title"
                      interactionKind={PopoverInteractionKind.CLICK}
                      popoverClassName="pt-popover-content-sizing"
                      position={Position.RIGHT}
+                     popoverClassName="pt-popover-content-sizing"
                      useSmartPositioning={false}>
                 <button className="pt-button pt-intent-primary">Popover Target</button>
             </Popover>
@@ -262,38 +267,88 @@ documentation.
 Styleguide components.popover.js.minimal
 */
 
-$popover-width: $pt-grid-size * 35 !default;
+$popover-width: $pt-grid-size * 35;
+$popover-border-radius: $pt-border-radius * 2;
 
 .pt-popover {
   @include popover-sizing(
     $arrow-square-size: 30px,
-    $arrow-offset: 4px,
-    $arrow-target-offset: -4px
+    $arrow-offset: 15px,
+    $arrow-target-offset: -12px
   );
 
   @include popover-appearance(
     $popover-background-color,
     inherit,
     $pt-popover-box-shadow,
-    $pt-drop-shadow-opacity,
-    $pt-border-shadow-opacity
+    $pt-drop-shadow-opacity
   );
-
-  @include scale-transition();
 
   display: inline-block;
   z-index: $pt-z-index-overlay;
-  border-radius: $pt-border-radius;
+  border: 1px solid $pt-thin-lines-color;
+  border-radius: $popover-border-radius;
+  background: $popover-background-color;
 
   .pt-popover-content {
     position: relative;
-    border-radius: $pt-border-radius;
+    border-radius: $popover-border-radius;
+  }
+
+  .pt-popover-header {
+    position: relative;
+    border-top-left-radius: $popover-border-radius;
+    border-top-right-radius: $popover-border-radius;
+    background: $popover-header-background-color;
+    text-align: center;
+
+    > [class^="pt-icon"] {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.5;
+      cursor: pointer;
+
+      &:hover,
+      &:active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .pt-popover-footer {
+    border-top: 1px solid $pt-thin-lines-color;
+    border-bottom-left-radius: $popover-border-radius;
+    border-bottom-right-radius: $popover-border-radius;
   }
 
   &.pt-popover-content-sizing {
     .pt-popover-content {
       max-width: $popover-width;
       padding: $pt-grid-size * 2;
+    }
+
+    .pt-popover-header {
+      margin: (-$pt-grid-size * 2) (-$pt-grid-size * 2) ($pt-grid-size * 2);
+      padding: ($pt-grid-size * 2) ($pt-grid-size * 4);
+
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6 {
+        margin-bottom: 0;
+      }
+
+      > [class^="pt-icon"] {
+        right: $pt-grid-size * 2;
+      }
+    }
+
+    .pt-popover-footer {
+      margin: ($pt-grid-size * 2) (-$pt-grid-size * 2) (-$pt-grid-size * 2);
+      padding: ($pt-grid-size * 1.5) ($pt-grid-size * 2);
     }
 
     // only inline popovers get a width if this class is applied
@@ -346,8 +401,7 @@ $popover-width: $pt-grid-size * 35 !default;
       $dark-popover-background-color,
       inherit,
       $pt-dark-popover-box-shadow,
-      $pt-dark-drop-shadow-opacity,
-      $pt-dark-border-shadow-opacity
+      $pt-dark-drop-shadow-opacity
     );
   }
 }

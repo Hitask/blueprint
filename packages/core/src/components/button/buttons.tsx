@@ -20,13 +20,16 @@ export interface IButtonProps extends IActionProps {
 
     /** Name of icon (the part after `pt-icon-`) to add to button. */
     rightIconName?: string;
+
+    /** Is button has circle-style */
+    round?: boolean;
 }
 
 export class Button extends React.Component<React.HTMLProps<HTMLButtonElement> & IButtonProps, {}> {
     public static displayName = "Blueprint.Button";
 
     public render() {
-        const { children, disabled, elementRef, onClick, rightIconName, text } = this.props;
+        const { children, disabled, round, elementRef, onClick, rightIconName, text } = this.props;
         return (
             <button
                 type="button"
@@ -35,9 +38,10 @@ export class Button extends React.Component<React.HTMLProps<HTMLButtonElement> &
                 onClick={disabled ? undefined : onClick}
                 ref={elementRef}
             >
-                {text}
+                {maybeRenderText(text, round)}
+                {maybeRenderHelpText(text, round)}
                 {children}
-                {maybeRenderRightIcon(rightIconName)}
+                {maybeRenderRightIcon(rightIconName, round)}
             </button>
         );
     }
@@ -49,7 +53,7 @@ export class AnchorButton extends React.Component<React.HTMLProps<HTMLAnchorElem
     public static displayName = "Blueprint.AnchorButton";
 
     public render() {
-        const { children, disabled, href, onClick, rightIconName, tabIndex = 0, text } = this.props;
+        const { children, disabled, round, href, onClick, rightIconName, tabIndex = 0, text } = this.props;
         return (
             <a
                 role="button"
@@ -60,9 +64,10 @@ export class AnchorButton extends React.Component<React.HTMLProps<HTMLAnchorElem
                 ref={this.props.elementRef}
                 tabIndex={disabled ? undefined : tabIndex}
             >
-                {text}
+                {maybeRenderText(text, round)}
+                {maybeRenderHelpText(text, round)}
                 {children}
-                {maybeRenderRightIcon(rightIconName)}
+                {maybeRenderRightIcon(rightIconName, round)}
             </a>
         );
     }
@@ -73,15 +78,32 @@ export const AnchorButtonFactory = React.createFactory(AnchorButton);
 function getButtonClasses(props: IButtonProps) {
     return classNames(
         Classes.BUTTON,
-        { [Classes.DISABLED]: props.disabled },
+        {
+          [Classes.DISABLED]: props.disabled,
+          [Classes.ROUND]: props.round,
+        },
         Classes.iconClass(props.iconName),
         Classes.intentClass(props.intent),
         props.className,
     );
 }
 
-function maybeRenderRightIcon(iconName: string) {
-    if (iconName == null) {
+function maybeRenderText(text: string, round: boolean) {
+    if (round) {
+      return undefined;
+    }
+    return text;
+}
+
+function maybeRenderHelpText(text: string, round: boolean) {
+    if (!round || !text) {
+      return undefined;
+    }
+    return <span className={Classes.BUTTON_HELPTEXT}>{text}</span>;
+}
+
+function maybeRenderRightIcon(iconName: string, round: boolean) {
+    if (iconName == null || round) {
         return undefined;
     } else {
         return <span className={classNames(Classes.ICON_STANDARD, Classes.iconClass(iconName), Classes.ALIGN_RIGHT)} />;

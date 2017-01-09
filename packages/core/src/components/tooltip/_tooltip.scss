@@ -81,7 +81,7 @@ elements from appearing at the same time.
 ```
 <Popover content={<h1>Popover!</h1>} position={Position.RIGHT}>
     <Tooltip content="I has a popover!" position={Position.RIGHT}>
-        <button className="pt-button pt-intent-success">Hover and click me</button>
+        <button className="pt-button">Hover and click me</button>
     </Tooltip>
 </Popover>
 ```

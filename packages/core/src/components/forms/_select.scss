@@ -6,15 +6,16 @@
 @import "../../common/variables";
 @import "../popover/common";
 
+$select-color: $white;
+
 /*
 Selects
 
 Styling `<select>` tags requires a wrapper element to customize the dropdown caret. Put class
 modifiers on the wrapper and attribute modifiers directly on the `<select>`.
 
-<div class="pt-callout pt-intent-primary pt-icon-info-sign">
-  Check out [Dropdown Menus](#components.menu.js.dropdown) for a simple JavaScript alternative
-  to the `<select>` tag.
+<div class="pt-callout pt-icon-info-sign">
+  Check out [Dropdown Menus](#components.menu.js.dropdown) for a simple JavaScript alternative to the `<select>` tag.
 </div>
 
 Markup:
@@ -42,6 +43,7 @@ Styleguide components.forms.select
   position: relative;
   vertical-align: middle;
   letter-spacing: normal;
+  color: $select-color;
 
   select {
     @extend %pt-select;
@@ -58,6 +60,7 @@ Styleguide components.forms.select
 
   &::after {
     @extend %pt-select-arrow;
+    color: inherit;
   }
 
   &.pt-large {

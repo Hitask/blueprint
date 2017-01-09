@@ -31,6 +31,9 @@ export interface IEditableTextProps extends IIntentProps, IProps {
     /** Minimum width in pixels of the input, when not `multiline`. */
     minWidth?: number;
 
+    /** Whether to show border or not */
+    showBorder?: boolean;
+
     /**
      * Whether the component supports multiple lines of text.
      * This prop should not be changed during the component's lifetime.
@@ -132,7 +135,7 @@ export class EditableText extends AbstractComponent<IEditableTextProps, IEditabl
     }
 
     public render() {
-        const { disabled, multiline } = this.props;
+        const { disabled, multiline, showBorder } = this.props;
         const value = (this.props.value == null ? this.state.value : this.props.value);
         const hasValue = (value != null && value !== "");
 
@@ -143,6 +146,7 @@ export class EditableText extends AbstractComponent<IEditableTextProps, IEditabl
                 [Classes.DISABLED]: disabled,
                 "pt-editable-editing": this.state.isEditing,
                 "pt-editable-placeholder": !hasValue,
+                "pt-editable-withborder": showBorder,
                 "pt-multiline": multiline,
             },
             this.props.className,

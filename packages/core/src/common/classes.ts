@@ -11,6 +11,7 @@ import { Intent } from "./intent";
 export const DARK = "pt-dark";
 export const ACTIVE = "pt-active";
 export const MINIMAL = "pt-minimal";
+export const ROUND = "pt-round";
 export const DISABLED = "pt-disabled";
 export const SMALL = "pt-small";
 export const LARGE = "pt-large";
@@ -33,6 +34,7 @@ export const BREADCRUMBS_COLLAPSED = "pt-breadcrumbs-collapsed";
 
 export const BUTTON = "pt-button";
 export const BUTTON_GROUP = "pt-button-group";
+export const BUTTON_HELPTEXT = "pt-button-helptext";
 
 export const CARD = "pt-card";
 
@@ -87,10 +89,13 @@ export const POPOVER = "pt-popover";
 export const POPOVER_ARROW = "pt-popover-arrow";
 export const POPOVER_BACKDROP = "pt-popover-backdrop";
 export const POPOVER_CONTENT = "pt-popover-content";
+export const POPOVER_HEADER = "pt-popover-header";
+export const POPOVER_FOOTER = "pt-popover-footer";
 export const POPOVER_DISMISS = "pt-popover-dismiss";
 export const POPOVER_DISMISS_OVERRIDE = "pt-popover-dismiss-override";
 export const POPOVER_OPEN = "pt-popover-open";
 export const POPOVER_TARGET = "pt-popover-target";
+export const POPOVER_HASTITLE = "pt-popover-hastitle";
 export const TRANSITION_CONTAINER = "pt-transition-container";
 
 export const PORTAL = "pt-portal";
