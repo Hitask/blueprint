@@ -10,16 +10,19 @@
 $control-indicator-size: $pt-icon-size-standard !default;
 $control-indicator-size-large: $pt-icon-size-large !default;
 
-$control-background-color: $button-background-color !default;
-$control-background-color-hover: $button-background-color-hover !default;
-$control-background-color-active: $button-background-color-active !default;
+$control-shadow-color: $input-shadow-color !default;
+$control-background-color: $pt-control-inactive !default;
+$control-background-color-hover: $pt-control-inactive !default;
+$control-background-color-active: $pt-control-active !default;
+$control-background-color-disabled: $pt-control-inactive !default;
 $dark-control-background-color: $dark-button-background-color !default;
 $dark-control-background-color-hover: $dark-button-background-color-hover !default;
 $dark-control-background-color-active: $dark-button-background-color-active !default;
 
-$control-checked-background-color: nth(map-get($button-intents, "primary"), 1) !default;
-$control-checked-background-color-hover: nth(map-get($button-intents, "primary"), 2) !default;
-$control-checked-background-color-active: nth(map-get($button-intents, "primary"), 3) !default;
+$control-checked-shadow-color: $input-shadow-color-focus !default;
+$control-checked-background-color: $pt-control-active !default;
+$control-checked-background-color-hover: $pt-control-active !default;
+$control-checked-background-color-active: $pt-control-active !default;
 
 .pt-control {
   display: block;
@@ -47,20 +50,20 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
 
   .pt-control-indicator {
     @include pt-icon($pt-icon-size-standard);
-    @include linear-gradient-with-fallback($white, $white-transparent, $control-background-color);
 
     position: absolute;
     top: 0;
     left: 0;
     margin: 0;
-    border: $button-border-width solid;
-    border-color: $button-border-color;
-    box-shadow: $button-box-shadow;
-    background-clip: padding-box;
+    border: none;
+    box-shadow: inset border-shadow(1, $control-shadow-color);
+    background: none;
     cursor: pointer;
     width: $control-indicator-size;
     height: $control-indicator-size;
     line-height: $control-indicator-size;
+    transition: box-shadow $pt-transition-duration $pt-transition-ease,
+      background-color $pt-transition-duration $pt-transition-ease;
     user-select: none;
 
     &::before {
@@ -71,55 +74,9 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
     }
   }
 
-  input:checked ~ .pt-control-indicator {
-    @include linear-gradient-with-fallback(
-      rgba($white, 0.1),
-      $white-transparent,
-      $control-checked-background-color
-    );
-
-    border-color: $button-intent-border-color;
-    box-shadow: $button-intent-box-shadow;
-    background-clip: border-box;
-    color: $white;
-  }
-
   &:hover {
-    .pt-control-indicator {
-      @include linear-gradient-with-fallback(
-        rgba($white, 0.5),
-        $white-transparent,
-        $control-background-color-hover
-      );
-
-      border-color: $button-border-color-hover;
-      background-clip: padding-box;
-    }
-
-    input:checked ~ .pt-control-indicator {
-      @include linear-gradient-with-fallback(
-        rgba($white, 0.1),
-        $white-transparent,
-        $control-checked-background-color-hover
-      );
-
-      border-color: $button-intent-border-color;
-      box-shadow: $button-intent-box-shadow;
-    }
-  }
-
-  input:not(:disabled):active {
-    ~ .pt-control-indicator {
-      border-color: $button-border-color-active;
-      box-shadow: inset $button-box-shadow;
-      background: $control-background-color-active;
-      background-clip: padding-box;
-    }
-
-    &:checked ~ .pt-control-indicator {
-      border-color: $button-intent-border-color-active;
-      box-shadow: inset $button-intent-box-shadow;
-      background: $control-checked-background-color-active;
+    input:not(:disabled) ~ .pt-control-indicator {
+      box-shadow: inset border-shadow(1, $control-checked-shadow-color);
     }
   }
 
@@ -127,19 +84,14 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
     @include focus-outline();
   }
 
-  input:disabled {
-    ~ .pt-control-indicator {
-      border-color: transparent;
-      box-shadow: none;
-      background: $button-background-color-disabled;
-      cursor: not-allowed;
-    }
+  input:disabled ~ .pt-control-indicator {
+    box-shadow: none;
+    background-color: rgba($control-background-color-disabled, 0.5);
+    cursor: not-allowed;
+  }
 
-    &:checked ~ .pt-control-indicator {
-      border-color: transparent;
-      box-shadow: none;
-      background: rgba($control-checked-background-color, 0.5);
-    }
+  input:checked ~ .pt-control-indicator {
+    box-shadow: inset border-shadow(1, $control-checked-shadow-color);
   }
 
   /*
@@ -170,8 +122,6 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
 
   :checked  - Checked
   :disabled - Disabled
-  :indeterminate - Indeterminate. Note that this style can only be achieved via JavaScript
-                   <code>input.indeterminate = true</code>.
   .pt-align-right - Right-aligned indicator
   .pt-large - Large
 
@@ -210,19 +160,14 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
       font-size: $control-indicator-size;
     }
 
-    input:indeterminate,
-    &:hover input:indeterminate {
-      // :indeterminate should behave like :checked with different icon
-      // stylelint-disable-next-line scss/at-extend-no-missing-placeholder
-      @extend input:checked;
-    }
+    input:checked ~ .pt-control-indicator {
+      box-shadow: inset border-shadow(1, $control-checked-shadow-color, 2px);
+      color: $control-checked-shadow-color;
 
-    input:checked ~ .pt-control-indicator::before {
-      content: $pt-icon-small-tick;
-    }
-
-    input:indeterminate ~ .pt-control-indicator::before {
-      content: $pt-icon-small-minus;
+      &::before {
+        color: inherit;
+        content: $pt-icon-small-tick;
+      }
     }
   }
 
@@ -298,26 +243,14 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
       font-size: $radio-indicator-font-size;
     }
 
-    input:checked ~ .pt-control-indicator::before {
-      display: inline-block;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      box-shadow: $button-intent-box-shadow;
-      background: $white;
-      width: 1em;
-      height: 1em;
-      content: "";
+    input:checked ~ .pt-control-indicator {
+      box-shadow: inset border-shadow(1, $control-checked-shadow-color, $radio-indicator-font-size - 0.5);
     }
 
-    input:checked:disabled ~ .pt-control-indicator::before {
-      box-shadow: none;
-    }
-
-    input:focus ~ .pt-control-indicator {
-      -moz-outline-radius: $control-indicator-size;
+    &.pt-large {
+      input:checked ~ .pt-control-indicator {
+        box-shadow: inset border-shadow(1, $control-checked-shadow-color, $radio-indicator-font-size-large - 0.5);
+      }
     }
   }
 
@@ -369,19 +302,17 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
   */
 
   $switch-height: $control-indicator-size !default;
-  $switch-height-large: $pt-grid-size * 2 !default;
   $switch-width: $pt-grid-size * 2.8 !default;
-  $switch-width-large: $pt-grid-size * 3.2 !default;
   $switch-indicator-margin: $pt-grid-size * 0.2 !default;
 
-  $switch-background-color: rgba($gray4, 0.5) !default;
-  $switch-background-color-hover: rgba($gray2, 0.5) !default;
-  $switch-background-color-active: rgba($gray1, 0.5) !default;
-  $switch-background-color-disabled: $button-background-color-disabled !default;
+  $switch-background-color: $control-background-color !default;
+  $switch-background-color-hover: $control-checked-background-color !default;
+  $switch-background-color-active: $control-checked-background-color-active !default;
+  $switch-background-color-disabled: rgba($control-background-color-disabled, 0.5) !default;
   $switch-checked-background-color: $control-checked-background-color !default;
   $switch-checked-background-color-hover: $control-checked-background-color-hover !default;
   $switch-checked-background-color-active: $control-checked-background-color-active !default;
-  $switch-checked-background-color-disabled: rgba($blue3, 0.5) !default;
+  $switch-checked-background-color-disabled: rgba($control-checked-background-color, 0.5) !default;
   $dark-switch-background-color: rgba($black, 0.5) !default;
   $dark-switch-background-color-hover: rgba($black, 0.7) !default;
   $dark-switch-background-color-active: rgba($black, 0.9) !default;
@@ -391,7 +322,6 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
   $dark-switch-checked-background-color-active: $blue5 !default;
   $dark-switch-checked-background-color-disabled: rgba($blue1, 0.5) !default;
 
-  $switch-indicator-border: border-shadow($pt-border-shadow-opacity) !default;
   $switch-indicator-background-color: $white !default;
   $switch-indicator-background-color-disabled: rgba($white, 0.8) !default;
   $dark-switch-indicator-border: border-shadow($pt-dark-border-shadow-opacity) !default;
@@ -408,14 +338,12 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
       background: $switch-background-color;
       width: $switch-width;
       height: $switch-height;
-      transition: background $pt-transition-duration $pt-transition-ease;
 
       &::before {
         display: block;
         top: $switch-indicator-margin;
         left: $switch-indicator-margin;
         border-radius: $switch-height;
-        box-shadow: $switch-indicator-border, $button-box-shadow;
         background: $switch-indicator-background-color;
         background-clip: padding-box;
         width: $switch-height - ($switch-indicator-margin * 2);
@@ -434,13 +362,15 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
 
       &::before {
         left: $switch-width - $switch-height + $switch-indicator-margin;
-        box-shadow: $switch-indicator-border, $button-intent-box-shadow;
       }
     }
 
     &:hover {
-      .pt-control-indicator {
-        background-color: $switch-background-color-hover;
+      input:not(:disabled) {
+        ~ .pt-control-indicator {
+          box-shadow: none;
+          background-color: $switch-background-color-hover;
+        }
       }
 
       input:checked ~ .pt-control-indicator {
@@ -461,10 +391,7 @@ $control-checked-background-color-active: nth(map-get($button-intents, "primary"
 
     input:disabled {
       ~ .pt-control-indicator {
-        background-color: $switch-background-color-disabled;
-
         &::before {
-          box-shadow: none;
           background-color: $switch-indicator-background-color-disabled;
         }
       }

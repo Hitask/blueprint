@@ -45,6 +45,11 @@ export interface IPopoverProps extends IOverlayableProps, IProps {
     content?: JSX.Element | string;
 
     /**
+     * The title displayed inside the header with cross icon.
+     */
+    title?: string;
+
+    /**
      * The length of a side of the square used to render the arrow.
      * @default 30
      * @internal
@@ -388,6 +393,7 @@ export class Popover extends AbstractComponent<IPopoverProps, IPopoverState> {
         const positionClasses = TetherUtils.getAttachmentClasses(this.props.position).join(" ");
         const containerClasses = classNames(Classes.TRANSITION_CONTAINER, { [positionClasses]: inline });
         const popoverClasses = classNames(Classes.POPOVER, {
+            [Classes.POPOVER_HASTITLE]: this.props.title !== undefined,
             [Classes.DARK]: this.props.inheritDarkTheme && this.hasDarkParent && !inline,
         }, this.props.popoverClassName);
 
@@ -404,10 +410,24 @@ export class Popover extends AbstractComponent<IPopoverProps, IPopoverState> {
                         </svg>
                     </div>
                     <div className={Classes.POPOVER_CONTENT}>
+                        {this.maybeRenderTitle()}
                         {this.props.content}
                     </div>
                 </div>
             </div>
+        );
+    }
+
+    private maybeRenderTitle() {
+        if (this.props.title === undefined) {
+            return undefined;
+        }
+        const crossIconClass = `${Classes.ICON_STANDARD} ${Classes.iconClass("cross")} ${Classes.POPOVER_DISMISS}`;
+        return (
+          <div className={Classes.POPOVER_HEADER}>
+            <h6>{this.props.title}</h6>
+            <span className={crossIconClass} />
+          </div>
         );
     }
 

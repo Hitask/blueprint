@@ -44,10 +44,6 @@ Markup:
 
 .pt-large - Large
 .pt-round - Rounded corners, ideal for badges
-.pt-intent-primary - Primary intent
-.pt-intent-success - Success intent
-.pt-intent-warning - Warning intent
-.pt-intent-danger  - Danger intent
 
 Styleguide components.tag.css
 */
@@ -76,10 +72,6 @@ Styleguide components.tag.css
 
   .pt-large - Large
   .pt-round - Rounded corners, ideal for badges
-  .pt-intent-primary - Primary intent
-  .pt-intent-success - Success intent
-  .pt-intent-warning - Warning intent
-  .pt-intent-danger  - Danger intent
 
   Styleguide components.tag.css.minimal
   */
@@ -115,9 +107,9 @@ you provide a `className` prop, the class names you provide will be added alongs
 Blueprint class name.
 
 ```
-<Tag intent={Intent.PRIMARY} onRemove={this.deleteTag}>Done</Tag>
+<Tag onRemove={this.deleteTag}>Done</Tag>
 // renders:
-<span class="pt-tag pt-intent-primary pt-tag-removable">
+<span class="pt-tag pt-tag-removable">
   Done
   <button class="pt-tag-remove" onClick={this.deleteTag}></button>
 </span>

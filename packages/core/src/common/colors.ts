@@ -40,8 +40,8 @@ export const Colors = {
 
     GRAY1: "#5C7080",
     GRAY2: "#738694",
-    GRAY3: "#8A9BA8",
-    GRAY4: "#A7B6C2",
+    GRAY3: "#A2B8C8",
+    GRAY4: "#AEBEC8",
     GRAY5: "#BFCCD6",
 
     GREEN1: "#0A6640",
@@ -59,8 +59,8 @@ export const Colors = {
     LIGHT_GRAY1: "#CED9E0",
     LIGHT_GRAY2: "#D8E1E8",
     LIGHT_GRAY3: "#E1E8ED",
-    LIGHT_GRAY4: "#EBF1F5",
-    LIGHT_GRAY5: "#F5F8FA",
+    LIGHT_GRAY4: "#E1E6EA",
+    LIGHT_GRAY5: "#F5F6F7",
 
     LIME1: "#728C23",
     LIME2: "#87A629",
@@ -95,8 +95,8 @@ export const Colors = {
     TURQUOISE1: "#008075",
     TURQUOISE2: "#00998C",
     TURQUOISE3: "#00B3A4",
-    TURQUOISE4: "#14CCBD",
-    TURQUOISE5: "#2EE6D6",
+    TURQUOISE4: "#03D2C2",
+    TURQUOISE5: "#4ED8C4",
 
     VERMILION1: "#9E2B0E",
     VERMILION2: "#B83211",

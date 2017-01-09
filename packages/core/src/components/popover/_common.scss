@@ -8,6 +8,7 @@
 @import "../../common/react-transition";
 
 $popover-background-color: $white !default;
+$popover-header-background-color: $pt-app-background-color !default;
 $dark-popover-background-color: $dark-gray4 !default;
 
 // $arrow-offset: amount to shift arrow along edge of popover
@@ -75,6 +76,10 @@ $dark-popover-background-color: $dark-gray4 !default;
         transform: rotate(90deg);
       }
     }
+
+    &.pt-popover-hastitle .pt-popover-arrow-fill {
+      fill: $popover-header-background-color;
+    }
   }
 
   .pt-tether-element-attached-right.pt-tether-target-attached-left > & {
@@ -133,8 +138,8 @@ $dark-popover-background-color: $dark-gray4 !default;
   $background-color,
   $text-color,
   $shadows,
-  $arrow-drop-shadow-opacity,
-  $arrow-border-shadow-opacity
+  $arrow-drop-shadow-opacity: 0,
+  $arrow-border-shadow-opacity: 0
 ) {
   box-shadow: $shadows;
 
@@ -144,7 +149,7 @@ $dark-popover-background-color: $dark-gray4 !default;
   }
 
   .pt-popover-arrow::before {
-    box-shadow: 1px 1px 6px rgba($black, $arrow-drop-shadow-opacity);
+    box-shadow: 0 0 6px rgba($black, $arrow-drop-shadow-opacity - 0.2);
   }
 
   .pt-popover-arrow-border {

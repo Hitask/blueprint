@@ -104,7 +104,7 @@ export class TooltipExample extends BaseExample<{ isOpen: boolean }> {
                         inline={true}
                         position={Position.RIGHT}
                     >
-                        <button className="pt-button pt-intent-success">Hover and click me</button>
+                        <button className="pt-button">Hover and click me</button>
                     </Tooltip>
                 </Popover>
             </div>

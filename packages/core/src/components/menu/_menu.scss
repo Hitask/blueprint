@@ -221,25 +221,28 @@ Styleguide components.menu.css
   }
 
   &::before,
-  &::after {
-    color: $pt-icon-color;
-  }
-
+  &::after,
   .pt-menu-item-label {
-    color: $pt-text-color-muted;
+    color: $pt-text-color-soft;
   }
 
   &:not(.pt-disabled):hover {
     &::before,
     &::after,
     .pt-menu-item-label {
-      color: $white;
+      color: $pt-text-color;
     }
 
     // intent color only appears on hover
     @each $intent, $color in $pt-intent-colors {
       &.pt-intent-#{$intent} {
-        background-color: $color;
+        color: $color;
+
+        &::before,
+        &::after,
+        .pt-menu-item-label {
+          color: $color;
+        }
       }
     }
   }
@@ -251,12 +254,9 @@ Styleguide components.menu.css
     color: $pt-text-color-disabled;
 
     &::before,
-    &::after {
-      color: $pt-icon-color-disabled;
-    }
-
+    &::after,
     .pt-menu-item-label {
-      color: $pt-text-color-disabled;
+      color: $pt-icon-color-disabled;
     }
   }
 

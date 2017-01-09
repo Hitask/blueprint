@@ -116,12 +116,13 @@ export class PopoverExample extends BaseExample<IPopoverExampleState> {
 
         return (
             <Popover
+                title="Popover title"
                 content={this.getContents(this.state.contentIndex)}
                 constraints={this.state.constraints}
                 popoverClassName={popoverClassName}
                 {...this.state}
             >
-                <button className="pt-button pt-intent-primary">Popover target</button>
+                <button className="pt-button">Popover target</button>
             </Popover>
         );
     }
@@ -221,12 +222,13 @@ export class PopoverExample extends BaseExample<IPopoverExampleState> {
     private getContents(index: number) {
         return [
             <div>
-                <h5>Popover title</h5>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </p>
-                <button className={classNames(Classes.BUTTON, Classes.POPOVER_DISMISS)}>Dismiss</button>
+                <div className={Classes.POPOVER_FOOTER}>
+                  <button className={classNames(Classes.BUTTON, Classes.POPOVER_DISMISS)}>Dismiss</button>
+                </div>
             </div>,
             <div>
                 <label className={Classes.LABEL}>
