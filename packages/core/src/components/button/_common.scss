@@ -27,8 +27,10 @@ $dark-button-border-color: rgba($black, 0.6) !default;
 $dark-button-border-color-hover: rgba($black, 0.8) !default;
 $dark-button-box-shadow: 0 1px 1px rgba($black, 0.2) !default;
 
-$button-intent-border-color: rgba($black, 0.1) rgba($black, 0.1) rgba($black, 0.3) rgba($black, 0.1) !default;
-$button-intent-border-color-active: rgba($black, 0.6) rgba($black, 0.2) rgba($black, 0.2) rgba($black, 0.2) !default;
+$button-intent-border-color:
+  rgba($black, 0.1) rgba($black, 0.1) rgba($black, 0.3) rgba($black, 0.1) !default;
+$button-intent-border-color-active:
+  rgba($black, 0.6) rgba($black, 0.2) rgba($black, 0.2) rgba($black, 0.2) !default;
 $button-intent-box-shadow: 0 1px 1px rgba($black, 0.2) !default;
 $dark-button-intent-border-color: rgba($black, 0.6) !default;
 $dark-button-intent-box-shadow: 0 1px 1px rgba($black, 0.2) !default;
@@ -68,7 +70,7 @@ $button-intents: (
   "success": ($pt-intent-success, $green2, $green1),
   "warning": ($pt-intent-warning, $orange2, $orange1),
   "danger": ($pt-intent-danger, $red2, $red1)
-);
+) !default;
 
 // animating shadows requires the same number of shadows in different states
 @function input-transition-shadow($color: $input-shadow-color, $focus: false, $hover: false) {
@@ -97,7 +99,8 @@ $button-intents: (
 }
 
 // matches default buttons only -- used to remove border-right in button groups and control groups
-$non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*=\"pt-intent-\"]";
+$non-default-state-selectors:
+  ":last-child, :hover, :active, .pt-active, [class*=\"pt-intent-\"]" !default;
 
 @mixin pt-button-base() {
   display: inline-block;
@@ -174,7 +177,11 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 }
 
 @mixin pt-dark-button() {
-  @include linear-gradient-with-fallback(rgba($white, 0.1), rgba($white, 0.06), $dark-button-background-color);
+  @include linear-gradient-with-fallback(
+    rgba($white, 0.1),
+    rgba($white, 0.06),
+    $dark-button-background-color
+  );
 
   border-color: $dark-button-border-color;
   box-shadow: $dark-button-box-shadow;
@@ -204,7 +211,11 @@ $non-default-state-selectors: ":last-child, :hover, :active, .pt-active, [class*
 }
 
 @mixin pt-dark-button-hover() {
-  @include linear-gradient-with-fallback(rgba($black, 0.1), rgba($black, 0.2), $dark-button-background-color-hover);
+  @include linear-gradient-with-fallback(
+    rgba($black, 0.1),
+    rgba($black, 0.2),
+    $dark-button-background-color-hover
+  );
 
   border-color: $dark-button-border-color-hover;
   box-shadow: $dark-button-box-shadow;
