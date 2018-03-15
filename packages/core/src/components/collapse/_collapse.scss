@@ -3,7 +3,7 @@
 
 @import "../../common/variables";
 
-$collapse-transition: ($pt-transition-duration * 2) $pt-transition-ease !default;
+$collapse-transition: $pt-transition-duration $pt-transition-ease !default;
 
 .pt-collapse {
   height: 0;
