@@ -61,7 +61,7 @@ $timepicker-control-width: $pt-grid-size * 3.3 !default;
     box-shadow: input-transition-shadow($input-shadow-color-focus);
     background: transparent;
     width: $timepicker-control-width;
-    height: $timepicker-input-row-inner-height;
+    height: $timepicker-input-row-height;
     padding: 0;
     text-align: center;
     color: $pt-text-color;
