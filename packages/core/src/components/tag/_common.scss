@@ -17,14 +17,14 @@ $tag-padding-large: ($tag-height-large - $pt-icon-size-large) / 2 !default;
 
   display: inline-block;
   position: relative;
-  border: none;
+  border: 1px solid $hi-tag-border-color;
   border-radius: $tag-height / 2;
   box-shadow: none;
-  background-color: $tag-default-color;
+  background-color: $hi-tag-background-color;
   min-width: $tag-height;
-  padding: $tag-padding ($tag-padding * 3);
+  padding: $tag-padding ($tag-padding * 6);
   line-height: $pt-icon-size-standard;
-  color: $pt-dark-text-color;
+  color: $hi-tag-text-color;
   font-size: $pt-font-size-small;
 
   &.pt-round {
@@ -73,8 +73,9 @@ $tag-padding-large: ($tag-height-large - $pt-icon-size-large) / 2 !default;
   &:not([class*="pt-intent-"]) {
     @include pt-tag-minimal-interactive($tag-default-color, 0.2);
 
-    background-color: rgba($gray3, 0.2);
-    color: $pt-text-color;
+    border-color: rgba($hi-tag-border-color, 0.5);
+    background-color: rgba($hi-tag-background-color, 0.5);
+    color: $hi-tag-text-color;
 
     .pt-dark & {
       @include pt-tag-minimal-interactive($dark-tag-default-color, 0.2);
