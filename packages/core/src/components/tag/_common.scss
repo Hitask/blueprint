@@ -18,7 +18,7 @@ $tag-padding-large: ($tag-height-large - $pt-icon-size-large) / 2 !default;
   display: inline-block;
   position: relative;
   border: none;
-  border-radius: $pt-border-radius;
+  border-radius: $tag-height / 2;
   box-shadow: none;
   background-color: $tag-default-color;
   min-width: $tag-height;
