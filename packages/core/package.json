@@ -1,5 +1,5 @@
 {
-  "name": "@blueprintjs/core",
+  "name": "@hitask/blueprint-core",
   "version": "2.1.1",
   "description": "Core styles & components",
   "main": "lib/cjs/index.js",
@@ -35,7 +35,7 @@
     "verify": "npm-run-all compile -p dist test lint"
   },
   "dependencies": {
-    "@blueprintjs/icons": "^2.1.1",
+    "@hitask/blueprint-icons": "^2.1.1",
     "@types/dom4": "^2.0.0",
     "classnames": "^2.2",
     "dom4": "^2.0.1",

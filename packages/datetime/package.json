@@ -1,5 +1,5 @@
 {
-  "name": "@blueprintjs/datetime",
+  "name": "@hitask/blueprint-datetime",
   "version": "2.0.2",
   "description": "Components for interacting with dates and times",
   "main": "lib/cjs/index.js",
@@ -31,7 +31,7 @@
     "verify": "npm-run-all compile -p dist test lint"
   },
   "dependencies": {
-    "@blueprintjs/core": "^2.1.1",
+    "@hitask/blueprint-core": "^2.1.1",
     "classnames": "^2.2",
     "react-day-picker": "^7.0.7",
     "tslib": "^1.9.0"

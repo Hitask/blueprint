@@ -1,5 +1,5 @@
 {
-  "name": "@blueprintjs/icons",
+  "name": "@hitask/blueprint-icons",
   "version": "2.1.1",
   "description": "Components, fonts, icons, and css files for creating and displaying icons.",
   "main": "lib/cjs/index.js",
