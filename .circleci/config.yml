@@ -127,16 +127,40 @@ workflows:
   compile_lint_test_dist_deploy:
     jobs:
       - install-dependencies
+        filters:
+          branches:
+            ignore:
+              - custom-publish
       - compile:
           requires: [install-dependencies]
+          filters:
+            branches:
+              ignore:
+                - custom-publish
       - lint:
           requires: [install-dependencies]
+          filters:
+            branches:
+              ignore:
+                - custom-publish
       - dist:
           requires: [compile]
+          filters:
+            branches:
+              ignore:
+                - custom-publish
       - test:
           requires: [compile]
+          filters:
+            branches:
+              ignore:
+                - custom-publish
       - deploy-preview:
           requires: [dist]
+          filters:
+            branches:
+              ignore:
+                - custom-publish
       - deploy-npm:
           requires: [dist]
           filters:
