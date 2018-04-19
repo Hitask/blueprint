@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+rm -rf ../hitask-web/node_modules/@hitask/blueprint-core
+cp -r packages/core ../hitask-web/node_modules/@hitask/blueprint-core
+
+rm -rf ../hitask-web/node_modules/@hitask/blueprint-datetime
+cp -r packages/datetime ../hitask-web/node_modules/@hitask/blueprint-datetime
+
+rm -rf ../hitask-web/node_modules/@hitask/blueprint-select
+cp -r packages/select ../hitask-web/node_modules/@hitask/blueprint-select
+
+rm -rf ../hitask-web/node_modules/@hitask/blueprint-table
+cp -r packages/table ../hitask-web/node_modules/@hitask/blueprint-table
