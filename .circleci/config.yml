@@ -126,11 +126,11 @@ workflows:
   version: 2
   compile_lint_test_dist_deploy:
     jobs:
-      - install-dependencies
-        filters:
-          branches:
-            ignore:
-              - custom-publish
+      - install-dependencies:
+          filters:
+            branches:
+              ignore:
+                - custom-publish
       - compile:
           requires: [install-dependencies]
           filters:
