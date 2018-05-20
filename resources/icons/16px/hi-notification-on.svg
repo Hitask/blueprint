@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>hi-notification-on</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/hi-notification-on">
+            <g id="card-alert">
+                <path d="M13,9.5 C13,9.22385763 13.2238576,9 13.5,9 C13.7761424,9 14,9.22385763 14,9.5 L14,14.5 C14,15.3281424 13.3281424,16 12.5,16 L1.5,16 C0.671857625,16 0,15.3281424 0,14.5 L0,3.5 C0,2.67185763 0.671857625,2 1.5,2 L6.5,2 C6.77614237,2 7,2.22385763 7,2.5 C7,2.77614237 6.77614237,3 6.5,3 L1.5,3 C1.22414237,3 1,3.22414237 1,3.5 L1,14.5 C1,14.7758576 1.22414237,15 1.5,15 L12.5,15 C12.7758576,15 13,14.7758576 13,14.5 L13,9.5 Z" id="Shape" fill="#111111" fill-rule="nonzero"></path>
+                <circle id="Oval" fill="#4A4A4A" cx="13" cy="3" r="2.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
