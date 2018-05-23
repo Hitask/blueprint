@@ -85,7 +85,7 @@ export interface IEditableTextProps extends IIntentProps, IProps {
     onConfirm?(value: string): void;
 
     /** Callback invoked after the user enters edit mode. */
-    onEdit?(): void;
+    onEdit?(value: string): void;
 }
 
 export interface IEditableTextState {
@@ -196,7 +196,7 @@ export class EditableText extends AbstractPureComponent<IEditableTextProps, IEdi
 
     public componentDidUpdate(_: IEditableTextProps, prevState: IEditableTextState) {
         if (this.state.isEditing && !prevState.isEditing) {
-            safeInvoke(this.props.onEdit);
+            safeInvoke(this.props.onEdit, this.state.value);
         }
         this.updateInputDimensions();
     }
@@ -284,7 +284,7 @@ export class EditableText extends AbstractPureComponent<IEditableTextProps, IEdi
     };
 
     private maybeRenderInput(value: string) {
-        const { maxLength, multiline } = this.props;
+        const { maxLength, multiline, placeholder } = this.props;
         if (!this.state.isEditing) {
             return undefined;
         }
@@ -294,6 +294,7 @@ export class EditableText extends AbstractPureComponent<IEditableTextProps, IEdi
             onBlur: this.handleBlur,
             onChange: this.handleTextChange,
             onKeyDown: this.handleKeyEvent,
+            placeholder,
             ref: this.refHandlers.input,
             style: {
                 height: this.state.inputHeight,

@@ -27,7 +27,7 @@ export class DocsIcon extends React.PureComponent<IDocsIconProps, {}> {
         const { iconName, displayName, tags } = this.props;
         return (
             <ClickToCopy className="docs-icon" data-tags={tags} value={iconName}>
-                <Icon icon={iconName} iconSize={Icon.SIZE_LARGE} />
+                <Icon icon={iconName} />
                 <div className="docs-icon-name">{displayName}</div>
                 <div className="docs-icon-detail">
                     <p className="docs-code">{iconName}</p>

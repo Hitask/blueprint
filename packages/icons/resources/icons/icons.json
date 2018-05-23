@@ -1,5 +1,173 @@
 [
   {
+  "displayName": "Group",
+  "iconName": "hi-group",
+  "tags": "users, group, team",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Notify",
+  "iconName": "hi-user-notify",
+  "tags": "user, notify",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Assign",
+  "iconName": "hi-user-assign",
+  "tags": "user, assign",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Tag",
+  "iconName": "hi-tag",
+  "tags": "tag, label",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Project",
+  "iconName": "hi-item-project",
+  "tags": "project, folder",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "More...",
+  "iconName": "hi-more",
+  "tags": "more, dots, menu",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Event",
+  "iconName": "hi-list-event",
+  "tags": "event, list",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Document",
+  "iconName": "hi-list-document",
+  "tags": "document, list",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Edit",
+  "iconName": "hi-edit",
+  "tags": "edit, modify",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Attach",
+  "iconName": "hi-attach",
+  "tags": "add, attach, attachment, file",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Add",
+  "iconName": "hi-add",
+  "tags": "add, plus, new",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Notification On",
+  "iconName": "hi-notification-on",
+  "tags": "notification, alert, enable",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Notification",
+  "iconName": "hi-notification",
+  "tags": "notification, alert",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Unlocked",
+  "iconName": "hi-lock-open",
+  "tags": "lock, unlocked, shared",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Locked",
+  "iconName": "hi-lock-closed",
+  "tags": "lock, locked, private",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Task",
+  "iconName": "hi-item-task",
+  "tags": "task, todo",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Note",
+  "iconName": "hi-item-note",
+  "tags": "note, text",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Event",
+  "iconName": "hi-item-event",
+  "tags": "event, calendar",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "File",
+  "iconName": "hi-item-file",
+  "tags": "file, document, attach",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Duplicate",
+  "iconName": "hi-duplicate",
+  "tags": "duplicate, copy",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Calendar",
+  "iconName": "hi-calendar",
+  "tags": "calendar, date, event",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+  "displayName": "Download",
+  "iconName": "hi-download",
+  "tags": "download",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
+    "displayName": "Comment",
+    "iconName": "hi-comment",
+    "tags": "comment",
+    "group": "Hitask - Item",
+    "content": ""
+  },
+  {
+    "displayName": "Delete",
+    "iconName": "hi-delete",
+    "tags": "delete, trash, remove",
+    "group": "Hitask - Item",
+    "content": ""
+  },
+  {
     "displayName": "Blank",
     "iconName": "blank",
     "tags": "empty, placeholder",
@@ -3071,5 +3239,12 @@
     "tags": "summit, climb, peak",
     "group": "miscellaneous",
     "content": "\\e7b1"
+  },
+  {
+    "displayName": "Shield",
+    "iconName": "shield",
+    "tags": "protect, protection, secure, security, safe, safety, privacy, marking, control",
+    "group": "miscellaneous",
+    "content": "\\e7b2"
   }
 ]
