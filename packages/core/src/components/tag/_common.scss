@@ -6,7 +6,7 @@ $dark-tag-default-color: $gray5 !default;
 
 $tag-icon-spacing: 3px !default;
 $tag-height: $pt-grid-size * 2 !default;
-$tag-padding: ($tag-height - $pt-icon-size-standard) / 2 !default;
+$tag-padding: ($tag-height - $pt-icon-size-standard - 2px) / 2 !default; // 2px for borders
 $tag-margin: ($pt-input-height - $tag-height) / 2 !default;
 
 $tag-height-large: $pt-grid-size * 3 !default;
