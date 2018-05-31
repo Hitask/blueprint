@@ -1,5 +1,12 @@
 [
   {
+  "displayName": "Alert",
+  "iconName": "hi-alert",
+  "tags": "reminder, alert, notify",
+  "group": "Hitask - Item",
+  "content": ""
+  },
+  {
   "displayName": "Group",
   "iconName": "hi-group",
   "tags": "users, group, team",
