@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^2.3.1",
-    "classnames": "^2.2",
+    "classnames": "^2.2.5",
     "tslib": "^1.9.0"
   },
   "devDependencies": {

@@ -33,7 +33,7 @@
     "@blueprintjs/core": "^2.3.1",
     "@blueprintjs/select": "^2.0.1",
     "@blueprintjs/timezone": "^2.0.1",
-    "classnames": "^2.2",
+    "classnames": "^2.2.5",
     "tslib": "^1.9.0"
   },
   "devDependencies": {
