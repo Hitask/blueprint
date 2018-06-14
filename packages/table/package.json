@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@hitask/blueprint-core": "^2.3.3",
-    "classnames": "^2.2",
+    "classnames": "^2.2.5",
     "prop-types": "^15.6.0",
     "tslib": "^1.9.0"
   },

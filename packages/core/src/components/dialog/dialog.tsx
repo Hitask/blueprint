@@ -43,6 +43,11 @@ export interface IDialogProps extends IOverlayableProps, IBackdropProps, IProps 
     isCloseButtonShown?: boolean;
 
     /**
+     * A space-delimited list of class names to pass along to a overlay component
+     */
+    overlayClassName?: string;
+
+    /**
      * CSS styles to apply to the dialog.
      * @default {}
      */
@@ -70,12 +75,17 @@ export class Dialog extends AbstractPureComponent<IDialogProps, {}> {
     public static displayName = "Blueprint2.Dialog";
 
     public render() {
+        const { children, className, overlayClassName, style, ...restProps } = this.props;
         return (
-            <Overlay {...this.props} className={Classes.OVERLAY_SCROLL_CONTAINER} hasBackdrop={true}>
+            <Overlay
+                className={classNames(Classes.OVERLAY_SCROLL_CONTAINER, overlayClassName)}
+                hasBackdrop={true}
+                {...restProps}
+            >
                 <div className={Classes.DIALOG_CONTAINER} onMouseDown={this.handleContainerMouseDown}>
-                    <div className={classNames(Classes.DIALOG, this.props.className)} style={this.props.style}>
+                    <div className={classNames(Classes.DIALOG, className)} style={style}>
                         {this.maybeRenderHeader()}
-                        {this.props.children}
+                        {children}
                     </div>
                 </div>
             </Overlay>

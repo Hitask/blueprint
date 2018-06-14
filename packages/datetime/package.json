@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@hitask/blueprint-core": "^2.3.3",
-    "classnames": "^2.2",
+    "classnames": "^2.2.5",
     "react-day-picker": "^7.0.7",
     "tslib": "^1.9.0"
   },
