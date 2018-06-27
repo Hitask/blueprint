@@ -22,7 +22,7 @@ describe("<Icon>", () => {
     it("renders intent class", () =>
         assert.isTrue(shallow(<Icon icon="add" intent={Intent.DANGER} />).hasClass(Classes.INTENT_DANGER)));
 
-    it("renders icon name", () => assertIcon(<Icon icon="calendar" />, "calendar"));
+    it.skip("renders icon name", () => assertIcon(<Icon icon="calendar" />, "calendar"));
 
     it("renders icon color", () => assertIconColor(<Icon icon="add" color="red" />, "red"));
 
@@ -51,9 +51,9 @@ describe("<Icon>", () => {
         assert.equal(icon.find("title").text(), "bird");
     });
 
-    it("title defaults to icon name", () => {
+    it("title not rendered by default", () => {
         const icon = shallow(<Icon icon="airplane" />);
-        assert.equal(icon.find("title").text(), "airplane");
+        assert.equal(icon.find("title").length, 0);
     });
 
     /** Asserts that rendered icon has given className. */

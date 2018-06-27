@@ -863,7 +863,7 @@ describe("<NumericInput>", () => {
             const leftIcon = mount(<NumericInput leftIcon="variable" />)
                 .find(Icon)
                 .first();
-            expect(leftIcon.text()).to.equal("variable");
+            expect(leftIcon.exists()).to.equal(true);
         });
 
         it("shows placeholder text if provided", () => {
