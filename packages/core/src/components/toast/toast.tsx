@@ -24,6 +24,12 @@ export interface IToastProps extends IProps, IIntentProps {
      */
     action?: IActionProps & ILinkProps;
 
+    /**
+     * Whether toast can be removed by clicking in cross button
+     * @default: true
+     */
+    canDismiss?: boolean;
+
     /** Name of a Blueprint UI icon (or an icon element) to render before the message. */
     icon?: IconName | JSX.Element;
 
@@ -46,6 +52,7 @@ export interface IToastProps extends IProps, IIntentProps {
 
 export class Toast extends AbstractPureComponent<IToastProps, {}> {
     public static defaultProps: IToastProps = {
+        canDismiss: true,
         className: "",
         message: "",
         timeout: 5000,
@@ -54,7 +61,7 @@ export class Toast extends AbstractPureComponent<IToastProps, {}> {
     public static displayName = "Blueprint2.Toast";
 
     public render(): JSX.Element {
-        const { className, icon, intent, message } = this.props;
+        const { className, canDismiss, icon, intent, message } = this.props;
         return (
             <div
                 className={classNames(Classes.TOAST, Classes.intentClass(intent), className)}
@@ -68,7 +75,7 @@ export class Toast extends AbstractPureComponent<IToastProps, {}> {
                 <span className={Classes.TOAST_MESSAGE}>{message}</span>
                 <ButtonGroup minimal={true}>
                     {this.maybeRenderActionButton()}
-                    <Button icon="cross" onClick={this.handleCloseClick} />
+                    {canDismiss && <Button icon="cross" onClick={this.handleCloseClick} />}
                 </ButtonGroup>
             </div>
         );
