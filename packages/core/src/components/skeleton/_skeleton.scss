@@ -49,7 +49,7 @@ Styleguide skeleton
 
   // Transparent text will occupy space but be invisible to the user
   color: transparent !important;
-  animation: $skeleton-animation;
+  // animation: $skeleton-animation; // disable for performance reasons
   pointer-events: none;
   user-select: none;
 
