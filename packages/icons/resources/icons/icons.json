@@ -1,5 +1,40 @@
 [
   {
+  "displayName": "Reports",
+  "iconName": "hi-reports",
+  "tags": "reports, graph, chart",
+  "group": "Hitask - Action",
+  "content": ""
+  },
+  {
+  "displayName": "Settings 2",
+  "iconName": "hi-settings2",
+  "tags": "settings",
+  "group": "Hitask - Action",
+  "content": ""
+  },
+  {
+  "displayName": "Settings",
+  "iconName": "hi-settings",
+  "tags": "settings",
+  "group": "Hitask - Action",
+  "content": ""
+  },
+  {
+  "displayName": "Data",
+  "iconName": "hi-data",
+  "tags": "data",
+  "group": "Hitask - Action",
+  "content": ""
+  },
+  {
+  "displayName": "Log Out",
+  "iconName": "hi-exit",
+  "tags": "signout, logout, exit",
+  "group": "Hitask - Action",
+  "content": ""
+  },
+  {
   "displayName": "Alert",
   "iconName": "hi-alert",
   "tags": "reminder, alert, notify",

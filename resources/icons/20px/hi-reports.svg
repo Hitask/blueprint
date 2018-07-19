@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>topmenu/icon/reports</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="topmenu/Item" transform="translate(0.000000, -19.000000)" stroke="#4A4A4A">
+            <g id="topmenu/icon/reports" transform="translate(0.000000, 18.000000)">
+                <g id="chart-bars" transform="translate(0.000000, 1.000000)">
+                    <path d="M0.5,13.5 L15.5,13.5" id="Shape"></path>
+                    <rect id="Rectangle-path" x="6.5" y="0.5" width="3" height="10"></rect>
+                    <rect id="Rectangle-path" x="0.5" y="5.5" width="3" height="5"></rect>
+                    <rect id="Rectangle-path" x="12.5" y="7.5" width="3" height="3"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
