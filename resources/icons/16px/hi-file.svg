@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>ItemList/file</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="ItemList/file" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M9.5,0 C9.63260824,0 9.7597852,0.0526784202 9.85355339,0.146446609 L14.8535534,5.14644661 C14.9473216,5.2402148 15,5.36739176 15,5.5 L15,15.5 C15,15.7761424 14.7761424,16 14.5,16 L1.5,16 C1.22385763,16 1,15.7761424 1,15.5 L1,0.5 C1,0.223857625 1.22385763,0 1.5,0 L9.5,0 Z" id="Path-Copy" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <g id="single-folded" transform="translate(1.000000, 0.000000)" fill="#9298B0" fill-rule="nonzero">
+            <path d="M9,5 L13.5,5 C13.7761424,5 14,5.22385763 14,5.5 C14,5.77614237 13.7761424,6 13.5,6 L8.5,6 C8.22385763,6 8,5.77614237 8,5.5 L8,0.5 C8,0.223857625 8.22385763,0 8.5,0 C8.77614237,0 9,0.223857625 9,0.5 L9,5 Z" id="Shape"></path>
+            <path d="M8.5,0 C8.63260824,0 8.7597852,0.0526784202 8.85355339,0.146446609 L13.8535534,5.14644661 C13.9473216,5.2402148 14,5.36739176 14,5.5 L14,15.5 C14,15.7761424 13.7761424,16 13.5,16 L0.5,16 C0.223857625,16 0,15.7761424 0,15.5 L0,0.5 C0,0.223857625 0.223857625,0 0.5,0 L8.5,0 Z M8.29289322,1 L1,1 L1,15 L13,15 L13,5.70710678 L8.29289322,1 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>
