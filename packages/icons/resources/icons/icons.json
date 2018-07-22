@@ -1,212 +1,212 @@
 [
   {
-  "displayName": "Reports",
-  "iconName": "hi-reports",
-  "tags": "reports, graph, chart",
-  "group": "Hitask - Action",
-  "content": ""
+    "displayName": "Reports",
+    "iconName": "hi-reports",
+    "tags": "reports, graph, chart",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Settings 2",
-  "iconName": "hi-settings2",
-  "tags": "settings",
-  "group": "Hitask - Action",
-  "content": ""
+    "displayName": "Settings 2",
+    "iconName": "hi-settings2",
+    "tags": "settings",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Settings",
-  "iconName": "hi-settings",
-  "tags": "settings",
-  "group": "Hitask - Action",
-  "content": ""
+    "displayName": "Settings",
+    "iconName": "hi-settings",
+    "tags": "settings",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Data",
-  "iconName": "hi-data",
-  "tags": "data",
-  "group": "Hitask - Action",
-  "content": ""
+    "displayName": "Data",
+    "iconName": "hi-data",
+    "tags": "data",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Log Out",
-  "iconName": "hi-exit",
-  "tags": "signout, logout, exit",
-  "group": "Hitask - Action",
-  "content": ""
+    "displayName": "Log Out",
+    "iconName": "hi-exit",
+    "tags": "signout, logout, exit",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Alert",
-  "iconName": "hi-alert",
-  "tags": "reminder, alert, notify",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Alert",
+    "iconName": "hi-alert",
+    "tags": "reminder, alert, notify",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Group",
-  "iconName": "hi-group",
-  "tags": "users, group, team",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Group",
+    "iconName": "hi-group",
+    "tags": "users, group, team",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Notify",
-  "iconName": "hi-user-notify",
-  "tags": "user, notify",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Notify",
+    "iconName": "hi-user-notify",
+    "tags": "user, notify",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Assign",
-  "iconName": "hi-user-assign",
-  "tags": "user, assign",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Assign",
+    "iconName": "hi-user-assign",
+    "tags": "user, assign",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Tag",
-  "iconName": "hi-tag",
-  "tags": "tag, label",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Tag",
+    "iconName": "hi-tag",
+    "tags": "tag, label",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Project",
-  "iconName": "hi-item-project",
-  "tags": "project, folder",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Project",
+    "iconName": "hi-item-project",
+    "tags": "project, folder",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "More...",
-  "iconName": "hi-more",
-  "tags": "more, dots, menu",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "More...",
+    "iconName": "hi-more",
+    "tags": "more, dots, menu",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Event",
-  "iconName": "hi-list-event",
-  "tags": "event, list",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Event",
+    "iconName": "hi-list-event",
+    "tags": "event, list",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Document",
-  "iconName": "hi-list-document",
-  "tags": "document, list",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Document",
+    "iconName": "hi-list-document",
+    "tags": "document, list",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Edit",
-  "iconName": "hi-edit",
-  "tags": "edit, modify",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Edit",
+    "iconName": "hi-edit",
+    "tags": "edit, modify",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Attach",
-  "iconName": "hi-attach",
-  "tags": "add, attach, attachment, file",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Attach",
+    "iconName": "hi-attach",
+    "tags": "add, attach, attachment, file",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Add",
-  "iconName": "hi-add",
-  "tags": "add, plus, new",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Add",
+    "iconName": "hi-add",
+    "tags": "add, plus, new",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Notification On",
-  "iconName": "hi-notification-on",
-  "tags": "notification, alert, enable",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Notification On",
+    "iconName": "hi-notification-on",
+    "tags": "notification, alert, enable",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Notification",
-  "iconName": "hi-notification",
-  "tags": "notification, alert",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Notification",
+    "iconName": "hi-notification",
+    "tags": "notification, alert",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Unlocked",
-  "iconName": "hi-lock-open",
-  "tags": "lock, unlocked, shared",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Unlocked",
+    "iconName": "hi-lock-open",
+    "tags": "lock, unlocked, shared",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Locked",
-  "iconName": "hi-lock-closed",
-  "tags": "lock, locked, private",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Locked",
+    "iconName": "hi-lock-closed",
+    "tags": "lock, locked, private",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Task",
-  "iconName": "hi-item-task",
-  "tags": "task, todo",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Task",
+    "iconName": "hi-item-task",
+    "tags": "task, todo",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Note",
-  "iconName": "hi-item-note",
-  "tags": "note, text",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Note",
+    "iconName": "hi-item-note",
+    "tags": "note, text",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Event",
-  "iconName": "hi-item-event",
-  "tags": "event, calendar",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Event",
+    "iconName": "hi-item-event",
+    "tags": "event, calendar",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "File",
-  "iconName": "hi-item-file",
-  "tags": "file, document, attach",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "File",
+    "iconName": "hi-item-file",
+    "tags": "file, document, attach",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Duplicate",
-  "iconName": "hi-duplicate",
-  "tags": "duplicate, copy",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Duplicate",
+    "iconName": "hi-duplicate",
+    "tags": "duplicate, copy",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Calendar",
-  "iconName": "hi-calendar",
-  "tags": "calendar, date, event",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Calendar",
+    "iconName": "hi-calendar",
+    "tags": "calendar, date, event",
+    "group": "Hitask",
+    "content": ""
   },
   {
-  "displayName": "Download",
-  "iconName": "hi-download",
-  "tags": "download",
-  "group": "Hitask - Item",
-  "content": ""
+    "displayName": "Download",
+    "iconName": "hi-download",
+    "tags": "download",
+    "group": "Hitask",
+    "content": ""
   },
   {
     "displayName": "Comment",
     "iconName": "hi-comment",
     "tags": "comment",
-    "group": "Hitask - Item",
+    "group": "Hitask",
     "content": ""
   },
   {
     "displayName": "Delete",
     "iconName": "hi-delete",
     "tags": "delete, trash, remove",
-    "group": "Hitask - Item",
+    "group": "Hitask",
     "content": ""
   },
   {
