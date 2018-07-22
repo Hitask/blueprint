@@ -7,16 +7,16 @@
     "content": ""
   },
   {
-    "displayName": "Settings 2",
-    "iconName": "hi-settings2",
+    "displayName": "Settings",
+    "iconName": "hi-settings",
     "tags": "settings",
     "group": "Hitask",
     "content": ""
   },
   {
-    "displayName": "Settings",
-    "iconName": "hi-settings",
-    "tags": "settings",
+    "displayName": "Preferences",
+    "iconName": "hi-preferences",
+    "tags": "settings, preferences",
     "group": "Hitask",
     "content": ""
   },
