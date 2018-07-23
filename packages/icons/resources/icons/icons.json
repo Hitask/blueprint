@@ -84,13 +84,6 @@
     "content": ""
   },
   {
-    "displayName": "Document",
-    "iconName": "hi-list-document",
-    "tags": "document, list",
-    "group": "Hitask",
-    "content": ""
-  },
-  {
     "displayName": "Edit",
     "iconName": "hi-edit",
     "tags": "edit, modify",
@@ -154,13 +147,6 @@
     "content": ""
   },
   {
-    "displayName": "Note",
-    "iconName": "hi-item-note",
-    "tags": "note, text",
-    "group": "Hitask",
-    "content": ""
-  },
-  {
     "displayName": "Event",
     "iconName": "hi-event",
     "tags": "event, calendar",
@@ -171,13 +157,6 @@
     "displayName": "Event",
     "iconName": "hi-item-event",
     "tags": "event, calendar",
-    "group": "Hitask",
-    "content": ""
-  },
-  {
-    "displayName": "Event",
-    "iconName": "hi-list-event",
-    "tags": "event, list",
     "group": "Hitask",
     "content": ""
   },
