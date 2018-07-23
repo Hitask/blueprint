@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+rm -rf ../hitask-web/node_modules/@hitask/blueprint-icons
+cp -r packages/icons ../hitask-web/node_modules/@hitask/blueprint-icons
+
 rm -rf ../hitask-web/node_modules/@hitask/blueprint-core
 cp -r packages/core ../hitask-web/node_modules/@hitask/blueprint-core
 
