@@ -30,6 +30,7 @@
     "lint": "lerna run --parallel lint",
     "lint-fix": "lerna run --parallel lint-fix",
     "test": "lerna run --parallel test",
+    "verify-build": "npm-run-all -s compile dist:libs dist:apps",
     "verify": "npm-run-all -s compile dist:libs dist:apps -p test lint",
     "serve": "http-server docs"
   },
