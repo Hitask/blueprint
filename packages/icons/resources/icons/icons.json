@@ -1,5 +1,19 @@
 [
   {
+    "displayName": "Filter",
+    "iconName": "hi-filter",
+    "tags": "filter, funnel",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
+    "displayName": "Sort Order",
+    "iconName": "hi-sort-order",
+    "tags": "sort, order",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Reports",
     "iconName": "hi-reports",
     "tags": "reports, graph, chart",
