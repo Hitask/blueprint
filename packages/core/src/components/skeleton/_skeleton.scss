@@ -49,9 +49,12 @@ Styleguide skeleton
 
   // Transparent text will occupy space but be invisible to the user
   color: transparent !important;
-  // animation: $skeleton-animation; // disable for performance reasons
   pointer-events: none;
   user-select: none;
+
+  &.animated {
+    animation: $skeleton-animation; // disable for performance reasons
+  }
 
   // Make pseudo-elements (CSS icons) and children invisible
   &::before,
