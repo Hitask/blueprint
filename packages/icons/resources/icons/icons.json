@@ -21,6 +21,13 @@
     "content": ""
   },
   {
+    "displayName": "Report",
+    "iconName": "hi-report",
+    "tags": "report, reports, note, document",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Settings",
     "iconName": "hi-settings",
     "tags": "settings",
