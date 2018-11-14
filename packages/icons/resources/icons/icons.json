@@ -91,6 +91,13 @@
     "content": ""
   },
   {
+    "displayName": "Stopwatch",
+    "iconName": "hi-stopwatch",
+    "tags": "stopwatch, time, clock",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Project",
     "iconName": "hi-item-project",
     "tags": "project, folder",
