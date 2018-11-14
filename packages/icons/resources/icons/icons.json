@@ -84,6 +84,13 @@
     "content": ""
   },
   {
+    "displayName": "Time",
+    "iconName": "hi-time",
+    "tags": "time, clock",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Project",
     "iconName": "hi-item-project",
     "tags": "project, folder",
