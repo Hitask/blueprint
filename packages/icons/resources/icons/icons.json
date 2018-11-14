@@ -21,6 +21,13 @@
     "content": ""
   },
   {
+    "displayName": "Report",
+    "iconName": "hi-report",
+    "tags": "report, reports, note, document",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Settings",
     "iconName": "hi-settings",
     "tags": "settings",
@@ -80,6 +87,20 @@
     "displayName": "Tag",
     "iconName": "hi-tag",
     "tags": "tag, label",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
+    "displayName": "Time",
+    "iconName": "hi-time",
+    "tags": "time, clock",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
+    "displayName": "Stopwatch",
+    "iconName": "hi-stopwatch",
+    "tags": "stopwatch, time, clock",
     "group": "Hitask",
     "content": ""
   },
