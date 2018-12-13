@@ -1,6 +1,6 @@
 {
   "name": "@hitask/blueprint-datetime",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "Components for interacting with dates and times",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
