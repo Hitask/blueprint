@@ -14,6 +14,20 @@
     "content": ""
   },
   {
+    "displayName": "Search",
+    "iconName": "hi-search",
+    "tags": "search, magnifying glass",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
+    "displayName": "Help",
+    "iconName": "hi-help",
+    "tags": "help, question",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Reports",
     "iconName": "hi-reports",
     "tags": "reports, graph, chart",
