@@ -39,5 +39,5 @@ When changes are ready to be published, do:
 
 * run `yarn verify` - Compile and test libs. Continue only after successful complete
 * Merge `master` branch to `custom-publish` branch
-* Update packages versions
+* Update versions of packages that were changed (together with packages that depend on changed packages)
 * From each package folder run `npm publish --access=public`
