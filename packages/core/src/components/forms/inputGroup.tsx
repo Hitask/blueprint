@@ -14,6 +14,7 @@ import {
     IControlledProps,
     IIntentProps,
     IProps,
+    MaybeElement,
     removeNonHTMLProps,
 } from "../../common/props";
 import { Icon, IconName } from "../icon/icon";
@@ -37,10 +38,13 @@ export interface IInputGroupProps extends IControlledProps, IIntentProps, IProps
      * Name of a Blueprint UI icon (or an icon element) to render on the left side of the input group,
      * before the user's cursor.
      */
-    leftIcon?: IconName | JSX.Element;
+    leftIcon?: IconName | MaybeElement;
 
     /** Whether this input should use large styles. */
     large?: boolean;
+
+    /** Whether this input should use small styles. */
+    small?: boolean;
 
     /** Placeholder text in the absence of any value. */
     placeholder?: string;
@@ -78,13 +82,14 @@ export class InputGroup extends React.PureComponent<IInputGroupProps & HTMLInput
     };
 
     public render() {
-        const { className, intent, large, leftIcon, round } = this.props;
+        const { className, intent, large, small, leftIcon, round } = this.props;
         const classes = classNames(
             Classes.INPUT_GROUP,
             Classes.intentClass(intent),
             {
                 [Classes.DISABLED]: this.props.disabled,
                 [Classes.LARGE]: large,
+                [Classes.SMALL]: small,
                 [Classes.ROUND]: round,
             },
             className,

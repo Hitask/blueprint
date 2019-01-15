@@ -8,7 +8,7 @@ import classNames from "classnames";
 import * as React from "react";
 
 import { IconName, IconSvgPaths16, IconSvgPaths20 } from "@blueprintjs/icons";
-import { Classes, DISPLAYNAME_PREFIX, IIntentProps, IProps } from "../../common";
+import { Classes, DISPLAYNAME_PREFIX, IIntentProps, IProps, MaybeElement } from "../../common";
 
 export { IconName };
 
@@ -23,6 +23,12 @@ export interface IIconProps extends IIntentProps, IProps {
      * surrounding text.
      */
     color?: string;
+
+    /**
+     * String for the `title` attribute on the rendered element, which will appear
+     * on hover as a native browser tooltip.
+     */
+    htmlTitle?: string;
 
     /**
      * Name of a Blueprint UI icon, or an icon element, to render. This prop is
@@ -40,7 +46,7 @@ export interface IIconProps extends IIntentProps, IProps {
      *   should avoid using `<Icon icon={<Element />}` directly; simply render
      *   `<Element />` instead.
      */
-    icon: IconName | JSX.Element | false | null | undefined;
+    icon: IconName | MaybeElement;
 
     /**
      * Size of the icon, in pixels. Blueprint contains 16px and 20px SVG icon
@@ -72,9 +78,9 @@ export class Icon extends React.PureComponent<IIconProps & React.DOMAttributes<H
     public static readonly SIZE_STANDARD = 16;
     public static readonly SIZE_LARGE = 20;
 
-    public render() {
+    public render(): JSX.Element | null {
         const { icon } = this.props;
-        if (icon == null) {
+        if (icon == null || typeof icon === "boolean") {
             return null;
         } else if (typeof icon !== "string") {
             return icon;
@@ -83,6 +89,7 @@ export class Icon extends React.PureComponent<IIconProps & React.DOMAttributes<H
         const {
             className,
             color,
+            htmlTitle,
             iconSize = Icon.SIZE_STANDARD,
             intent,
             title = null,
@@ -99,7 +106,7 @@ export class Icon extends React.PureComponent<IIconProps & React.DOMAttributes<H
         const viewBox = `0 0 ${pixelGridSize} ${pixelGridSize}`;
 
         return (
-            <TagName className={classes} {...htmlprops}>
+            <TagName {...htmlprops} className={classes} title={htmlTitle}>
                 <svg fill={color} data-icon={icon} width={iconSize} height={iconSize} viewBox={viewBox}>
                     {title && <desc>{title}</desc>}
                     {paths}

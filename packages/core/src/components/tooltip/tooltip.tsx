@@ -54,6 +54,8 @@ export class Tooltip extends React.PureComponent<ITooltipProps, {}> {
         transitionDuration: 100,
     };
 
+    private popover: Popover | null = null;
+
     public render() {
         const { children, intent, popoverClassName, ...restProps } = this.props;
         const classes = classNames(Classes.TOOLTIP, Classes.intentClass(intent), popoverClassName);
@@ -67,9 +69,17 @@ export class Tooltip extends React.PureComponent<ITooltipProps, {}> {
                 interactionKind={PopoverInteractionKind.HOVER_TARGET_ONLY}
                 lazy={true}
                 popoverClassName={classes}
+                portalContainer={this.props.portalContainer}
+                ref={ref => (this.popover = ref)}
             >
                 {children}
             </Popover>
         );
+    }
+
+    public reposition() {
+        if (this.popover != null) {
+            this.popover.reposition();
+        }
     }
 }

@@ -159,6 +159,14 @@ describe("<Popover>", () => {
         assert.lengthOf(wrapper.find(Portal), 1);
     });
 
+    it("renders to specified container correctly", () => {
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        wrapper = renderPopover({ isOpen: true, usePortal: true, portalContainer: container });
+        assert.lengthOf(container.getElementsByClassName(Classes.POPOVER_CONTENT), 1);
+        document.body.removeChild(container);
+    });
+
     it("does not render Portal when usePortal=false", () => {
         wrapper = renderPopover({ isOpen: true, usePortal: false });
         assert.lengthOf(wrapper.find(Portal), 0);
@@ -206,6 +214,35 @@ describe("<Popover>", () => {
         const onOpening = sinon.spy();
         wrapper = renderPopover({ isOpen: true, onOpening });
         assert.isTrue(onOpening.calledOnce);
+    });
+
+    describe("targetProps", () => {
+        const spy = sinon.spy();
+        const targetProps: React.HTMLAttributes<HTMLElement> = {
+            className: "test-test",
+            // hover & click events & onKeyDown for fun
+            onClick: spy,
+            onKeyDown: spy,
+            onMouseEnter: spy,
+            onMouseLeave: spy,
+            tabIndex: 400,
+        };
+        function targetPropsTest(interactionKind: PopoverInteractionKind) {
+            spy.resetHistory();
+            wrapper = renderPopover({ interactionKind, targetTagName: "address", targetProps })
+                .simulateTarget("click")
+                .simulateTarget("keydown")
+                .simulateTarget("mouseenter")
+                .simulateTarget("mouseleave");
+            const target = wrapper.find("address");
+            assert.isTrue(target.prop("className").indexOf(Classes.POPOVER_TARGET) >= 0);
+            assert.isTrue(target.prop("className").indexOf(targetProps.className) >= 0);
+            assert.equal(target.prop("tabIndex"), targetProps.tabIndex);
+            assert.equal(spy.callCount, 4);
+        }
+
+        it("passed to target element (click)", () => targetPropsTest("click"));
+        it("passed to target element (hover)", () => targetPropsTest("hover"));
     });
 
     describe("openOnTargetFocus", () => {

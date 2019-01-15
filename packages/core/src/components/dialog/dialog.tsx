@@ -10,7 +10,8 @@ import * as React from "react";
 import { AbstractPureComponent } from "../../common/abstractPureComponent";
 import * as Classes from "../../common/classes";
 import * as Errors from "../../common/errors";
-import { DISPLAYNAME_PREFIX, IProps } from "../../common/props";
+import { DISPLAYNAME_PREFIX, IProps, MaybeElement } from "../../common/props";
+import { Button } from "../button/buttons";
 import { H4 } from "../html/html";
 import { Icon, IconName } from "../icon/icon";
 import { IBackdropProps, IOverlayableProps, Overlay } from "../overlay/overlay";
@@ -33,7 +34,7 @@ export interface IDialogProps extends IOverlayableProps, IBackdropProps, IProps 
      * dialog's header. Note that the header will only be rendered if `title` is
      * provided.
      */
-    icon?: IconName | JSX.Element;
+    icon?: IconName | MaybeElement;
 
     /**
      * Whether to show the close button in the dialog's header.
@@ -108,14 +109,13 @@ export class Dialog extends AbstractPureComponent<IDialogProps, {}> {
         // this gives us a behavior as if the default value were `true`
         if (this.props.isCloseButtonShown !== false) {
             return (
-                <button
+                <Button
                     aria-label="Close"
                     className={Classes.DIALOG_CLOSE_BUTTON}
+                    icon={<Icon icon="small-cross" iconSize={Icon.SIZE_LARGE} />}
+                    minimal={true}
                     onClick={this.props.onClose}
-                    type="button"
-                >
-                    <Icon icon="small-cross" iconSize={Icon.SIZE_LARGE} />
-                </button>
+                />
             );
         } else {
             return undefined;

@@ -86,6 +86,7 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
     public static displayName = `${DISPLAYNAME_PREFIX}.Popover`;
 
     public static defaultProps: IPopoverProps = {
+        boundary: "scrollParent",
         captureDismiss: false,
         defaultIsOpen: false,
         disabled: false,
@@ -145,7 +146,7 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
         // as JSX component instead of intrinsic element. but because of its
         // type, tsc actually recognizes that it is _any_ intrinsic element, so
         // it can typecheck the HTML props!!
-        const { className, disabled, modifiers, wrapperTagName: WrapperTagName } = this.props;
+        const { className, disabled, wrapperTagName: WrapperTagName } = this.props;
         const { isOpen } = this.state;
 
         const isContentEmpty = Utils.ensureElement(this.understandChildren().content) == null;
@@ -154,19 +155,6 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
         if (isContentEmpty && !disabled && isOpen !== false && !Utils.isNodeEnv("production")) {
             console.warn(Errors.POPOVER_WARN_EMPTY_CONTENT);
         }
-        const allModifiers: PopperModifiers = {
-            ...modifiers,
-            arrowOffset: {
-                enabled: this.isArrowEnabled(),
-                fn: arrowOffsetModifier,
-                order: 510, // arrow is 500
-            },
-            updatePopoverState: {
-                enabled: true,
-                fn: this.updatePopoverState,
-                order: 900,
-            },
-        };
 
         return (
             <Manager>
@@ -190,11 +178,12 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
                         transitionDuration={this.props.transitionDuration}
                         transitionName={Classes.POPOVER}
                         usePortal={this.props.usePortal}
+                        portalContainer={this.props.portalContainer}
                     >
                         <Popper
                             innerRef={this.refHandlers.popover}
                             placement={positionToPlacement(this.props.position)}
-                            modifiers={allModifiers}
+                            modifiers={this.getPopperModifiers()}
                         >
                             {this.renderPopover}
                         </Popper>
@@ -227,6 +216,16 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
     public componentDidUpdate() {
         this.updateDarkParent();
     }
+
+    /**
+     * Instance method to instruct the `Popover` to recompute its position.
+     *
+     * This method should only be used if you are updating the target in a way
+     * that does not cause it to re-render, such as changing its _position_
+     * without changing its _size_ (since `Popover` already repositions when it
+     * detects a resize).
+     */
+    public reposition = () => Utils.safeInvoke(this.popperScheduleUpdate);
 
     protected validateProps(props: IPopoverProps & { children?: React.ReactNode }) {
         if (props.isOpen == null && props.onInteraction != null) {
@@ -294,7 +293,7 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
 
         return (
             <div className={Classes.TRANSITION_CONTAINER} ref={popperProps.ref} style={popperProps.style}>
-                <ResizeSensor onResize={this.handlePopoverResize}>
+                <ResizeSensor onResize={this.reposition}>
                     <div className={popoverClasses} style={{ transformOrigin }} {...popoverHandlers}>
                         {this.isArrowEnabled() && (
                             <PopoverArrow arrowProps={popperProps.arrowProps} placement={popperProps.placement} />
@@ -307,11 +306,11 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
     };
 
     private renderTarget = (referenceProps: ReferenceChildrenProps) => {
-        const { targetClassName, targetTagName: TagName } = this.props;
+        const { openOnTargetFocus, targetClassName, targetProps = {}, targetTagName: TagName } = this.props;
         const { isOpen } = this.state;
         const isHoverInteractionKind = this.isHoverInteractionKind();
 
-        const targetProps: React.HTMLProps<HTMLElement> = isHoverInteractionKind
+        const finalTargetProps: React.HTMLProps<HTMLElement> = isHoverInteractionKind
             ? {
                   // HOVER handlers
                   onBlur: this.handleTargetBlur,
@@ -323,22 +322,31 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
                   // CLICK needs only one handler
                   onClick: this.handleTargetClick,
               };
-        targetProps.className = classNames(Classes.POPOVER_TARGET, { [Classes.POPOVER_OPEN]: isOpen }, targetClassName);
-        targetProps.ref = referenceProps.ref;
+        finalTargetProps.className = classNames(
+            Classes.POPOVER_TARGET,
+            { [Classes.POPOVER_OPEN]: isOpen },
+            targetProps.className,
+            targetClassName,
+        );
+        finalTargetProps.ref = referenceProps.ref;
 
         const rawTarget = Utils.ensureElement(this.understandChildren().target);
-        const { tabIndex = 0 } = rawTarget.props;
+        const rawTabIndex = rawTarget.props.tabIndex;
+        // ensure target is focusable if relevant prop enabled
+        const tabIndex = rawTabIndex == null && openOnTargetFocus && isHoverInteractionKind ? 0 : rawTabIndex;
         const clonedTarget: JSX.Element = React.cloneElement(rawTarget, {
             className: classNames(rawTarget.props.className, {
                 [Classes.ACTIVE]: isOpen && !isHoverInteractionKind,
             }),
             // force disable single Tooltip child when popover is open (BLUEPRINT-552)
             disabled: isOpen && Utils.isElementOfType(rawTarget, Tooltip) ? true : rawTarget.props.disabled,
-            tabIndex: this.props.openOnTargetFocus && isHoverInteractionKind ? tabIndex : undefined,
+            tabIndex,
         });
         return (
-            <ResizeSensor onResize={this.handlePopoverResize}>
-                <TagName {...targetProps}>{clonedTarget}</TagName>
+            <ResizeSensor onResize={this.reposition}>
+                <TagName {...targetProps} {...finalTargetProps}>
+                    {clonedTarget}
+                </TagName>
             </ResizeSensor>
         );
     };
@@ -366,6 +374,26 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
         }
     }
 
+    private getPopperModifiers(): PopperModifiers {
+        const { boundary, modifiers } = this.props;
+        const { flip = {}, preventOverflow = {} } = modifiers;
+        return {
+            ...modifiers,
+            arrowOffset: {
+                enabled: this.isArrowEnabled(),
+                fn: arrowOffsetModifier,
+                order: 510,
+            },
+            flip: { boundariesElement: boundary, ...flip },
+            preventOverflow: { boundariesElement: boundary, ...preventOverflow },
+            updatePopoverState: {
+                enabled: true,
+                fn: this.updatePopoverState,
+                order: 900,
+            },
+        };
+    }
+
     private handleTargetFocus = (e: React.FocusEvent<HTMLElement>) => {
         if (this.props.openOnTargetFocus && this.isHoverInteractionKind()) {
             if (e.relatedTarget == null && !this.lostFocusOnSamePage) {
@@ -375,6 +403,7 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
             }
             this.handleMouseEnter(e);
         }
+        Utils.safeInvokeMember(this.props.targetProps, "onFocus", e);
     };
 
     private handleTargetBlur = (e: React.FocusEvent<HTMLElement>) => {
@@ -386,6 +415,7 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
             }
         }
         this.lostFocusOnSamePage = e.relatedTarget != null;
+        Utils.safeInvokeMember(this.props.targetProps, "onBlur", e);
     };
 
     private handleMouseEnter = (e: React.SyntheticEvent<HTMLElement>) => {
@@ -404,6 +434,7 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
             // only begin opening popover when it is enabled
             this.setOpenState(true, e, this.props.hoverOpenDelay);
         }
+        Utils.safeInvokeMember(this.props.targetProps, "onMouseEnter", e);
     };
 
     private handleMouseLeave = (e: React.SyntheticEvent<HTMLElement>) => {
@@ -419,6 +450,7 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
             // user-configurable closing delay is helpful when moving mouse from target to popover
             this.setOpenState(false, e, this.props.hoverCloseDelay);
         });
+        Utils.safeInvokeMember(this.props.targetProps, "onMouseLeave", e);
     };
 
     private handlePopoverClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -434,8 +466,6 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
             }
         }
     };
-
-    private handlePopoverResize = () => Utils.safeInvoke(this.popperScheduleUpdate);
 
     private handleOverlayClose = (e: React.SyntheticEvent<HTMLElement>) => {
         const eventTarget = e.target as HTMLElement;
@@ -454,6 +484,7 @@ export class Popover extends AbstractPureComponent<IPopoverProps, IPopoverState>
                 this.setOpenState(!this.props.isOpen, e);
             }
         }
+        Utils.safeInvokeMember(this.props.targetProps, "onClick", e);
     };
 
     // a wrapper around setState({isOpen}) that will call props.onInteraction instead when in controlled mode.

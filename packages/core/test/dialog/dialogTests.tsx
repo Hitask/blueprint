@@ -31,6 +31,29 @@ describe("<Dialog>", () => {
         });
     });
 
+    it("portalClassName appears on Portal", () => {
+        const TEST_CLASS = "test-class";
+        const dialog = mount(
+            <Dialog isOpen={true} portalClassName={TEST_CLASS}>
+                {createDialogContents()}
+            </Dialog>,
+        );
+        assert.isDefined(document.querySelector(`.${Classes.PORTAL}.${TEST_CLASS}`));
+        dialog.unmount();
+    });
+
+    it("renders contents to specified container correctly", () => {
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        mount(
+            <Dialog isOpen={true} portalContainer={container}>
+                {createDialogContents()}
+            </Dialog>,
+        );
+        assert.lengthOf(container.getElementsByClassName(Classes.DIALOG), 1, `missing ${Classes.DIALOG}`);
+        document.body.removeChild(container);
+    });
+
     it("attempts to close when overlay backdrop element is moused down", () => {
         const onClose = spy();
         const dialog = mount(
@@ -90,10 +113,10 @@ describe("<Dialog>", () => {
                     dialog body
                 </Dialog>,
             );
-            assert.lengthOf(dialog.find(`.${Classes.DIALOG_CLOSE_BUTTON}`), 1);
+            assert.lengthOf(dialog.find(`.${Classes.DIALOG_HEADER}`).find(Button), 1);
 
             dialog.setProps({ isCloseButtonShown: false });
-            assert.lengthOf(dialog.find(`.${Classes.DIALOG_CLOSE_BUTTON}`), 0);
+            assert.lengthOf(dialog.find(`.${Classes.DIALOG_HEADER}`).find(Button), 0);
         });
 
         it("clicking close button triggers onClose", () => {
@@ -103,7 +126,10 @@ describe("<Dialog>", () => {
                     dialog body
                 </Dialog>,
             );
-            dialog.find(`.${Classes.DIALOG_CLOSE_BUTTON}`).simulate("click");
+            dialog
+                .find(`.${Classes.DIALOG_HEADER}`)
+                .find(Button)
+                .simulate("click");
             assert.isTrue(onClose.calledOnce, "onClose not called");
         });
     });

@@ -47,6 +47,11 @@ export interface IMenuItemProps extends IActionProps, ILinkProps {
     label?: string;
 
     /**
+     * A space-delimited list of class names to pass along to the right-aligned label wrapper element.
+     */
+    labelClassName?: string;
+
+    /**
      * Right-aligned label content, useful for displaying hotkeys.
      */
     labelElement?: React.ReactNode;
@@ -70,6 +75,17 @@ export interface IMenuItemProps extends IActionProps, ILinkProps {
      * @default true
      */
     shouldDismissPopover?: boolean;
+
+    /**
+     * Name of the HTML tag that wraps the MenuItem.
+     * @default "a"
+     */
+    tagName?: keyof JSX.IntrinsicElements;
+
+    /**
+     * A space-delimited list of class names to pass along to the text wrapper element.
+     */
+    textClassName?: string;
 }
 
 export class MenuItem extends React.PureComponent<IMenuItemProps & React.AnchorHTMLAttributes<HTMLAnchorElement>> {
@@ -95,6 +111,8 @@ export class MenuItem extends React.PureComponent<IMenuItemProps & React.AnchorH
             popoverProps,
             shouldDismissPopover,
             text,
+            textClassName,
+            tagName: TagName = "a",
             ...htmlProps
         } = this.props;
         const hasSubmenu = children != null;
@@ -114,14 +132,14 @@ export class MenuItem extends React.PureComponent<IMenuItemProps & React.AnchorH
         );
 
         const target = (
-            <a {...htmlProps} {...(disabled ? DISABLED_PROPS : {})} className={anchorClasses}>
+            <TagName {...htmlProps} {...(disabled ? DISABLED_PROPS : {})} className={anchorClasses}>
                 <Icon icon={icon} />
-                <Text className={Classes.FILL} ellipsize={!multiline}>
+                <Text className={classNames(Classes.FILL, textClassName)} ellipsize={!multiline}>
                     {text}
                 </Text>
                 {this.maybeRenderLabel(labelElement)}
                 {hasSubmenu && <Icon icon="caret-right" />}
-            </a>
+            </TagName>
         );
 
         const liClasses = classNames({ [Classes.MENU_SUBMENU]: hasSubmenu });
@@ -129,12 +147,12 @@ export class MenuItem extends React.PureComponent<IMenuItemProps & React.AnchorH
     }
 
     private maybeRenderLabel(labelElement?: React.ReactNode) {
-        const { label } = this.props;
+        const { label, labelClassName } = this.props;
         if (label == null && labelElement == null) {
             return null;
         }
         return (
-            <span className={Classes.MENU_ITEM_LABEL}>
+            <span className={classNames(Classes.MENU_ITEM_LABEL, labelClassName)}>
                 {label}
                 {labelElement}
             </span>
