@@ -14,3 +14,6 @@ cp -r packages/select ../hitask-web/node_modules/@hitask/blueprint-select
 
 rm -rf ../hitask-web/node_modules/@hitask/blueprint-table
 cp -r packages/table ../hitask-web/node_modules/@hitask/blueprint-table
+
+rm -rf ../hitask-web/node_modules/@hitask/blueprint-timezone
+cp -r packages/timezone ../hitask-web/node_modules/@hitask/blueprint-timezone
