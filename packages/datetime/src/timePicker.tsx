@@ -4,7 +4,7 @@
  * Licensed under the terms of the LICENSE file distributed with this project.
  */
 
-import { Classes as CoreClasses, Icon, IProps, Keys, Utils as BlueprintUtils } from "@blueprintjs/core";
+import { Classes as CoreClasses, HTMLSelect, Icon, IProps, Keys, Utils as BlueprintUtils } from "@blueprintjs/core";
 import classNames from "classnames";
 import * as React from "react";
 
@@ -22,11 +22,12 @@ import {
 } from "./common/timeUnit";
 import * as Utils from "./common/utils";
 
-export enum TimePickerPrecision {
-    MINUTE = 0,
-    SECOND = 1,
-    MILLISECOND = 2,
-}
+export const TimePrecision = {
+    MILLISECOND: "millisecond" as "millisecond",
+    MINUTE: "minute" as "minute",
+    SECOND: "second" as "second",
+};
+export type TimePrecision = typeof TimePrecision[keyof typeof TimePrecision];
 
 export interface ITimePickerProps extends IProps {
     /**
@@ -48,9 +49,9 @@ export interface ITimePickerProps extends IProps {
 
     /**
      * The precision of time the user can set.
-     * @default TimePickerPrecision.MINUTE
+     * @default TimePrecision.MINUTE
      */
-    precision?: TimePickerPrecision;
+    precision?: TimePrecision;
 
     /**
      * Whether all the text in each input should be selected on focus.
@@ -109,7 +110,7 @@ export class TimePicker extends React.Component<ITimePickerProps, ITimePickerSta
         disabled: false,
         maxTime: getDefaultMaxTime(),
         minTime: getDefaultMinTime(),
-        precision: TimePickerPrecision.MINUTE,
+        precision: TimePrecision.MINUTE,
         selectAllOnFocus: false,
         showArrowButtons: false,
         useAmPm: false,
@@ -131,8 +132,8 @@ export class TimePicker extends React.Component<ITimePickerProps, ITimePickerSta
     }
 
     public render() {
-        const shouldRenderSeconds = this.props.precision >= TimePickerPrecision.SECOND;
-        const shouldRenderMilliseconds = this.props.precision >= TimePickerPrecision.MILLISECOND;
+        const shouldRenderMilliseconds = this.props.precision === TimePrecision.MILLISECOND;
+        const shouldRenderSeconds = shouldRenderMilliseconds || this.props.precision === TimePrecision.SECOND;
         const hourUnit = this.props.useAmPm ? TimeUnit.HOUR_12 : TimeUnit.HOUR_24;
         const classes = classNames(Classes.TIMEPICKER, this.props.className, {
             [CoreClasses.DISABLED]: this.props.disabled,
@@ -224,16 +225,15 @@ export class TimePicker extends React.Component<ITimePickerProps, ITimePickerSta
             return null;
         }
         return (
-            <div className={classNames(CoreClasses.SELECT, Classes.TIMEPICKER_AMPM_SELECT)}>
-                <select
-                    value={this.state.isPm ? "pm" : "am"}
-                    onChange={this.handleAmPmChange}
-                    disabled={this.props.disabled}
-                >
-                    <option value="am">AM</option>
-                    <option value="pm">PM</option>
-                </select>
-            </div>
+            <HTMLSelect
+                className={Classes.TIMEPICKER_AMPM_SELECT}
+                disabled={this.props.disabled}
+                onChange={this.handleAmPmChange}
+                value={this.state.isPm ? "pm" : "am"}
+            >
+                <option value="am">AM</option>
+                <option value="pm">PM</option>
+            </HTMLSelect>
         );
     }
 

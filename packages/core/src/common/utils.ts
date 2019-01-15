@@ -25,19 +25,38 @@ export function isFunction(value: any): value is Function {
 }
 
 /**
+ * Converts a React child to an element: non-empty string or number or
+ * `React.Fragment` (React 16.3+) is wrapped in given tag name; empty strings
+ * are discarded.
+ */
+export function ensureElement(child: React.ReactChild | undefined, tagName: keyof JSX.IntrinsicElements = "span") {
+    if (child == null) {
+        return undefined;
+    } else if (typeof child === "string") {
+        // cull whitespace strings
+        return child.trim().length > 0 ? React.createElement(tagName, {}, child) : undefined;
+    } else if (typeof child === "number" || typeof child.type === "symbol") {
+        // React.Fragment has a symbol type
+        return React.createElement(tagName, {}, child);
+    } else {
+        return child;
+    }
+}
+
+/**
  * Represents anything that has a `name` property such as Functions.
  */
 export interface INamed {
     name?: string;
 }
 
-export function getDisplayName(ComponentClass: React.ComponentClass | INamed) {
-    return (ComponentClass as React.ComponentClass).displayName || (ComponentClass as INamed).name || "Unknown";
+export function getDisplayName(ComponentClass: React.ComponentType | INamed) {
+    return (ComponentClass as React.ComponentType).displayName || (ComponentClass as INamed).name || "Unknown";
 }
 
 export function isElementOfType<P = {}>(
     element: any,
-    ComponentClass: React.ComponentClass<P>,
+    ComponentClass: React.ComponentType<P>,
 ): element is React.ReactElement<P> {
     return element != null && element.type === React.createElement(ComponentClass).type;
 }
@@ -147,7 +166,7 @@ export function countDecimalPlaces(num: number) {
  * @see https://developer.mozilla.org/en-US/docs/Web/Events/scroll
  */
 export function throttleEvent(target: EventTarget, eventName: string, newEventName: string) {
-    const throttledFunc = _throttleHelper(undefined, undefined, (event: Event) => {
+    const throttledFunc = _throttleHelper((event: Event) => {
         target.dispatchEvent(new CustomEvent(newEventName, event));
     });
     target.addEventListener(eventName, throttledFunc);
@@ -168,6 +187,7 @@ export function throttleReactEventCallback(
     options: IThrottledReactEventOptions = {},
 ) {
     const throttledFunc = _throttleHelper(
+        callback,
         (event2: React.SyntheticEvent<any>) => {
             if (options.preventDefault) {
                 event2.preventDefault();
@@ -175,15 +195,24 @@ export function throttleReactEventCallback(
         },
         // prevent React from reclaiming the event object before we reference it
         (event2: React.SyntheticEvent<any>) => event2.persist(),
-        callback,
     );
     return throttledFunc;
 }
 
-function _throttleHelper(
-    onBeforeIsRunningCheck: (...args: any[]) => void,
-    onAfterIsRunningCheck: (...args: any[]) => void,
-    onAnimationFrameRequested: (...args: any[]) => void,
+/**
+ * Throttle a method by wrapping it in a `requestAnimationFrame` call. Returns
+ * the throttled function.
+ */
+// tslint:disable-next-line:ban-types
+export function throttle<T extends Function>(method: T): T {
+    return _throttleHelper(method);
+}
+
+// tslint:disable-next-line:ban-types
+function _throttleHelper<T extends Function>(
+    onAnimationFrameRequested: T,
+    onBeforeIsRunningCheck?: T,
+    onAfterIsRunningCheck?: T,
 ) {
     let isRunning = false;
     const func = (...args: any[]) => {
@@ -203,11 +232,9 @@ function _throttleHelper(
         }
 
         requestAnimationFrame(() => {
-            if (isFunction(onAnimationFrameRequested)) {
-                onAnimationFrameRequested(...args);
-            }
+            onAnimationFrameRequested(...args);
             isRunning = false;
         });
     };
-    return func;
+    return (func as any) as T;
 }

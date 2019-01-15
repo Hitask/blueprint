@@ -7,14 +7,32 @@
 import { assert } from "chai";
 import { mount, ReactWrapper } from "enzyme";
 import * as React from "react";
+import { stub } from "sinon";
 
-import { Classes, Spinner, SVGSpinner } from "../../src/index";
+import { SPINNER_WARN_CLASSES_SIZE } from "../../src/common/errors";
+import { Classes, Spinner } from "../../src/index";
 
 describe("Spinner", () => {
     it("renders a spinner and two paths", () => {
         const root = mount(<Spinner />);
         assert.lengthOf(root.find(`.${Classes.SPINNER}`), 1);
         assert.lengthOf(root.find("path"), 2);
+    });
+
+    it("Classes.LARGE/SMALL determine default size", () => {
+        const root = mount(<Spinner className={Classes.SMALL} />);
+        assert.equal(root.find("svg").prop("height"), Spinner.SIZE_SMALL, "small");
+
+        root.setProps({ className: Classes.LARGE });
+        assert.equal(root.find("svg").prop("height"), Spinner.SIZE_LARGE, "large");
+    });
+
+    it("size overrides Classes.LARGE/SMALL", () => {
+        const warnSpy = stub(console, "warn");
+        const root = mount(<Spinner className={Classes.SMALL} size={32} />);
+        assert.equal(root.find("svg").prop("height"), 32, "size prop");
+        assert.equal(warnSpy.args[0][0], SPINNER_WARN_CLASSES_SIZE);
+        warnSpy.restore();
     });
 
     it("defaults to spinning quarter circle", () => {
@@ -33,20 +51,11 @@ describe("Spinner", () => {
         assertStrokePercent(root, 0.35);
     });
 
-    it("React renders SVGSpinner", () => {
-        assert.lengthOf(
-            mount(
-                <svg>
-                    <SVGSpinner />
-                </svg>,
-            ).find(`.${Classes.SVG_SPINNER} svg`),
-            1,
-        );
-    });
-
     function assertStrokePercent(wrapper: ReactWrapper<any, {}>, percent: number) {
-        const style = wrapper.find(`.${Classes.SPINNER_HEAD}`).prop("style");
-        const pathLength = parseInt(style.strokeDasharray.split(" ")[0], 10);
-        assert.strictEqual(style.strokeDashoffset, pathLength * (1 - percent));
+        const head = wrapper.find(`.${Classes.SPINNER_HEAD}`);
+        // NOTE: strokeDasharray is string "X X", but parseInt terminates at non-numeric character
+        const pathLength = parseInt(head.prop("strokeDasharray").toString(), 10);
+        const offset = head.prop("strokeDashoffset");
+        assert.strictEqual(offset, pathLength * (1 - percent));
     }
 });

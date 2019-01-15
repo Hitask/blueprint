@@ -10,7 +10,7 @@ import * as React from "react";
 import { spy } from "sinon";
 
 import * as Keys from "../../src/common/keys";
-import { Button, Classes, Dialog, Icon } from "../../src/index";
+import { Button, Classes, Dialog, H4, Icon } from "../../src/index";
 
 describe("<Dialog>", () => {
     it("renders its content correctly", () => {
@@ -75,6 +75,16 @@ describe("<Dialog>", () => {
         assert.isTrue(onClose.notCalled);
     });
 
+    it("supports overlay lifecycle props", () => {
+        const onOpening = spy();
+        mount(
+            <Dialog isOpen={true} onOpening={onOpening}>
+                body
+            </Dialog>,
+        );
+        assert.isTrue(onOpening.calledOnce);
+    });
+
     describe("header", () => {
         it(`renders .${Classes.DIALOG_HEADER} if title prop is given`, () => {
             const dialog = mount(
@@ -120,7 +130,7 @@ describe("<Dialog>", () => {
         return [
             <div className={Classes.DIALOG_HEADER} key={0}>
                 <Icon icon="inbox" iconSize={Icon.SIZE_LARGE} />
-                <h4>Dialog header</h4>
+                <H4>Dialog header</H4>
             </div>,
             <div className={Classes.DIALOG_BODY} key={1}>
                 <p>

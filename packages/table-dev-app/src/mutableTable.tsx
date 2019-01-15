@@ -8,6 +8,9 @@ import {
     Button,
     Classes,
     FocusStyleManager,
+    H4,
+    H6,
+    HTMLSelect,
     IButtonProps,
     Intent,
     Menu,
@@ -602,46 +605,46 @@ export class MutableTable extends React.Component<{}, IMutableTableState> {
 
         return (
             <div className={classNames("sidebar", Classes.ELEVATION_0)}>
-                <h4>Table</h4>
-                <h6>Display</h6>
+                <H4>Table</H4>
+                <H6>Display</H6>
                 {this.renderSwitch("Inline", "showInline")}
                 {this.renderSwitch("Focus cell", "showFocusCell")}
                 {this.renderSwitch("Ghost cells", "showGhostCells")}
                 {renderModeMenu}
                 {this.renderSwitch("Interaction bar", "showTableInteractionBar")}
-                <h6>Interactions</h6>
+                <H6>Interactions</H6>
                 {this.renderSwitch("Body context menu", "enableContextMenu")}
                 {this.renderSwitch("Callback logs", "showCallbackLogs")}
                 {this.renderSwitch("Full-table selection", "enableFullTableSelection")}
                 {this.renderSwitch("Multi-selection", "enableMultiSelection")}
-                <h6>Scroll to</h6>
+                <H6>Scroll to</H6>
                 {this.renderScrollToSection()}
 
-                <h4>Columns</h4>
-                <h6>Display</h6>
+                <H4>Columns</H4>
+                <H6>Display</H6>
                 {this.renderNumberSelectMenu("Num. columns", "numCols", COLUMN_COUNTS)}
                 {this.renderNumberSelectMenu("Num. frozen columns", "numFrozenCols", FROZEN_COLUMN_COUNTS)}
                 {this.renderSwitch("Loading state", "showColumnHeadersLoading")}
                 {this.renderSwitch("Menus", "showColumnMenus")}
                 {this.renderSwitch("Custom headers", "enableColumnCustomHeaders")}
-                <h6>Interactions</h6>
+                <H6>Interactions</H6>
                 {this.renderSwitch("Editing", "enableColumnNameEditing", "enableColumnCustomHeaders", false)}
                 {this.renderSwitch("Reordering", "enableColumnReordering")}
                 {this.renderSwitch("Resizing", "enableColumnResizing")}
                 {this.renderSwitch("Selection", "enableColumnSelection")}
 
-                <h4>Rows</h4>
-                <h6>Display</h6>
+                <H4>Rows</H4>
+                <H6>Display</H6>
                 {this.renderNumberSelectMenu("Num. rows", "numRows", ROW_COUNTS)}
                 {this.renderNumberSelectMenu("Num. frozen rows", "numFrozenRows", FROZEN_ROW_COUNTS)}
                 {this.renderSwitch("Headers", "showRowHeaders")}
                 {this.renderSwitch("Loading state", "showRowHeadersLoading")}
                 {this.renderSwitch("Zebra striping", "showZebraStriping")}
-                <h6>Interactions</h6>
+                <H6>Interactions</H6>
                 {this.renderSwitch("Reordering", "enableRowReordering")}
                 {this.renderSwitch("Resizing", "enableRowResizing")}
                 {this.renderSwitch("Selection", "enableRowSelection")}
-                <h6>Instance methods</h6>
+                <H6>Instance methods</H6>
                 {this.renderButton("Resize rows by tallest cell", {
                     onClick: this.handleResizeRowsByTallestCellButtonClick,
                 })}
@@ -649,29 +652,29 @@ export class MutableTable extends React.Component<{}, IMutableTableState> {
                     onClick: this.handleResizeRowsByApproxHeightButtonClick,
                 })}
 
-                <h4>Cells</h4>
-                <h6>Display</h6>
+                <H4>Cells</H4>
+                <H6>Display</H6>
                 {cellContentMenu}
                 {this.renderSwitch("Loading state", "showCellsLoading")}
                 {this.renderSwitch("Custom regions", "showCustomRegions")}
-                <h6>Interactions</h6>
+                <H6>Interactions</H6>
                 {this.renderSwitch("Editing", "enableCellEditing")}
                 {this.renderSwitch("Selection", "enableCellSelection")}
-                <h6>Text Layout</h6>
+                <H6>Text Layout</H6>
                 {this.renderSwitch("Truncation", "enableCellTruncation", "enableCellEditing", false)}
                 <div className="sidebar-indented-group">{truncatedPopoverModeMenu}</div>
                 {this.renderSwitch("Fixed truncation", "enableCellTruncationFixed", "enableCellTruncation", true)}
                 <div className="sidebar-indented-group">{truncatedLengthMenu}</div>
                 {this.renderSwitch("Wrap text", "enableCellWrap")}
 
-                <h4>Page</h4>
-                <h6>Display</h6>
+                <H4>Page</H4>
+                <H6>Display</H6>
                 {this.renderFocusStyleSelectMenu()}
-                <h6>Perf</h6>
+                <H6>Perf</H6>
                 {this.renderSwitch("Slow layout", "enableSlowLayout")}
                 {this.renderSwitch("Isolate layout boundary", "enableLayoutBoundary")}
 
-                <h4>Settings</h4>
+                <H4>Settings</H4>
                 {this.renderButton("Reset all", { icon: "undo", onClick: this.handleDefaultsButtonClick })}
             </div>
         );
@@ -768,13 +771,11 @@ export class MutableTable extends React.Component<{}, IMutableTableState> {
         const { selectedFocusStyle } = this.state;
         return (
             <label className={classNames(Classes.LABEL, Classes.INLINE, "tbl-select-label")}>
-                {"Focus outlines"}
-                <div className={Classes.SELECT}>
-                    <select onChange={this.updateFocusStyleState()} value={selectedFocusStyle}>
-                        <option value={"tab"}>On tab</option>
-                        <option value={"tabOrClick"}>On tab or click</option>
-                    </select>
-                </div>
+                Focus outlines
+                <HTMLSelect onChange={this.updateFocusStyleState()} value={selectedFocusStyle}>
+                    <option value="tab">On tab</option>
+                    <option value="tabOrClick">On tab or click</option>
+                </HTMLSelect>
             </label>
         );
     }
@@ -811,11 +812,9 @@ export class MutableTable extends React.Component<{}, IMutableTableState> {
         const child = (
             <label className={labelClasses}>
                 {label}
-                <div className={Classes.SELECT}>
-                    <select onChange={handleChange(stateKey)} value={selectedValue} disabled={isDisabled}>
-                        {options}
-                    </select>
-                </div>
+                <HTMLSelect disabled={isDisabled} onChange={handleChange(stateKey)} value={selectedValue}>
+                    {options}
+                </HTMLSelect>
             </label>
         );
 

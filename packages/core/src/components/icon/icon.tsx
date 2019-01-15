@@ -47,10 +47,9 @@ export interface IIconProps extends IIntentProps, IProps {
     style?: React.CSSProperties;
 
     /**
-     * Description string.
-     * Browsers usually render this as a tooltip on hover, whereas screen
-     * readers will use it for aural feedback.
-     * Null by default
+     * Description string. This string does not appear in normal browsers, but
+     * it increases accessibility. For instance, screen readers will use it for
+     * aural feedback. Null by default
      */
     title?: string | false | null;
 }
@@ -80,7 +79,7 @@ export class Icon extends React.PureComponent<IIconProps & React.SVGAttributes<S
         const classes = classNames(Classes.ICON, Classes.intentClass(intent), className);
         const viewBox = `0 0 ${pixelGridSize} ${pixelGridSize}`;
 
-        // ".pt-icon" will apply a "fill" CSS style, so we need to inject an inline style to override it
+        // ICON class will apply a "fill" CSS style, so we need to inject an inline style to override it
         let { style = {} } = this.props;
         if (color != null) {
             style = { ...style, fill: color };
@@ -96,7 +95,7 @@ export class Icon extends React.PureComponent<IIconProps & React.SVGAttributes<S
                 height={iconSize}
                 viewBox={viewBox}
             >
-                {title ? <title>{title}</title> : null}
+                {title && <desc>{title}</desc>}
                 {paths}
             </svg>
         );

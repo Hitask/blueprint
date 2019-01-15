@@ -42,18 +42,18 @@ export interface ICollapseProps extends IProps {
 
 export interface ICollapseState {
     /** The height that should be used for the content animations. This is a CSS value, not just a number. */
-    height?: string;
+    height: string;
 
     /** The state the element is currently in. */
-    animationState?: AnimationStates;
+    animationState: AnimationStates;
 }
 
 export enum AnimationStates {
-    CLOSED = "closed",
-    OPENING = "opening",
-    OPEN = "open",
-    CLOSING_START = "closing-start",
-    CLOSING_END = "closing-end",
+    CLOSED,
+    OPENING,
+    OPEN,
+    CLOSING_START,
+    CLOSING_END,
 }
 
 /*
@@ -94,7 +94,7 @@ export class Collapse extends AbstractPureComponent<ICollapseProps, ICollapseSta
     };
 
     public state = {
-        animationState: AnimationStates.OPEN,
+        animationState: this.props.isOpen ? AnimationStates.OPEN : AnimationStates.CLOSED,
         height: "0px",
     };
 

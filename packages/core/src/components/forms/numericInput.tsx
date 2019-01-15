@@ -37,7 +37,7 @@ export interface INumericInputProps extends IIntentProps, IProps {
      * The position of the buttons with respect to the input field.
      * @default Position.RIGHT
      */
-    buttonPosition?: Position.LEFT | Position.RIGHT | "none";
+    buttonPosition?: typeof Position.LEFT | typeof Position.RIGHT | "none";
 
     /**
      * Whether the value should be clamped to `[min, max]` on blur.
@@ -57,6 +57,11 @@ export interface INumericInputProps extends IIntentProps, IProps {
     fill?: boolean;
 
     /**
+     * Ref handler that receives HTML `<input>` element backing this component.
+     */
+    inputRef?: (ref: HTMLInputElement | null) => any;
+
+    /**
      * If set to `true`, the input will display with larger styling.
      * This is equivalent to setting `Classes.LARGE` via className on the
      * parent control group and on the child input group.
@@ -73,7 +78,7 @@ export interface INumericInputProps extends IIntentProps, IProps {
     placeholder?: string;
 
     /**
-     * The increment between successive values when <kbd class="pt-key">shift</kbd> is held.
+     * The increment between successive values when <kbd>shift</kbd> is held.
      * Pass explicit `null` value to disable this interaction.
      * @default 10
      */
@@ -86,7 +91,7 @@ export interface INumericInputProps extends IIntentProps, IProps {
     min?: number;
 
     /**
-     * The increment between successive values when <kbd class="pt-key">alt</kbd> is held.
+     * The increment between successive values when <kbd>alt</kbd> is held.
      * Pass explicit `null` value to disable this interaction.
      * @default 0.1
      */
@@ -362,6 +367,7 @@ export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumeri
 
     private inputRef = (input: HTMLInputElement) => {
         this.inputElement = input;
+        Utils.safeInvoke(this.props.inputRef, input);
     };
 
     // Callbacks - Buttons
