@@ -128,7 +128,7 @@ describe("<PanelStack>", () => {
         newPanelButton.simulate("click");
 
         const backButtonWithoutTitle = panelStackWrapper.findClass(Classes.PANEL_STACK_HEADER_BACK);
-        assert.equal(backButtonWithoutTitle.text(), "chevron-left");
+        assert.equal(backButtonWithoutTitle.text(), "");
 
         const newPanelButtonOnNotEmpty = panelStackWrapper
             .find("#new-panel-button")
@@ -141,7 +141,7 @@ describe("<PanelStack>", () => {
             .findClass(Classes.PANEL_STACK_HEADER_BACK)
             .hostNodes()
             .at(1);
-        assert.equal(backButtonWithTitle.text(), "chevron-left");
+        assert.equal(backButtonWithTitle.text(), "");
     });
 
     interface IPanelStackWrapper extends ReactWrapper<IPanelStackProps, any> {
