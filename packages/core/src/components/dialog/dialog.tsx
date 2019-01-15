@@ -10,8 +10,9 @@ import * as React from "react";
 import { AbstractPureComponent } from "../../common/abstractPureComponent";
 import * as Classes from "../../common/classes";
 import * as Errors from "../../common/errors";
-import { IProps } from "../../common/props";
-import { safeInvoke } from "../../common/utils";
+import { DISPLAYNAME_PREFIX, IProps, MaybeElement } from "../../common/props";
+import { Button } from "../button/buttons";
+import { H4 } from "../html/html";
 import { Icon, IconName } from "../icon/icon";
 import { IBackdropProps, IOverlayableProps, Overlay } from "../overlay/overlay";
 
@@ -33,7 +34,7 @@ export interface IDialogProps extends IOverlayableProps, IBackdropProps, IProps 
      * dialog's header. Note that the header will only be rendered if `title` is
      * provided.
      */
-    icon?: IconName | JSX.Element;
+    icon?: IconName | MaybeElement;
 
     /**
      * Whether to show the close button in the dialog's header.
@@ -72,7 +73,7 @@ export class Dialog extends AbstractPureComponent<IDialogProps, {}> {
         isOpen: false,
     };
 
-    public static displayName = "Blueprint2.Dialog";
+    public static displayName = `${DISPLAYNAME_PREFIX}.Dialog`;
 
     public render() {
         const { children, className, overlayClassName, style, ...restProps } = this.props;
@@ -82,7 +83,7 @@ export class Dialog extends AbstractPureComponent<IDialogProps, {}> {
                 hasBackdrop={true}
                 {...restProps}
             >
-                <div className={Classes.DIALOG_CONTAINER} onMouseDown={this.handleContainerMouseDown}>
+                <div className={Classes.DIALOG_CONTAINER}>
                     <div className={classNames(Classes.DIALOG, className)} style={style}>
                         {this.maybeRenderHeader()}
                         {children}
@@ -108,9 +109,13 @@ export class Dialog extends AbstractPureComponent<IDialogProps, {}> {
         // this gives us a behavior as if the default value were `true`
         if (this.props.isCloseButtonShown !== false) {
             return (
-                <button aria-label="Close" className={Classes.DIALOG_CLOSE_BUTTON} onClick={this.props.onClose}>
-                    <Icon icon="small-cross" iconSize={Icon.SIZE_LARGE} />
-                </button>
+                <Button
+                    aria-label="Close"
+                    className={Classes.DIALOG_CLOSE_BUTTON}
+                    icon={<Icon icon="small-cross" iconSize={Icon.SIZE_LARGE} />}
+                    minimal={true}
+                    onClick={this.props.onClose}
+                />
             );
         } else {
             return undefined;
@@ -125,17 +130,9 @@ export class Dialog extends AbstractPureComponent<IDialogProps, {}> {
         return (
             <div className={Classes.DIALOG_HEADER}>
                 <Icon icon={icon} iconSize={Icon.SIZE_LARGE} />
-                <h4 className={Classes.DIALOG_HEADER_TITLE}>{title}</h4>
+                <H4>{title}</H4>
                 {this.maybeRenderCloseButton()}
             </div>
         );
     }
-
-    private handleContainerMouseDown = (evt: React.MouseEvent<HTMLDivElement>) => {
-        // quick re-implementation of canOutsideClickClose because .pt-dialog-container covers the backdrop
-        const isClickOutsideDialog = (evt.target as HTMLElement).closest(`.${Classes.DIALOG}`) == null;
-        if (isClickOutsideDialog && this.props.canOutsideClickClose) {
-            safeInvoke(this.props.onClose, evt);
-        }
-    };
 }

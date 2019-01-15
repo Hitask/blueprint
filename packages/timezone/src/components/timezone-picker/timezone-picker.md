@@ -7,7 +7,7 @@ timezone metadata.
 
 @reactExample TimezonePickerExample
 
-@## JavaScript API
+@## Props
 
 This component only supports controlled usage.
 Control the selected timezone with the `value` prop.
@@ -25,7 +25,7 @@ Moment Timezone uses a similar [heuristic for guessing](http://momentjs.com/time
 the user's timezone.
 
 <div class="@ns-callout @ns-intent-warning @ns-icon-warning-sign">
-    <h4 class="@ns-callout-title">Local timezone detection</h4>
+    <h4 class="@ns-heading">Local timezone detection</h4>
     We detect the local timezone when the `showLocalTimezone` prop is enabled and cannot guarantee correctness in all browsers.
     In supported browsers, the [i18n API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat/resolvedOptions) is used.
     In other browsers, `Date` methods and a population heuristic are used.
@@ -36,22 +36,11 @@ the user's timezone.
 ```tsx
 import { TimezonePicker } from "@blueprintjs/timezone";
 
-export interface ITimezoneExampleState {
-    timezone: string;
-}
-
-export class TimezoneExample extends React.PureComponent<{}, ITimezoneExampleState> {
-    public state: ITimezoneExampleState = {
-        timezone: "",
-    };
+export class TimezoneExample extends React.PureComponent<{}, { timezone: string; }> {
+    public state = { timezone: "" };
 
     public render() {
-        return (
-            <TimezonePicker
-                value={this.state.timezone}
-                onChange={this.handleTimezoneChange}
-            />
-        );
+        return <TimezonePicker value={this.state.timezone} onChange={this.handleTimezoneChange} />;
     }
 
     private handleTimezoneChange = (timezone: string) => this.setState({ timezone });

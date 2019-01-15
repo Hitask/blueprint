@@ -31,8 +31,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         typescriptOnly: false,
     };
 
-    public static COMPONENT_MESSAGE = "use <NamedIcon /> component for icon prop";
-    public static LITERAL_MESSAGE = "use IconName string literal for icon prop";
+    public static componentMessage = (component: string) => `Replace icon literal with component: ${component}`;
+    public static literalMessage = (literal: string) => `Replace icon component with literal: ${literal}`;
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const [option = OPTION_COMPONENT] = this.ruleArguments;
@@ -45,12 +45,19 @@ function walk(ctx: Lint.WalkContext<string>): void {
         if (ts.isJsxAttribute(node) && node.name.text === "icon") {
             const { initializer } = node;
             const option = ctx.options;
-            if (ts.isStringLiteral(initializer) && option === OPTION_COMPONENT) {
-                addFailure(ctx, node, Rule.COMPONENT_MESSAGE, `icon={<${pascalCase(initializer.text)}Icon />}`);
+            if (initializer === undefined) {
+                // no-op
+            } else if (ts.isStringLiteral(initializer) && option === OPTION_COMPONENT) {
+                // "tick" -> <TickIcon />
+                const iconName = `<${pascalCase(initializer.text)}Icon />`;
+                addFailure(ctx, node, Rule.componentMessage(iconName), `{${iconName}}`);
             } else if (ts.isJsxExpression(initializer) && option === OPTION_LITERAL) {
+                // <TickIcon /> -> "tick"
                 const match = /<(\w+)Icon /.exec(initializer.getText());
-                const literal = match == null ? undefined : `icon="${dashCase(match[1])}"`;
-                addFailure(ctx, node, Rule.LITERAL_MESSAGE, literal);
+                if (match != null) {
+                    const message = Rule.literalMessage(`"${dashCase(match[1])}"`);
+                    addFailure(ctx, node, message, message);
+                }
             }
         }
         return ts.forEachChild(node, cb);
@@ -58,8 +65,9 @@ function walk(ctx: Lint.WalkContext<string>): void {
 }
 
 function addFailure(ctx: Lint.WalkContext<string>, node: ts.Declaration, message: string, replacement?: string) {
-    const start = node.getStart(ctx.sourceFile);
-    const width = node.getWidth(ctx.sourceFile);
+    const offsetLength = "icon=".length;
+    const start = node.getStart(ctx.sourceFile) + offsetLength;
+    const width = node.getWidth(ctx.sourceFile) - offsetLength;
     const fixer = replacement == null ? undefined : new Lint.Replacement(start, width, replacement);
     ctx.addFailureAt(start, width, message, fixer);
 }

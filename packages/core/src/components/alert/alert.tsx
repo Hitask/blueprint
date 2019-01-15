@@ -7,7 +7,7 @@
 import classNames from "classnames";
 import * as React from "react";
 
-import { AbstractPureComponent, Classes, Intent, IProps } from "../../common";
+import { AbstractPureComponent, Classes, DISPLAYNAME_PREFIX, Intent, IProps, MaybeElement } from "../../common";
 import {
     ALERT_WARN_CANCEL_ESCAPE_KEY,
     ALERT_WARN_CANCEL_OUTSIDE_CLICK,
@@ -17,10 +17,11 @@ import { safeInvoke } from "../../common/utils";
 import { Button } from "../button/buttons";
 import { Dialog } from "../dialog/dialog";
 import { Icon, IconName } from "../icon/icon";
+import { IOverlayLifecycleProps } from "../overlay/overlay";
 
-export interface IAlertProps extends IProps {
+export interface IAlertProps extends IOverlayLifecycleProps, IProps {
     /**
-     * Whether pressing <kbd class="pt-key">escape</kbd> when focused on the Alert should cancel the alert.
+     * Whether pressing <kbd>escape</kbd> when focused on the Alert should cancel the alert.
      * If this prop is enabled, then either `onCancel` or `onClose` must also be defined.
      * @default false
      */
@@ -47,7 +48,7 @@ export interface IAlertProps extends IProps {
     confirmButtonText?: string;
 
     /** Name of a Blueprint UI icon (or an icon element) to display on the left side. */
-    icon?: IconName | JSX.Element;
+    icon?: IconName | MaybeElement;
 
     /**
      * The intent to be applied to the confirm (right-most) button.
@@ -73,6 +74,13 @@ export interface IAlertProps extends IProps {
      * @default 300
      */
     transitionDuration?: number;
+
+    /**
+     * The container element into which the overlay renders its contents, when `usePortal` is `true`.
+     * This prop is ignored if `usePortal` is `false`.
+     * @default document.body
+     */
+    portalContainer?: HTMLElement;
 
     /**
      * Handler invoked when the alert is canceled. Alerts can be **canceled** in the following ways:
@@ -107,19 +115,29 @@ export class Alert extends AbstractPureComponent<IAlertProps, {}> {
         isOpen: false,
     };
 
-    public static displayName = "Blueprint2.Alert";
+    public static displayName = `${DISPLAYNAME_PREFIX}.Alert`;
 
     public render() {
-        const { children, className, icon, intent, cancelButtonText, confirmButtonText } = this.props;
+        const {
+            canEscapeKeyCancel,
+            canOutsideClickCancel,
+            children,
+            className,
+            icon,
+            intent,
+            cancelButtonText,
+            confirmButtonText,
+            onClose,
+            ...overlayProps
+        } = this.props;
         return (
             <Dialog
+                {...overlayProps}
                 className={classNames(Classes.ALERT, className)}
-                canEscapeKeyClose={this.props.canEscapeKeyCancel}
-                canOutsideClickClose={this.props.canOutsideClickCancel}
-                isOpen={this.props.isOpen}
+                canEscapeKeyClose={canEscapeKeyCancel}
+                canOutsideClickClose={canOutsideClickCancel}
                 onClose={this.handleCancel}
-                style={this.props.style}
-                transitionDuration={this.props.transitionDuration}
+                portalContainer={this.props.portalContainer}
             >
                 <div className={Classes.ALERT_BODY}>
                     <Icon icon={icon} iconSize={40} intent={intent} />

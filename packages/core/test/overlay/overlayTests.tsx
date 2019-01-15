@@ -10,9 +10,9 @@ import * as React from "react";
 import { spy } from "sinon";
 
 import { dispatchMouseEvent } from "@blueprintjs/test-commons";
-
 import * as Keys from "../../src/common/keys";
 import { Classes, IOverlayProps, Overlay, Portal, Utils } from "../../src/index";
+import { findInPortal } from "../utils";
 
 const BACKDROP_SELECTOR = `.${Classes.OVERLAY_BACKDROP}`;
 
@@ -53,9 +53,33 @@ describe("<Overlay>", () => {
                 {createOverlayContents()}
             </Overlay>,
         );
-        assert.lengthOf(overlay.find("h1"), 1);
+        assert.lengthOf(overlay.find("strong"), 1);
         assert.lengthOf(overlay.find(BACKDROP_SELECTOR), 1);
         overlay.unmount();
+    });
+
+    it("renders contents to specified container correctly", () => {
+        const CLASS_TO_TEST = "bp-test-content";
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        mountWrapper(
+            <Overlay isOpen={true} portalContainer={container}>
+                <p className={CLASS_TO_TEST}>test</p>
+            </Overlay>,
+        );
+        assert.lengthOf(container.getElementsByClassName(CLASS_TO_TEST), 1);
+        document.body.removeChild(container);
+    });
+
+    it("portalClassName appears on Portal", () => {
+        const CLASS_TO_TEST = "bp-test-content";
+        mountWrapper(
+            <Overlay isOpen={true} portalClassName={CLASS_TO_TEST}>
+                <p>test</p>
+            </Overlay>,
+        );
+        // search document for portal container element.
+        assert.isDefined(document.querySelector(`.${Classes.PORTAL}.${CLASS_TO_TEST}`));
     });
 
     it("renders Portal after first opened", () => {
@@ -81,71 +105,9 @@ describe("<Overlay>", () => {
                 {createOverlayContents()}
             </Overlay>,
         );
-        assert.lengthOf(overlay.find("h1"), 1);
+        assert.lengthOf(overlay.find("strong"), 1);
         assert.lengthOf(overlay.find(BACKDROP_SELECTOR), 0);
         overlay.unmount();
-    });
-
-    it("invokes didOpen when Overlay is opened", () => {
-        const didOpen = spy();
-        mountWrapper(
-            <Overlay didOpen={didOpen} isOpen={false}>
-                {createOverlayContents()}
-            </Overlay>,
-        );
-        assert.isTrue(didOpen.notCalled, "didOpen invoked when overlay closed");
-
-        wrapper.setProps({ isOpen: true });
-        assert.isTrue(didOpen.calledOnce, "didOpen not invoked when overlay open");
-    });
-
-    it("invokes didOpen when inline Overlay is opened", () => {
-        const didOpen = spy();
-        mountWrapper(
-            <Overlay didOpen={didOpen} isOpen={false} usePortal={false}>
-                {createOverlayContents()}
-            </Overlay>,
-        );
-        assert.isTrue(didOpen.notCalled, "didOpen invoked when overlay closed");
-
-        wrapper.setProps({ isOpen: true });
-        assert.isTrue(didOpen.calledOnce, "didOpen not invoked when overlay open");
-    });
-
-    it("invokes didClose when Overlay is closed", done => {
-        const didClose = spy();
-        mountWrapper(
-            <Overlay didClose={didClose} isOpen={true} transitionDuration={1}>
-                {createOverlayContents()}
-            </Overlay>,
-        );
-        assert.isTrue(didClose.notCalled, "didClose invoked when overlay open");
-
-        wrapper.setProps({ isOpen: false });
-        // didClose relies on transition onExited so we go async for a sec
-        setTimeout(() => {
-            wrapper.update();
-            assert.isTrue(didClose.calledOnce, "didClose not invoked when overlay closed");
-            assert.isFalse(wrapper.find("h1").exists(), "no content");
-            done();
-        });
-    });
-
-    it("invokes didClose when inline Overlay is closed", done => {
-        const didClose = spy();
-        mountWrapper(
-            <Overlay didClose={didClose} isOpen={true} usePortal={false} transitionDuration={1}>
-                {createOverlayContents()}
-            </Overlay>,
-        );
-        assert.isTrue(didClose.notCalled, "didClose invoked when overlay open");
-
-        wrapper.setProps({ isOpen: false });
-        // didClose relies on transition onExited so we go async for a sec
-        setTimeout(() => {
-            assert.isTrue(didClose.calledOnce, "didClose not invoked when overlay closed");
-            done();
-        });
     });
 
     it("renders portal attached to body when not inline after first opened", () => {
@@ -215,7 +177,7 @@ describe("<Overlay>", () => {
             const onClose = spy();
             mountWrapper(
                 <Overlay isOpen={true} onClose={onClose}>
-                    <div>
+                    <div id="outer-element">
                         {createOverlayContents()}
                         <Overlay isOpen={true}>
                             <div id="inner-element">{createOverlayContents()}</div>
@@ -223,7 +185,8 @@ describe("<Overlay>", () => {
                     </div>
                 </Overlay>,
             );
-            wrapper.find("#inner-element").simulate("mousedown");
+            // this hackery is necessary for React 15 support, where Portals break trees.
+            findInPortal(findInPortal(wrapper, "#outer-element"), "#inner-element").simulate("mousedown");
             assert.isTrue(onClose.notCalled);
         });
 
@@ -258,7 +221,7 @@ describe("<Overlay>", () => {
             );
             const portal = overlay.find(Portal);
             assert.isTrue(portal.exists(), "missing Portal");
-            assert.lengthOf(portal.find("h1"), 1, "missing h1");
+            assert.lengthOf(portal.find("strong"), 1, "missing h1");
             overlay.unmount();
         });
     });
@@ -325,7 +288,7 @@ describe("<Overlay>", () => {
                 </Overlay>,
             );
             wrapper.find(BACKDROP_SELECTOR).simulate("mousedown");
-            assertFocus(`h1.${Classes.OVERLAY_CONTENT}`, done);
+            assertFocus(`strong.${Classes.OVERLAY_CONTENT}`, done);
         });
 
         it("does not result in maximum call stack if two overlays open with enforceFocus=true", () => {
@@ -476,8 +439,45 @@ describe("<Overlay>", () => {
         }
     });
 
+    it("lifecycle methods called as expected", done => {
+        // these lifecycles are passed directly to CSSTransition from react-transition-group
+        // so we do not need to test these extensively. one integration test should do.
+        const onClosed = spy();
+        const onClosing = spy();
+        const onOpened = spy();
+        const onOpening = spy();
+        wrapper = mountWrapper(
+            <Overlay
+                {...{ onClosed, onClosing, onOpened, onOpening }}
+                isOpen={true}
+                usePortal={false}
+                // transition duration shorter than timeout below to ensure it's done
+                transitionDuration={8}
+            >
+                {createOverlayContents()}
+            </Overlay>,
+        );
+        assert.isTrue(onOpening.calledOnce, "onOpening");
+        assert.isFalse(onOpened.calledOnce, "onOpened not called yet");
+
+        setTimeout(() => {
+            // on*ed called after transition completes
+            assert.isTrue(onOpened.calledOnce, "onOpened");
+
+            wrapper.setProps({ isOpen: false });
+            // on*ing called immediately when prop changes
+            assert.isTrue(onClosing.calledOnce, "onClosing");
+            assert.isFalse(onClosed.calledOnce, "onClosed not called yet");
+
+            setTimeout(() => {
+                assert.isTrue(onClosed.calledOnce, "onOpened");
+                done();
+            }, 10);
+        }, 10);
+    });
+
     let index = 0;
     function createOverlayContents() {
-        return <h1 id={`overlay-${index++}`}>Overlay content!</h1>;
+        return <strong id={`overlay-${index++}`}>Overlay content!</strong>;
     }
 });

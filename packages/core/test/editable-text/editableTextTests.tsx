@@ -7,7 +7,6 @@
 import { assert } from "chai";
 import { mount, ReactWrapper, shallow } from "enzyme";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { spy } from "sinon";
 
 import * as Keys from "../../src/common/keys";
@@ -61,14 +60,10 @@ describe("<EditableText>", () => {
 
         it("calls onChange when escape key pressed and value is unconfirmed", () => {
             const changeSpy = spy();
-            const input = mount(
-                <EditableText isEditing={true} onChange={changeSpy} placeholder="Edit..." defaultValue="alphabet" />,
-            ).find("input");
-
-            input.simulate("keydown", { which: Keys.ESCAPE });
-            assert.equal(changeSpy.callCount, 0, "onChange called incorrectly"); // no change so no invoke
-
-            input.simulate("change", { target: { value: "hello" } }).simulate("keydown", { which: Keys.ESCAPE });
+            mount(<EditableText isEditing={true} onChange={changeSpy} placeholder="Edit..." defaultValue="alphabet" />)
+                .find("input")
+                .simulate("change", { target: { value: "hello" } })
+                .simulate("keydown", { which: Keys.ESCAPE });
             assert.equal(changeSpy.callCount, 2, "onChange not called twice"); // change & escape
             assert.deepEqual(changeSpy.args[1], ["alphabet"], `unexpected argument "${changeSpy.args[1][0]}"`);
         });
@@ -163,7 +158,7 @@ describe("<EditableText>", () => {
         it("controlled mode can only change value via props", () => {
             let expected = "alphabet";
             const wrapper = mount(<EditableText isEditing={true} value={expected} />);
-            const inputElement = ReactDOM.findDOMNode(wrapper.instance()).querySelector("input") as HTMLInputElement;
+            const inputElement = wrapper.getDOMNode().querySelector("input") as HTMLInputElement;
 
             const input = wrapper.find("input");
             input.simulate("change", { target: { value: "hello" } });
@@ -248,7 +243,7 @@ describe("<EditableText>", () => {
             const wrapper = mount(
                 <EditableText isEditing={true} onConfirm={confirmSpy} multiline={true} confirmOnEnterKey={true} />,
             );
-            const textarea = ReactDOM.findDOMNode(wrapper.instance()).querySelector("textarea") as HTMLTextAreaElement;
+            const textarea = wrapper.getDOMNode().querySelector("textarea") as HTMLTextAreaElement;
             simulateHelper(wrapper, "", { ctrlKey: true, target: textarea, which: Keys.ENTER });
             assert.strictEqual(textarea.value, "\n");
             simulateHelper(wrapper, "", { metaKey: true, target: textarea, which: Keys.ENTER });

@@ -6,8 +6,8 @@
 
 import * as React from "react";
 
-import { Button, Intent, ITagProps, Label, Switch, TagInput } from "@blueprintjs/core";
-import { BaseExample, handleBooleanChange } from "@blueprintjs/docs-theme";
+import { Button, H5, Intent, ITagProps, Switch, TagInput } from "@blueprintjs/core";
+import { Example, handleBooleanChange, IExampleProps } from "@blueprintjs/docs-theme";
 
 const INTENTS = [Intent.NONE, Intent.PRIMARY, Intent.SUCCESS, Intent.DANGER, Intent.WARNING];
 
@@ -23,39 +23,45 @@ const VALUES = [
 ];
 
 export interface ITagInputExampleState {
-    addOnBlur?: boolean;
-    disabled?: boolean;
-    fill?: boolean;
-    intent?: boolean;
-    large?: boolean;
-    minimal?: boolean;
-    values?: React.ReactNode[];
+    addOnBlur: boolean;
+    addOnPaste: boolean;
+    disabled: boolean;
+    fill: boolean;
+    intent: boolean;
+    large: boolean;
+    leftIcon: boolean;
+    minimal: boolean;
+    values: React.ReactNode[];
 }
 
-export class TagInputExample extends BaseExample<ITagInputExampleState> {
+export class TagInputExample extends React.PureComponent<IExampleProps, ITagInputExampleState> {
     public state: ITagInputExampleState = {
         addOnBlur: false,
+        addOnPaste: true,
         disabled: false,
         fill: false,
         intent: false,
         large: false,
+        leftIcon: true,
         minimal: false,
         values: VALUES,
     };
 
     private handleAddOnBlurChange = handleBooleanChange(addOnBlur => this.setState({ addOnBlur }));
+    private handleAddOnPasteChange = handleBooleanChange(addOnPaste => this.setState({ addOnPaste }));
     private handleDisabledChange = handleBooleanChange(disabled => this.setState({ disabled }));
     private handleFillChange = handleBooleanChange(fill => this.setState({ fill }));
     private handleIntentChange = handleBooleanChange(intent => this.setState({ intent }));
     private handleLargeChange = handleBooleanChange(large => this.setState({ large }));
+    private handleLeftIconChange = handleBooleanChange(leftIcon => this.setState({ leftIcon }));
     private handleMinimalChange = handleBooleanChange(minimal => this.setState({ minimal }));
 
-    protected renderExample() {
-        const { addOnBlur, disabled, fill, large, values } = this.state;
+    public render() {
+        const { minimal, values, ...props } = this.state;
 
         const clearButton = (
             <Button
-                disabled={disabled}
+                disabled={props.disabled}
                 icon={values.length > 1 ? "cross" : "refresh"}
                 minimal={true}
                 onClick={this.handleClear}
@@ -67,65 +73,40 @@ export class TagInputExample extends BaseExample<ITagInputExampleState> {
         // example purposes!!
         const getTagProps = (_v: string, index: number): ITagProps => ({
             intent: this.state.intent ? INTENTS[index % INTENTS.length] : Intent.NONE,
-            large,
-            minimal: this.state.minimal,
+            large: props.large,
+            minimal,
         });
 
         return (
-            <TagInput
-                addOnBlur={addOnBlur}
-                disabled={disabled}
-                fill={fill}
-                large={large}
-                leftIcon="user"
-                onChange={this.handleChange}
-                placeholder="Separate values with commas..."
-                rightElement={clearButton}
-                tagProps={getTagProps}
-                values={values}
-            />
+            <Example options={this.renderOptions()} {...this.props}>
+                <TagInput
+                    {...props}
+                    leftIcon={this.state.leftIcon ? "user" : undefined}
+                    onChange={this.handleChange}
+                    placeholder="Separate values with commas..."
+                    rightElement={clearButton}
+                    tagProps={getTagProps}
+                    values={values}
+                />
+            </Example>
         );
     }
 
-    protected renderOptions() {
-        return [
-            [
-                <Switch
-                    checked={this.state.fill}
-                    label="Fill container width"
-                    key="fill"
-                    onChange={this.handleFillChange}
-                />,
-                <Switch checked={this.state.large} label="Large" key="large" onChange={this.handleLargeChange} />,
-                <Switch
-                    checked={this.state.disabled}
-                    label="Disabled"
-                    key="disabled"
-                    onChange={this.handleDisabledChange}
-                />,
-                <Switch
-                    checked={this.state.addOnBlur}
-                    label="Add on blur"
-                    key="addOnBlur"
-                    onChange={this.handleAddOnBlurChange}
-                />,
-            ],
-            [
-                <Label text="Tag props" key="heading" />,
-                <Switch
-                    checked={this.state.minimal}
-                    label="Use minimal tags"
-                    key="minimal"
-                    onChange={this.handleMinimalChange}
-                />,
-                <Switch
-                    checked={this.state.intent}
-                    label="Cycle through intents"
-                    key="intent"
-                    onChange={this.handleIntentChange}
-                />,
-            ],
-        ];
+    private renderOptions() {
+        return (
+            <>
+                <H5>Props</H5>
+                <Switch label="Large" checked={this.state.large} onChange={this.handleLargeChange} />
+                <Switch label="Disabled" checked={this.state.disabled} onChange={this.handleDisabledChange} />
+                <Switch label="Left icon" checked={this.state.leftIcon} onChange={this.handleLeftIconChange} />
+                <Switch label="Add on blur" checked={this.state.addOnBlur} onChange={this.handleAddOnBlurChange} />
+                <Switch label="Add on paste" checked={this.state.addOnPaste} onChange={this.handleAddOnPasteChange} />
+                <Switch label="Fill container width" checked={this.state.fill} onChange={this.handleFillChange} />
+                <H5>Tag props</H5>
+                <Switch label="Use minimal tags" checked={this.state.minimal} onChange={this.handleMinimalChange} />
+                <Switch label="Cycle through intents" checked={this.state.intent} onChange={this.handleIntentChange} />
+            </>
+        );
     }
 
     private handleChange = (values: React.ReactNode[]) => {

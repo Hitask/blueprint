@@ -3,7 +3,7 @@
 Use `Select<T>` for choosing one item from a list. The component's children will be wrapped in a [`Popover`](#labs/popover) that contains the list and an optional `InputGroup` to filter it. Provide a predicate to customize the filtering algorithm. The value of a `Select<T>` (the currently chosen item) is uncontrolled: listen to changes with `onItemSelect`.
 
 <div class="@ns-callout @ns-intent-primary @ns-icon-info-sign">
-    <h4 class="@ns-callout-title">Disabling a Select</h4>
+    <h4 class="@ns-heading">Disabling a Select</h4>
     <p>Disabling the component requires setting the `disabled` prop to `true`
     and separately disabling the component's children as appropriate (because `Select` accepts arbitrary children).</p>
     <p>For example, `<Select ... disabled={true}><Button ... disabled={true} /></Select>`</p>
@@ -60,19 +60,27 @@ See the code sample in [Item List Renderer API](#select/select-component.item-li
 
 @## Controlled usage
 
-The `InputGroup` value is managed by `Select`'s internal state and is not exposed via props. If you would like to control it, you can circumvent `Select` state by passing your `value` state and `onChange` handler to `inputProps`. You can then query the `items` array directly and omit both predicate props.
+The input value can be controlled with the `query` and `onQueryChange` props. _Do not use `inputProps` for this;_ the component ignores `inputProps.value` and `inputProps.onChange` in favor of `query` and `onQueryChange` (as noted in the prop documentation).
+
+The focused item (for keyboard interactions) can be controlled with the `activeItem` and `onActiveItemChange` props.
 
 ```tsx
-// controlling query involves controlling the input and doing your own filtering
 <FilmSelect
-    inputProps={{ value: this.state.myQuery, onChange: this.handleChange }}
     items={myFilter(ALL_ITEMS, this.state.myQuery)}
     itemRenderer={...}
     onItemSelect={...}
+    // controlled active item
+    activeItem={this.state.myActiveItem}
+    onActiveItemChange={this.handleActiveItemChange}
+    // controlled query
+    query={this.state.myQuery}
+    onQueryChange={this.handleQueryChange}
 />
 ```
 
-This "escape hatch" can be used to implement all sorts of advanced behavior on top of the basic `Select` interactions, such as windowed filtering for large data sets.
+This controlled usage allows you to implement all sorts of advanced behavior on
+top of the basic `Select` interactions, such as windowed filtering for large
+data sets.
 
 @## JavaScript API
 
@@ -95,7 +103,7 @@ const filterFilm: ItemPredicate<IFilm> = (query, film) => {
     return film.title.toLowerCase().indexOf(query.toLowerCase()) >= 0;
 };
 
-const renderFilm: ItemRenderer<Film> = (item, { handleClick, modifiers }) => {
+const renderFilm: ItemRenderer<Film> = (film, { handleClick, modifiers }) => {
     if (!modifiers.filtered) {
         return null;
     }

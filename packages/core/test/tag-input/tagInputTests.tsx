@@ -150,6 +150,42 @@ describe("<TagInput>", () => {
             });
         });
 
+        describe("when addOnPaste=true", () => {
+            it("is invoked on paste if the text contains a delimiter between values", () => {
+                const text = "pasted\ntext";
+                const onAdd = sinon.stub();
+                const wrapper = mount(<TagInput values={VALUES} addOnPaste={true} onAdd={onAdd} />);
+                wrapper.find("input").simulate("paste", { clipboardData: { getData: () => text } });
+                assert.isTrue(onAdd.calledOnce);
+                assert.deepEqual(onAdd.args[0][0], ["pasted", "text"]);
+            });
+
+            it("is invoked on paste if the text contains a trailing delimiter", () => {
+                const text = "pasted\n";
+                const onAdd = sinon.stub();
+                const wrapper = mount(<TagInput values={VALUES} addOnPaste={true} onAdd={onAdd} />);
+                wrapper.find("input").simulate("paste", { clipboardData: { getData: () => text } });
+                assert.isTrue(onAdd.calledOnce);
+                assert.deepEqual(onAdd.args[0][0], ["pasted"]);
+            });
+
+            it("is not invoked on paste if the text does not include a delimiter", () => {
+                const text = "pasted";
+                const onAdd = sinon.stub();
+                const wrapper = mount(<TagInput values={VALUES} addOnPaste={true} onAdd={onAdd} />);
+                wrapper.find("input").simulate("paste", { clipboardData: { getData: () => text } });
+                assert.isTrue(onAdd.notCalled);
+            });
+        });
+
+        it("is not invoked on paste when addOnPaste=false", () => {
+            const text = "pasted\ntext";
+            const onAdd = sinon.stub();
+            const wrapper = mount(<TagInput values={VALUES} addOnPaste={false} onAdd={onAdd} />);
+            wrapper.find("input").simulate("paste", { clipboardData: { getData: () => text } });
+            assert.isTrue(onAdd.notCalled);
+        });
+
         it("does not clear the input if onAdd returns false", () => {
             const onAdd = sinon.stub().returns(false);
             const wrapper = mountTagInput(onAdd);
@@ -172,6 +208,12 @@ describe("<TagInput>", () => {
             wrapper.setState({ inputValue: NEW_VALUE });
             pressEnterInInput(wrapper, NEW_VALUE);
             assert.strictEqual(wrapper.state().inputValue, "");
+        });
+
+        it("does not clear the input if the input is controlled", () => {
+            const wrapper = mountTagInput(undefined, { inputValue: NEW_VALUE });
+            pressEnterInInput(wrapper, NEW_VALUE);
+            assert.strictEqual(wrapper.state().inputValue, NEW_VALUE);
         });
 
         it("splits input value on separator RegExp", () => {
@@ -320,6 +362,13 @@ describe("<TagInput>", () => {
             pressEnterInInput(wrapper, NEW_VALUE);
             assert.strictEqual(wrapper.state().inputValue, "");
         });
+
+        it("does not clear the input if the input is controlled", () => {
+            const onChange = sinon.stub();
+            const wrapper = shallow(<TagInput onChange={onChange} values={VALUES} inputValue={NEW_VALUE} />);
+            pressEnterInInput(wrapper, NEW_VALUE);
+            assert.strictEqual(wrapper.state().inputValue, NEW_VALUE);
+        });
     });
 
     describe("onKeyDown", () => {
@@ -428,7 +477,7 @@ describe("<TagInput>", () => {
             "input should be disabled",
         );
         wrapper.find(Tag).forEach(tag => {
-            assert.isFalse(tag.hasClass(Classes.TAG_REMOVABLE), "tag should not have tag-removable applied");
+            assert.lengthOf(tag.find("." + Classes.TAG_REMOVE), 0, "tag should not have tag-remove button");
         });
     });
 
@@ -471,6 +520,11 @@ describe("<TagInput>", () => {
             const wrapper = mount(<TagInput inputValue="" values={VALUES} />);
             wrapper.setProps({ inputValue: NEW_VALUE });
             expect(wrapper.find("input").prop("value")).to.equal(NEW_VALUE);
+        });
+
+        it("has a default empty string value", () => {
+            const input = shallow(<TagInput values={VALUES} />).find("input");
+            expect(input.prop("value")).to.equal("");
         });
     });
 

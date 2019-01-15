@@ -1,8 +1,55 @@
 @# Breadcrumbs
 
-Breadcrumbs identify the current resource in an application.
+Breadcrumbs identify the path to the current resource in an application.
 
-@## CSS API
+@reactExample BreadcrumbsExample
+
+@## Props
+
+@### Breadcrumbs
+
+The `Breadcrumbs` component requires an `items` array of
+[breadcrumb props](#core/components/breadcrumbs.breadcrumb) and renders them in
+an [`OverflowList`](#core/components/overflow-list) to automatically collapse
+breadcrumbs that do not fit in the available space.
+
+```tsx
+const { Breadcrumbs, IBreadcrumbProps, Icon } = "@blueprintjs/core";
+
+const BREADCRUMBS: IBreadcrumbProps[] = [
+    { href: "/users", icon: "folder-close", text: "Users" },
+    { href: "/users/janet", icon: "folder-close", text: "Janet" },
+    { icon: "document", text: "image.jpg" },
+];
+
+export class BreadcrumbsExample extends React.Component {
+    public render() {
+        return (
+            <Breadcrumbs
+                currentBreadcrumbRenderer={this.renderCurrentBreadcrumb}
+                items={BREADCRUMBS}
+             />
+        );
+    }
+    private renderCurrentBreadcrumb = ({ text, ...restProps }: IBreadcrumbProps) => {
+        // customize rendering of last breadcrumb
+        return <Breadcrumb {...restProps}>{text} <Icon icon="star" /></Breadcrumb>;
+    };
+}
+```
+
+@interface IBreadcrumbsProps
+
+@### Breadcrumb
+
+The `Breadcrumb` component renders an `a.@ns-breadcrumb` if given an `href` or
+`onClick` and a `span.@ns-breadcrumb` otherwise. Typically you will supply an
+array of `IBreadcrumbProps` to the `<Breadcrumbs items>` prop and only render
+this component directly when defining a custom `breadcrumbRenderer`.
+
+@interface IBreadcrumbProps
+
+@## CSS
 
 * Begin with a `ul.@ns-breadcrumbs`; each crumb should be in its own `li` as a direct descendant.
 * Breadcrumbs are typically navigation links (for example, to the parent folder in a file path), and
@@ -19,14 +66,3 @@ containing breadcrumbs that are collapsed due to layout constraints.
 [popover](#core/components/popover)) to a breadcrumb, wrap it around the contents of the `li`.
 
 @css breadcrumbs
-
-@## JavaScript API
-
-The `Breadcrumb` component is available in the __@blueprintjs/core__ package.
-Make sure to review the [getting started docs for installation info](#blueprint/getting-started).
-
-The component renders an `a.@ns-breadcrumb`. You are responsible for constructing
-the `ul.@ns-breadcrumbs` list. [`CollapsibleList`](#core/components/collapsiblelist)
-works nicely with this component because its props are a subset of `IMenuItemProps`.
-
-@interface IBreadcrumbProps

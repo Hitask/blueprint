@@ -28,14 +28,12 @@ rare cases where custom styling is necessary and should be used sparingly:
 - `$pt-font-size-large`
 - `$pt-line-height`
 
-See the [Fonts section](#core/typography.fonts) for more information and usage guidelines.
-
 @## Icon variables
 
 Most icons should be displayed using the `span.@ns-icon-*` classes or via modifier classes on
 components like `.@ns-button`. In rare cases, you may need direct access to the content
 string that generates each icon in the icon font. Blueprint provides these variables with
-straightforward names (see the [Icons section](#core/icons) for the full list of identifiers):
+straightforward names (see the [Icons section](#icons) for the full list of identifiers):
 
 - `$pt-icon-style`
 - `$pt-icon-align-left`
@@ -105,6 +103,25 @@ dark theme components.
 - `$pt-dark-input-box-shadow`
 - `$pt-dark-popover-box-shadow`
 - `$pt-dark-tooltip-box-shadow`
+
+@## Elevation drop shadows
+
+Use these when you need to apply a drop shadow to custom UI components to simulate height.
+These elevations correspond to those of the [Card](#core/components/card.elevation) component.
+
+- `$pt-elevation-shadow-0`
+- `$pt-elevation-shadow-1`
+- `$pt-elevation-shadow-2`
+- `$pt-elevation-shadow-3`
+- `$pt-elevation-shadow-4`
+
+Use these for drop shadows in dark theme.
+
+- `$pt-dark-elevation-shadow-0`
+- `$pt-dark-elevation-shadow-1`
+- `$pt-dark-elevation-shadow-2`
+- `$pt-dark-elevation-shadow-3`
+- `$pt-dark-elevation-shadow-4`
 
 @## Color aliases
 

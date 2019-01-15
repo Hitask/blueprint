@@ -1,18 +1,22 @@
 {
   "name": "@hitask/blueprint-timezone",
-  "version": "2.0.3",
+  "version": "3.2.0",
   "description": "Components related to timezone selection and UI",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
+  "esnext": "lib/esnext/index.js",
   "typings": "lib/esm/index.d.ts",
   "style": "lib/css/blueprint-timezone.css",
   "unpkg": "dist/timezone.bundle.js",
-  "sideEffects": ["*.css"],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "clean": "rm -rf dist/* && rm -rf lib/*",
     "compile": "run-p \"compile:*\"",
     "compile:esm": "tsc -p ./src",
-    "compile:cjs": "tsc -p ./src/tsconfig.cjs.json",
+    "compile:cjs": "tsc -p ./src -m commonjs --outDir lib/cjs",
+    "compile:esnext": "tsc -p ./src -t esnext --outDir lib/esnext",
     "compile:css": "sass-compile ./src",
     "dev": "run-p \"compile:esm -- --watch\" \"compile:css -- --watch\"",
     "dist": "run-s \"dist:*\"",
@@ -31,26 +35,25 @@
     "verify": "npm-run-all compile -p dist test lint"
   },
   "dependencies": {
-    "@hitask/blueprint-core": "^2.3.0",
-    "@hitask/blueprint-select": "^2.0.1",
-    "classnames": "^2.2.5",
+    "@hitask/blueprint-core": "^3.11.0",
+    "@hitask/blueprint-select": "^3.5.0",
+    "classnames": "^2.2",
     "moment": "^2.14.1",
     "moment-timezone": "^0.5.13",
     "tslib": "^1.9.0"
   },
   "devDependencies": {
-    "@blueprintjs/node-build-scripts": "^0.6.1",
-    "@blueprintjs/test-commons": "^0.5.2",
+    "@blueprintjs/node-build-scripts": "*",
+    "@blueprintjs/test-commons": "^0.8.0",
     "@types/moment-timezone": "^0.5.0",
     "enzyme": "^3.3.0",
-    "karma": "^1.7.1",
+    "karma": "^3.1.4",
     "npm-run-all": "^4.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0",
-    "react-transition-group": "^2.2.1",
-    "typescript": "~2.7.2",
-    "webpack": "^3.10.0"
+    "typescript": "~2.8.3",
+    "webpack-cli": "^3.1.2"
   },
   "repository": {
     "type": "git",
@@ -65,5 +68,5 @@
     "select"
   ],
   "author": "Palantir Technologies",
-  "license": "Apache-2.0"
+  "license": "SEE LICENSE IN LICENSE"
 }

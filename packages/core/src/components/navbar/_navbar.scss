@@ -37,6 +37,7 @@ $dark-navbar-background-color: $dark-gray5 !default;
   z-index: $pt-z-index-content;
   box-shadow: $pt-elevation-shadow-1;
   background-color: $navbar-background-color;
+  width: 100%;
   height: $pt-navbar-height;
   padding: 0 $navbar-padding;
 
@@ -60,12 +61,6 @@ $dark-navbar-background-color: $dark-gray5 !default;
     top: 0;
     right: 0;
     left: 0;
-  }
-
-  .#{$ns}-logo {
-    // logo must be centered in 50px square
-    margin-right: $navbar-padding;
-    width: $pt-navbar-height - $navbar-padding * 2;
   }
 }
 

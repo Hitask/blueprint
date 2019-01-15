@@ -11,6 +11,7 @@ import { SinonStub, spy, stub } from "sinon";
 
 import * as Errors from "../../src/common/errors";
 import { Alert, Button, Classes, IAlertProps, IButtonProps, Icon, Intent, Keys } from "../../src/index";
+import { findInPortal } from "../utils";
 
 describe("<Alert>", () => {
     it("renders its content correctly", () => {
@@ -34,6 +35,19 @@ describe("<Alert>", () => {
         assert.lengthOf(wrapper.find(`.${Classes.ALERT_FOOTER}`), 1);
     });
 
+    it("renders contents to specified container correctly", () => {
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        mount(
+            <Alert isOpen={true} portalContainer={container}>
+                <p>Are you sure you want to delete this file?</p>
+                <p>There is no going back.</p>
+            </Alert>,
+        );
+        assert.lengthOf(container.getElementsByClassName(Classes.ALERT), 1);
+        document.body.removeChild(container);
+    });
+
     it("renders the icon correctly", () => {
         const wrapper = shallow(
             <Alert icon="warning-sign" isOpen={true} confirmButtonText="Delete">
@@ -43,6 +57,19 @@ describe("<Alert>", () => {
         );
 
         assert.lengthOf(wrapper.find(Icon), 1);
+    });
+
+    it("supports overlay lifecycle props", () => {
+        const onOpening = spy();
+        const wrapper = mount(
+            <Alert isOpen={true} onOpening={onOpening}>
+                Alert
+                <p>Are you sure you want to delete this file?</p>
+                <p>There is no going back.</p>
+            </Alert>,
+        );
+        assert.isTrue(onOpening.calledOnce);
+        wrapper.unmount();
     });
 
     describe("confirm button", () => {
@@ -136,7 +163,7 @@ describe("<Alert>", () => {
                     <p>There is no going back.</p>
                 </Alert>,
             );
-            const overlay = alert.find("." + Classes.OVERLAY).hostNodes();
+            const overlay = findInPortal(alert, "." + Classes.OVERLAY).first();
 
             overlay.simulate("keydown", { which: Keys.ESCAPE });
             assert.isTrue(onCancel.notCalled);
@@ -155,7 +182,7 @@ describe("<Alert>", () => {
                     <p>There is no going back.</p>
                 </Alert>,
             );
-            const backdrop = alert.find("." + Classes.OVERLAY_BACKDROP).hostNodes();
+            const backdrop = findInPortal(alert, "." + Classes.OVERLAY_BACKDROP).hostNodes();
 
             backdrop.simulate("mousedown");
             assert.isTrue(onCancel.notCalled);

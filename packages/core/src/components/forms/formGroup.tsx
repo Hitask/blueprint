@@ -7,9 +7,15 @@
 import classNames from "classnames";
 import * as React from "react";
 import * as Classes from "../../common/classes";
-import { IIntentProps, IProps } from "../../common/props";
+import { DISPLAYNAME_PREFIX, IIntentProps, IProps } from "../../common/props";
 
 export interface IFormGroupProps extends IIntentProps, IProps {
+    /**
+     * A space-delimited list of class names to pass along to the
+     * `Classes.FORM_CONTENT` element that contains `children`.
+     */
+    contentClassName?: string;
+
     /**
      * Whether form group should appear as non-interactive.
      * Remember that `input` elements must be disabled separately.
@@ -19,6 +25,7 @@ export interface IFormGroupProps extends IIntentProps, IProps {
     /**
      * Optional helper text. The given content will be wrapped in
      * `Classes.FORM_HELPER_TEXT` and displayed beneath `children`.
+     * Helper text color is determined by the `intent`.
      */
     helperText?: React.ReactNode;
 
@@ -35,38 +42,29 @@ export interface IFormGroupProps extends IIntentProps, IProps {
     labelFor?: string;
 
     /**
-     * Whether this form input should appear as required (does not affect HTML form required status).
-     * Providing a boolean `true` value will render a default "required" message after the `label` prop.
-     * Providing a JSX value will render that content instead.
-     *
-     * _Note:_ the default message element is exposed as `FormGroup.DEFAULT_REQUIRED_CONTENT` and
-     * can be changed to provide a new global default for your app.
-     * @default false
+     * Optional secondary text that appears after the label.
      */
-    requiredLabel?: boolean | React.ReactNode;
+    labelInfo?: React.ReactNode;
+
+    /** CSS properties to apply to the root element. */
+    style?: React.CSSProperties;
 }
 
 export class FormGroup extends React.PureComponent<IFormGroupProps, {}> {
-    /**
-     * Element used to render `required` message when a boolean value is
-     * provided for that prop. Modifying the value of this property will change
-     * the default globally in your app.
-     *
-     * Defaults to `<span class={Classes.TEXT_MUTED}>(required)</span>`.
-     */
-    public static DEFAULT_REQUIRED_CONTENT = <span className={Classes.TEXT_MUTED}>(required)</span>;
+    public static displayName = `${DISPLAYNAME_PREFIX}.FormGroup`;
 
     public render() {
-        const { children, label, labelFor } = this.props;
+        const { children, contentClassName, helperText, label, labelFor, labelInfo, style } = this.props;
         return (
-            <div className={this.getClassName()}>
-                <label className={Classes.LABEL} htmlFor={labelFor}>
-                    {label}
-                    {this.maybeRenderRequiredLabel()}
-                </label>
-                <div className={Classes.FORM_CONTENT}>
+            <div className={this.getClassName()} style={style}>
+                {label && (
+                    <label className={Classes.LABEL} htmlFor={labelFor}>
+                        {label} <span className={Classes.TEXT_MUTED}>{labelInfo}</span>
+                    </label>
+                )}
+                <div className={classNames(Classes.FORM_CONTENT, contentClassName)}>
                     {children}
-                    {this.maybeRenderHelperText()}
+                    {helperText && <div className={Classes.FORM_HELPER_TEXT}>{helperText}</div>}
                 </div>
             </div>
         );
@@ -83,18 +81,5 @@ export class FormGroup extends React.PureComponent<IFormGroupProps, {}> {
             },
             className,
         );
-    }
-
-    private maybeRenderRequiredLabel() {
-        const { requiredLabel } = this.props;
-        return requiredLabel === true ? FormGroup.DEFAULT_REQUIRED_CONTENT : requiredLabel;
-    }
-
-    private maybeRenderHelperText() {
-        const { helperText } = this.props;
-        if (!helperText) {
-            return null;
-        }
-        return <div className={Classes.FORM_HELPER_TEXT}>{helperText}</div>;
     }
 }
