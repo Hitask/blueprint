@@ -4,16 +4,18 @@
  * Licensed under the terms of the LICENSE file distributed with this project.
  */
 
-import { AbstractPureComponent, Button, DISPLAYNAME_PREFIX, IProps, Utils } from "@blueprintjs/core";
+import { AbstractPureComponent, Button, DISPLAYNAME_PREFIX, Divider, IProps, Utils } from "@blueprintjs/core";
 import classNames from "classnames";
 import * as React from "react";
-import DayPicker, { CaptionElementProps, DayModifiers, DayPickerProps } from "react-day-picker";
+import DayPicker, { CaptionElementProps, DayModifiers, DayPickerProps, NavbarElementProps } from "react-day-picker";
 
 import * as Classes from "./common/classes";
 import * as DateUtils from "./common/dateUtils";
 import * as Errors from "./common/errors";
 import { DatePickerCaption } from "./datePickerCaption";
 import { getDefaultMaxDate, getDefaultMinDate, IDatePickerBaseProps } from "./datePickerCore";
+import { DatePickerNavbar } from "./datePickerNavbar";
+import { TimePicker } from "./timePicker";
 
 export interface IDatePickerProps extends IDatePickerBaseProps, IProps {
     /**
@@ -74,6 +76,7 @@ export class DatePicker extends AbstractPureComponent<IDatePickerProps, IDatePic
         minDate: getDefaultMinDate(),
         reverseMonthAndYearMenus: false,
         showActionsBar: false,
+        timePickerProps: {},
     };
 
     public static displayName = `${DISPLAYNAME_PREFIX}.DatePicker`;
@@ -115,6 +118,7 @@ export class DatePicker extends AbstractPureComponent<IDatePickerProps, IDatePic
                     {...dayPickerProps}
                     canChangeMonth={true}
                     captionElement={this.renderCaption}
+                    navbarElement={this.renderNavbar}
                     disabledDays={this.getDisabledDaysModifier()}
                     fromMonth={minDate}
                     month={new Date(displayYear, displayMonth)}
@@ -123,7 +127,8 @@ export class DatePicker extends AbstractPureComponent<IDatePickerProps, IDatePic
                     selectedDays={this.state.value}
                     toMonth={maxDate}
                 />
-                {showActionsBar ? this.renderOptionsBar() : null}
+                {this.maybeRenderTimePicker()}
+                {showActionsBar && this.renderOptionsBar()}
             </div>
         );
     }
@@ -179,18 +184,37 @@ export class DatePicker extends AbstractPureComponent<IDatePickerProps, IDatePic
             {...props}
             maxDate={this.props.maxDate}
             minDate={this.props.minDate}
-            onMonthChange={this.handleMonthSelectChange}
-            onYearChange={this.handleYearSelectChange}
+            onDateChange={this.handleMonthChange}
             reverseMonthAndYearMenus={this.props.reverseMonthAndYearMenus}
         />
     );
 
+    private renderNavbar = (props: NavbarElementProps) => (
+        <DatePickerNavbar {...props} maxDate={this.props.maxDate} minDate={this.props.minDate} />
+    );
+
     private renderOptionsBar() {
-        return (
-            <div className={Classes.DATEPICKER_FOOTER}>
+        return [
+            <Divider key="div" />,
+            <div className={Classes.DATEPICKER_FOOTER} key="footer">
                 <Button minimal={true} onClick={this.handleTodayClick} text="Today" />
                 <Button minimal={true} onClick={this.handleClearClick} text="Clear" />
-            </div>
+            </div>,
+        ];
+    }
+
+    private maybeRenderTimePicker() {
+        const { timePrecision, timePickerProps } = this.props;
+        if (timePrecision == null && timePickerProps === DatePicker.defaultProps.timePickerProps) {
+            return null;
+        }
+        return (
+            <TimePicker
+                precision={timePrecision}
+                {...timePickerProps}
+                onChange={this.handleTimeChange}
+                value={this.state.value}
+            />
         );
     }
 
@@ -212,7 +236,8 @@ export class DatePicker extends AbstractPureComponent<IDatePickerProps, IDatePic
         }
 
         // allow toggling selected date by clicking it again (if prop enabled)
-        const newValue = this.props.canClearSelection && modifiers.selected ? null : day;
+        const newValue =
+            this.props.canClearSelection && modifiers.selected ? null : DateUtils.getDateTime(day, this.state.value);
         this.updateValue(newValue, true);
     };
 
@@ -224,7 +249,7 @@ export class DatePicker extends AbstractPureComponent<IDatePickerProps, IDatePic
         const displayDate = selectedDay == null ? 1 : Math.min(selectedDay, maxDaysInMonth);
 
         // 12:00 matches the underlying react-day-picker timestamp behavior
-        const value = new Date(displayYear, displayMonth, displayDate, 12);
+        const value = DateUtils.getDateTime(new Date(displayYear, displayMonth, displayDate, 12), this.state.value);
         // clamp between min and max dates
         if (value < minDate) {
             return minDate;
@@ -237,53 +262,16 @@ export class DatePicker extends AbstractPureComponent<IDatePickerProps, IDatePic
     private handleClearClick = () => this.updateValue(null, true);
 
     private handleMonthChange = (newDate: Date) => {
-        const displayMonth = newDate.getMonth();
-        const displayYear = newDate.getFullYear();
-        this.setState({ displayMonth, displayYear });
-
+        const date = this.computeValidDateInSpecifiedMonthYear(newDate.getFullYear(), newDate.getMonth());
+        this.setState({ displayMonth: date.getMonth(), displayYear: date.getFullYear() });
         if (this.state.value !== null) {
-            const value = this.computeValidDateInSpecifiedMonthYear(displayYear, displayMonth);
-            Utils.safeInvoke(this.props.dayPickerProps.onMonthChange, value);
             // if handleDayClick just got run (so this flag is set), then the
             // user selected a date in a new month, so don't invoke onChange a
             // second time
-            this.updateValue(value, false, this.ignoreNextMonthChange);
+            this.updateValue(date, false, this.ignoreNextMonthChange);
             this.ignoreNextMonthChange = false;
         }
-        // don't change value if it's empty
-    };
-
-    private handleMonthSelectChange = (displayMonth: number) => {
-        this.setState({ displayMonth });
-        if (this.state.value !== null) {
-            const value = this.computeValidDateInSpecifiedMonthYear(this.state.value.getFullYear(), displayMonth);
-            Utils.safeInvoke(this.props.dayPickerProps.onMonthChange, value);
-            this.updateValue(value, false);
-        }
-    };
-
-    private handleYearSelectChange = (displayYear: number) => {
-        let { displayMonth } = this.state;
-
-        if (this.state.value !== null) {
-            const value = this.computeValidDateInSpecifiedMonthYear(displayYear, displayMonth);
-            Utils.safeInvoke(this.props.dayPickerProps.onMonthChange, value);
-            this.updateValue(value, false);
-            displayMonth = value.getMonth();
-        } else {
-            // if value is empty, then we need to clamp displayMonth to valid
-            // months between min and max dates.
-            const { minDate, maxDate } = this.props;
-            const minMonth = minDate.getMonth();
-            const maxMonth = maxDate.getMonth();
-            if (displayYear === minDate.getFullYear() && displayMonth < minMonth) {
-                displayMonth = minMonth;
-            } else if (displayYear === maxDate.getFullYear() && displayMonth > maxMonth) {
-                displayMonth = maxMonth;
-            }
-        }
-
-        this.setState({ displayMonth, displayYear });
+        Utils.safeInvoke(this.props.dayPickerProps.onMonthChange, date);
     };
 
     private handleTodayClick = () => {
@@ -293,6 +281,13 @@ export class DatePicker extends AbstractPureComponent<IDatePickerProps, IDatePic
         const selectedDay = value.getDate();
         this.setState({ displayMonth, displayYear, selectedDay });
         this.updateValue(value, true);
+    };
+
+    private handleTimeChange = (time: Date) => {
+        Utils.safeInvoke(this.props.timePickerProps.onChange, time);
+        const { value } = this.state;
+        const newValue = DateUtils.getDateTime(value != null ? value : new Date(), time);
+        this.updateValue(newValue, true);
     };
 
     /**
