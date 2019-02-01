@@ -17,7 +17,7 @@ import * as DateUtils from "../src/common/dateUtils";
 import * as Errors from "../src/common/errors";
 import { Months } from "../src/common/months";
 import { DatePickerNavbar } from "../src/datePickerNavbar";
-import { IDateRangePickerState } from "../src/dateRangePicker";
+import { IDateRangePickerState, IDateRangeShortcut } from "../src/dateRangePicker";
 import {
     Classes as DateClasses,
     DateRange,
@@ -1147,9 +1147,26 @@ describe("<DateRangePicker>", () => {
             assert.isTrue(DateUtils.areSameDay(onChangeSpy.firstCall.args[0][0] as Date, new Date()));
         });
 
-        it("clicking a shortcut doesn't change time", () => {
+        it("clicking a shortcut with includeTime=false doesn't change time", () => {
             render({ timePrecision: "minute", defaultValue: defaultRange }).clickShortcut();
             assert.isTrue(DateUtils.areSameTime(onChangeSpy.firstCall.args[0][0] as Date, defaultRange[0]));
+        });
+
+        it("clicking a shortcut with includeTime=true changes time", () => {
+            const endTime = defaultRange[1];
+            const startTime = new Date(defaultRange[1].getTime());
+            startTime.setHours(startTime.getHours() - 2);
+
+            const shortcuts: IDateRangeShortcut[] = [
+                {
+                    dateRange: [startTime, endTime] as DateRange,
+                    includeTime: true,
+                    label: "shortcut with time",
+                },
+            ];
+
+            render({ timePrecision: "minute", defaultValue: defaultRange, shortcuts }).clickShortcut();
+            assert.equal(onChangeSpy.firstCall.args[0][0] as Date, startTime);
         });
 
         it("selecting and unselecting a day doesn't change time", () => {
