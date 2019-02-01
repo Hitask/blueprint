@@ -33,8 +33,23 @@ import { Shortcuts } from "./shortcuts";
 import { TimePicker } from "./timePicker";
 
 export interface IDateRangeShortcut {
+    /** Shortcut label that appears in the list. */
     label: string;
+
+    /**
+     * Date range represented by this shortcut. Note that time components of a
+     * shortcut are ignored by default; set `includeTime: true` to respect them.
+     */
     dateRange: DateRange;
+
+    /**
+     * Set this prop to `true` to allow this shortcut to change the selected
+     * times as well as the dates. By default, time components of a shortcut are
+     * ignored; clicking a shortcut takes the date components of the `dateRange`
+     * and combines them with the currently selected time.
+     * @default false
+     */
+    includeTime?: boolean;
 }
 
 export interface IDateRangePickerProps extends IDatePickerBaseProps, IProps {
@@ -282,7 +297,7 @@ export class DateRangePicker extends AbstractPureComponent<IDateRangePickerProps
             <Shortcuts
                 key="shortcuts"
                 {...{ allowSingleDayRange, maxDate, minDate, shortcuts }}
-                onShortcutClick={this.handleNextState}
+                onShortcutClick={this.handleShortcutClick}
             />,
             <Divider key="div" />,
         ];
@@ -493,6 +508,24 @@ export class DateRangePicker extends AbstractPureComponent<IDateRangePickerProps
         this.handleDayMouseEnter(day, modifiers, e);
 
         this.handleNextState(nextValue);
+    };
+
+    private handleShortcutClick = (shortcut: IDateRangeShortcut) => {
+        const { dateRange, includeTime } = shortcut;
+        if (includeTime) {
+            const newDateRange: DateRange = [dateRange[0], dateRange[1]];
+            const newTimeRange: DateRange = [dateRange[0], dateRange[1]];
+            const nextState = getStateChange(
+                this.state.value,
+                dateRange,
+                this.state,
+                this.props.contiguousCalendarMonths,
+            );
+            this.setState({ ...nextState, time: newTimeRange });
+            Utils.safeInvoke(this.props.onChange, newDateRange);
+        } else {
+            this.handleNextState(dateRange);
+        }
     };
 
     private handleNextState = (nextValue: DateRange) => {
