@@ -67,7 +67,7 @@
   max-height: 30 * $pt-grid-size;
   overflow: auto;
   padding: $pt-grid-size $pt-grid-size;
-  font-family: $pt-font-family-monospace;
+  font-family: inherit;
 }
 
 .#{$ns}-table-popover-whitespace-pre {

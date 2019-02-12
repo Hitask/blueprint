@@ -17,7 +17,7 @@ $tag-input-icon-padding-large: ($pt-input-height-large - $pt-icon-size-large) / 
   height: auto;
   min-height: $pt-input-height;
   padding-right: 0;
-  padding-left: $tag-input-padding;
+  padding-left: $tag-input-padding * 2;
   line-height: inherit;
 
   .#{$ns}-tag-input-icon {
@@ -50,6 +50,7 @@ $tag-input-icon-padding-large: ($pt-input-height-large - $pt-icon-size-large) / 
   }
 
   .#{$ns}-tag {
+    max-width: calc(100% - 5px);
     // NOTE: in order to wrap long words, you must set explicit width on TagInput,
     // or use .#{$ns}-fill CSS class modifier.
     overflow-wrap: break-word;

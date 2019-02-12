@@ -104,6 +104,7 @@ $button-intents: (
   padding: $button-padding;
   vertical-align: middle;
   text-align: left;
+  line-height: $pt-grid-size * 2;
   font-size: $pt-font-size;
 }
 

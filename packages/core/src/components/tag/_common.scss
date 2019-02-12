@@ -35,7 +35,7 @@ $tag-round-adjustment: 2px !default;
   padding: $tag-padding-top $tag-padding;
   line-height: $tag-line-height;
   color: $hi-tag-text-color;
-  font-size: $pt-font-size-small;
+  font-size: $pt-font-size-small - 1px;
 
   &:focus {
     @include focus-outline(0);
