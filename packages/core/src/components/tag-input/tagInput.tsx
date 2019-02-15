@@ -166,6 +166,12 @@ export interface ITagInputProps extends IIntentProps, IProps {
      * to simplify type logic.
      */
     values: React.ReactNode[];
+
+    /**
+     * Key code that trigger submit action.
+     * @default Keys.ENTER
+     */
+    submitKey?: number;
 }
 
 export interface ITagInputState {
@@ -185,6 +191,7 @@ export class TagInput extends AbstractPureComponent<ITagInputProps, ITagInputSta
         addOnPaste: true,
         inputProps: {},
         separator: /[,\n\r]/,
+        submitKey: Keys.ENTER,
         tagProps: {},
     };
 
@@ -366,7 +373,7 @@ export class TagInput extends AbstractPureComponent<ITagInputProps, ITagInputSta
 
         let activeIndexToEmit = activeIndex;
 
-        if (event.which === Keys.ENTER && value.length > 0) {
+        if (event.which === this.props.submitKey && value.length > 0) {
             this.addTags(value);
         } else if (selectionEnd === 0 && this.props.values.length > 0) {
             // cursor at beginning of input allows interaction with tags.
