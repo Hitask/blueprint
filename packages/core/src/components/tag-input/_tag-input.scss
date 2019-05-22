@@ -17,7 +17,7 @@ $tag-input-icon-padding-large: ($pt-input-height-large - $pt-icon-size-large) / 
   height: auto;
   min-height: $pt-input-height;
   padding-right: 0;
-  padding-left: $tag-input-padding * 2;
+  padding-left: $tag-input-padding;
   line-height: inherit;
 
   .#{$ns}-tag-input-icon {
