@@ -1,7 +1,17 @@
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  *
- * Licensed under the terms of the LICENSE file distributed with this project.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 import * as React from "react";
@@ -76,7 +86,8 @@ export class MultiSelectExample extends React.PureComponent<IExampleProps, IMult
         const maybeCreateNewItemFromQuery = allowCreate ? createFilm : undefined;
         const maybeCreateNewItemRenderer = allowCreate ? renderCreateFilmOption : null;
 
-        const clearButton = films.length > 0 ? <Button icon="cross" minimal={true} onClick={this.handleClear} /> : null;
+        const clearButton =
+            films.length > 0 ? <Button icon="cross" minimal={true} onClick={this.handleClear} /> : undefined;
 
         return (
             <Example options={this.renderOptions()} {...this.props}>
@@ -93,6 +104,7 @@ export class MultiSelectExample extends React.PureComponent<IExampleProps, IMult
                     items={this.state.items}
                     noResults={<MenuItem disabled={true} text="No results." />}
                     onItemSelect={this.handleFilmSelect}
+                    onItemsPaste={this.handleFilmsPaste}
                     popoverProps={{ minimal: popoverMinimal }}
                     tagRenderer={this.renderTag}
                     tagInputProps={{ tagProps: getTagProps, onRemove: this.handleTagRemove, rightElement: clearButton }}
@@ -180,20 +192,29 @@ export class MultiSelectExample extends React.PureComponent<IExampleProps, IMult
     }
 
     private selectFilm(film: IFilm) {
-        const { films } = this.state;
+        this.selectFilms([film]);
+    }
 
-        const { createdItems: nextCreatedItems, items: nextItems } = maybeAddCreatedFilmToArrays(
-            this.state.items,
-            this.state.createdItems,
-            film,
-        );
+    private selectFilms(filmsToSelect: IFilm[]) {
+        const { createdItems, films, items } = this.state;
 
-        this.setState({
-            createdItems: nextCreatedItems,
+        let nextCreatedItems = createdItems.slice();
+        let nextFilms = films.slice();
+        let nextItems = items.slice();
+
+        filmsToSelect.forEach(film => {
+            const results = maybeAddCreatedFilmToArrays(nextItems, nextCreatedItems, film);
+            nextItems = results.items;
+            nextCreatedItems = results.createdItems;
             // Avoid re-creating an item that is already selected (the "Create
             // Item" option will be shown even if it matches an already selected
             // item).
-            films: !arrayContainsFilm(films, film) ? [...films, film] : films,
+            nextFilms = !arrayContainsFilm(nextFilms, film) ? [...nextFilms, film] : nextFilms;
+        });
+
+        this.setState({
+            createdItems: nextCreatedItems,
+            films: nextFilms,
             items: nextItems,
         });
     }
@@ -222,6 +243,12 @@ export class MultiSelectExample extends React.PureComponent<IExampleProps, IMult
         } else {
             this.deselectFilm(this.getSelectedFilmIndex(film));
         }
+    };
+
+    private handleFilmsPaste = (films: IFilm[]) => {
+        // On paste, don't bother with deselecting already selected values, just
+        // add the new ones.
+        this.selectFilms(films);
     };
 
     private handleSwitchChange(prop: keyof IMultiSelectExampleState) {

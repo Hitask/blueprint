@@ -1,7 +1,17 @@
 /*
  * Copyright 2018 Palantir Technologies, Inc. All rights reserved.
  *
- * Licensed under the terms of the LICENSE file distributed with this project.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 import { IProps, Utils } from "@blueprintjs/core";
@@ -66,11 +76,21 @@ export interface IListItemsProps<T> extends IProps {
     itemListPredicate?: ItemListPredicate<T>;
 
     /**
-     * Customize querying of individual items. Return `true` to keep the item, `false` to hide.
-     * This method will be invoked once for each item, so it should be performant. For more complex
-     * queries, use `itemListPredicate` to operate once on the entire array.
+     * Customize querying of individual items.
      *
-     * This prop is ignored if `itemListPredicate` is also defined.
+     * __Filtering a list of items.__ This function is invoked to filter the
+     * list of items as a query is typed. Return `true` to keep the item, or
+     * `false` to hide. This method is invoked once for each item, so it should
+     * be performant. For more complex queries, use `itemListPredicate` to
+     * operate once on the entire array. For the purposes of filtering the list,
+     * this prop is ignored if `itemListPredicate` is also defined.
+     *
+     * __Matching a pasted value to an item.__ This function is also invoked to
+     * match a pasted value to an existing item if possible. In this case, the
+     * function will receive `exactMatch=true`, and the function should return
+     * true only if the item _exactly_ matches the query. For the purposes of
+     * matching pasted values, this prop will be invoked even if
+     * `itemListPredicate` is defined.
      */
     itemPredicate?: ItemPredicate<T>;
 
@@ -129,6 +149,11 @@ export interface IListItemsProps<T> extends IProps {
      * typically by clicking or pressing `enter` key.
      */
     onItemSelect: (item: T, event?: React.SyntheticEvent<HTMLElement>) => void;
+
+    /**
+     * Callback invoked when multiple items are selected at once via pasting.
+     */
+    onItemsPaste?: (items: T[]) => void;
 
     /**
      * Callback invoked when the query string changes.
