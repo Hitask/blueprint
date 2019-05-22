@@ -1,7 +1,17 @@
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  *
- * Licensed under the terms of the LICENSE file distributed with this project.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 import * as React from "react";
@@ -53,6 +63,24 @@ export interface IQueryListRendererProps<T>  // Omit `createNewItem`, because it
      * perhaps because the user clicked it.
      */
     handleItemSelect: (item: T, event?: React.SyntheticEvent<HTMLElement>) => void;
+
+    /**
+     * Handler that should be invoked when the user pastes one or more values.
+     *
+     * This callback will use `itemPredicate` with `exactMatch=true` to find a
+     * subset of `items` exactly matching the pasted `values` provided, then it
+     * will invoke `onItemsPaste` with those found items. Each pasted value that
+     * does not exactly match an item will be ignored.
+     *
+     * If creating items is enabled (by providing both `createNewItemFromQuery`
+     * and `createNewItemRenderer`), then pasted values that do not exactly
+     * match an existing item will emit a new item as created via
+     * `createNewItemFromQuery`.
+     *
+     * If `itemPredicate` returns multiple matching items for a particular query
+     * in `queries`, then only the first matching item will be emitted.
+     */
+    handlePaste: (queries: string[]) => void;
 
     /**
      * Keyboard handler for up/down arrow keys to shift the active item.
@@ -152,6 +180,7 @@ export class QueryList<T> extends React.Component<IQueryListProps<T>, IQueryList
             handleItemSelect: this.handleItemSelect,
             handleKeyDown: this.handleKeyDown,
             handleKeyUp: this.handleKeyUp,
+            handlePaste: this.handlePaste,
             handleQueryChange: this.handleQueryChange,
             itemList: itemListRenderer({
                 ...spreadableState,
@@ -262,6 +291,9 @@ export class QueryList<T> extends React.Component<IQueryListProps<T>, IQueryList
         const maybeNoResults = this.isCreateItemRendered() ? null : noResults;
         const menuContent = renderFilteredItems(listProps, maybeNoResults, initialContent);
         const createItemView = this.isCreateItemRendered() ? this.renderCreateItemMenuItem(this.state.query) : null;
+        if (menuContent == null && createItemView == null) {
+            return null;
+        }
         return (
             <Menu ulRef={listProps.itemsParentRef}>
                 {menuContent}
@@ -350,6 +382,47 @@ export class QueryList<T> extends React.Component<IQueryListProps<T>, IQueryList
         }
     };
 
+    private handlePaste = (queries: string[]) => {
+        const { createNewItemFromQuery, onItemsPaste } = this.props;
+
+        let nextActiveItem: T | undefined;
+        const nextQueries = [];
+
+        // Find an exising item that exactly matches each pasted value, or
+        // create a new item if possible. Ignore unmatched values if creating
+        // items is disabled.
+        const pastedItemsToEmit = [];
+
+        for (const query of queries) {
+            const equalItem = getMatchingItem(query, this.props);
+
+            if (equalItem !== undefined) {
+                nextActiveItem = equalItem;
+                pastedItemsToEmit.push(equalItem);
+            } else if (this.canCreateItems()) {
+                const newItem = Utils.safeInvoke(createNewItemFromQuery, query);
+                if (newItem !== undefined) {
+                    pastedItemsToEmit.push(newItem);
+                }
+            } else {
+                nextQueries.push(query);
+            }
+        }
+
+        // UX nicety: combine all unmatched queries into a single
+        // comma-separated query in the input, so we don't lose any information.
+        // And don't reset the active item; we'll do that ourselves below.
+        this.setQuery(nextQueries.join(", "), false);
+
+        // UX nicety: update the active item if we matched with at least one
+        // existing item.
+        if (nextActiveItem !== undefined) {
+            this.setActiveItem(nextActiveItem);
+        }
+
+        Utils.safeInvoke(onItemsPaste, pastedItemsToEmit);
+    };
+
     private handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
         const { keyCode } = event;
         if (keyCode === Keys.ARROW_UP || keyCode === Keys.ARROW_DOWN) {
@@ -418,16 +491,18 @@ export class QueryList<T> extends React.Component<IQueryListProps<T>, IQueryList
     }
 
     private isCreateItemRendered(): boolean {
-        const { createNewItemFromQuery } = this.props;
         return (
-            createNewItemFromQuery != null &&
-            this.props.createNewItemRenderer != null &&
+            this.canCreateItems() &&
             this.state.query !== "" &&
             // this check is unfortunately O(N) on the number of items, but
             // alas, hiding the "Create Item" option when it exactly matches an
             // existing item is much clearer.
             !this.wouldCreatedItemMatchSomeExistingItem()
         );
+    }
+
+    private canCreateItems(): boolean {
+        return this.props.createNewItemFromQuery != null && this.props.createNewItemRenderer != null;
     }
 
     private wouldCreatedItemMatchSomeExistingItem() {
@@ -441,6 +516,20 @@ export class QueryList<T> extends React.Component<IQueryListProps<T>, IQueryList
 
 function pxToNumber(value: string | null) {
     return value == null ? 0 : parseInt(value.slice(0, -2), 10);
+}
+
+function getMatchingItem<T>(query: string, { items, itemPredicate }: IQueryListProps<T>): T | undefined {
+    if (Utils.isFunction(itemPredicate)) {
+        // .find() doesn't exist in ES5. Alternative: use a for loop instead of
+        // .filter() so that we can return as soon as we find the first match.
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (itemPredicate(query, item, i, true)) {
+                return item;
+            }
+        }
+    }
+    return undefined;
 }
 
 function getFilteredItems<T>(query: string, { items, itemPredicate, itemListPredicate }: IQueryListProps<T>) {

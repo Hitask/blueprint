@@ -3498,5 +3498,12 @@
     "tags": "folder, mail, file, message, notifications, warning",
     "group": "file",
     "content": "\\e7d4"
+  },
+  {
+    "displayName": "Inheritance",
+    "iconName": "inheritance",
+    "tags": "arrows, derive",
+    "group": "action",
+    "content": "\\e7d5"
   }
 ]
