@@ -147,7 +147,7 @@ workflows:
   version: 2
   compile_lint_test_dist_deploy:
     jobs:
-      - checkout-code
+      - checkout-code:
           filters:
             branches:
               ignore:
