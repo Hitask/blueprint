@@ -245,6 +245,26 @@
     "content": ""
   },
   {
+    "displayName": "Archive",
+    "iconName": "hi-archive",
+    "tags": "archive",
+    "group": "Hitask",
+    "content": ""
+  },{
+    "displayName": "Archive box",
+    "iconName": "hi-archive-box",
+    "tags": "archive, archive-box",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
+    "displayName": "Mobile",
+    "iconName": "hi-mobile",
+    "tags": "mobile, phone",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Download",
     "iconName": "hi-download",
     "tags": "download",
