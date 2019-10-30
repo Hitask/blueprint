@@ -293,6 +293,13 @@
     "content": ""
   },
   {
+    "displayName": "Link",
+    "iconName": "hi-link",
+    "tags": "link, connect",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Blank",
     "iconName": "blank",
     "tags": "empty, placeholder",
