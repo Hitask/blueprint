@@ -1,6 +1,6 @@
 {
   "name": "@hitask/blueprint-core",
-  "version": "3.18.2",
+  "version": "3.18.3",
   "description": "Core styles & components",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -40,7 +40,7 @@
     "verify": "npm-run-all compile -p dist test lint"
   },
   "dependencies": {
-    "@hitask/blueprint-icons": "^3.10.1",
+    "@hitask/blueprint-icons": "^3.10.2",
     "@types/dom4": "^2.0.1",
     "classnames": "^2.2.5",
     "dom4": "^2.1.5",
