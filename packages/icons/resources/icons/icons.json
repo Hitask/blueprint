@@ -286,6 +286,13 @@
     "content": ""
   },
   {
+    "displayName": "Ban",
+    "iconName": "hi-ban",
+    "tags": "ban, block, stop",
+    "group": "Hitask",
+    "content": ""
+  },
+  {
     "displayName": "Blank",
     "iconName": "blank",
     "tags": "empty, placeholder",
