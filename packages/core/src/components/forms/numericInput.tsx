@@ -16,10 +16,11 @@
 
 import classNames from "classnames";
 import * as React from "react";
+import { polyfill } from "react-lifecycles-compat";
 
 import { IconName } from "@blueprintjs/icons";
 import {
-    AbstractPureComponent,
+    AbstractPureComponent2,
     Classes,
     DISPLAYNAME_PREFIX,
     HTMLInputProps,
@@ -153,6 +154,9 @@ export interface INumericInputProps extends IIntentProps, IProps {
 }
 
 export interface INumericInputState {
+    prevMinProp?: number;
+    prevMaxProp?: number;
+    prevValueProp?: number | string;
     shouldSelectAfterUpdate: boolean;
     stepMaxPrecision: number;
     value: string;
@@ -179,7 +183,8 @@ const NON_HTML_PROPS: Array<keyof INumericInputProps> = [
 
 type ButtonEventHandlers = Required<Pick<React.HTMLAttributes<Element>, "onKeyDown" | "onMouseDown">>;
 
-export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumericInputProps, INumericInputState> {
+@polyfill
+export class NumericInput extends AbstractPureComponent2<HTMLInputProps & INumericInputProps, INumericInputState> {
     public static displayName = `${DISPLAYNAME_PREFIX}.NumericInput`;
 
     public static VALUE_EMPTY = "";
@@ -198,12 +203,56 @@ export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumeri
         value: NumericInput.VALUE_EMPTY,
     };
 
+    public static getDerivedStateFromProps(props: INumericInputProps, state: INumericInputState) {
+        const nextState = { prevMinProp: props.min, prevMaxProp: props.max, prevValueProp: props.value };
+
+        const didMinChange = props.min !== state.prevMinProp;
+        const didMaxChange = props.max !== state.prevMaxProp;
+        const didBoundsChange = didMinChange || didMaxChange;
+
+        const didValuePropChange = props.value !== state.prevValueProp;
+        const value = getValueOrEmptyValue(didValuePropChange ? props.value : state.value);
+
+        const sanitizedValue =
+            value !== NumericInput.VALUE_EMPTY
+                ? NumericInput.getSanitizedValue(value, /* delta */ 0, props.min, props.max)
+                : NumericInput.VALUE_EMPTY;
+
+        const stepMaxPrecision = NumericInput.getStepMaxPrecision(props);
+
+        // if a new min and max were provided that cause the existing value to fall
+        // outside of the new bounds, then clamp the value to the new valid range.
+        if (didBoundsChange && sanitizedValue !== state.value) {
+            return { ...nextState, stepMaxPrecision, value: sanitizedValue };
+        } else {
+            return { ...nextState, stepMaxPrecision, value };
+        }
+    }
+
     private static CONTINUOUS_CHANGE_DELAY = 300;
     private static CONTINUOUS_CHANGE_INTERVAL = 100;
 
+    // Value Helpers
+    // =============
+    private static getStepMaxPrecision(props: HTMLInputProps & INumericInputProps) {
+        if (props.minorStepSize != null) {
+            return Utils.countDecimalPlaces(props.minorStepSize);
+        } else {
+            return Utils.countDecimalPlaces(props.stepSize);
+        }
+    }
+
+    private static getSanitizedValue(value: string, stepMaxPrecision: number, min: number, max: number, delta = 0) {
+        if (!isValueNumeric(value)) {
+            return NumericInput.VALUE_EMPTY;
+        }
+        const nextValue = toMaxPrecision(parseFloat(value) + delta, stepMaxPrecision);
+        return clampValue(nextValue, min, max).toString();
+    }
+
     public state: INumericInputState = {
         shouldSelectAfterUpdate: false,
-        stepMaxPrecision: this.getStepMaxPrecision(this.props),
+        stepMaxPrecision: NumericInput.getStepMaxPrecision(this.props),
         value: getValueOrEmptyValue(this.props.value),
     };
 
@@ -215,32 +264,6 @@ export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumeri
 
     private incrementButtonHandlers = this.getButtonEventHandlers(IncrementDirection.UP);
     private decrementButtonHandlers = this.getButtonEventHandlers(IncrementDirection.DOWN);
-
-    public componentWillReceiveProps(nextProps: HTMLInputProps & INumericInputProps) {
-        super.componentWillReceiveProps(nextProps);
-
-        const value = getValueOrEmptyValue(nextProps.value);
-
-        const didMinChange = nextProps.min !== this.props.min;
-        const didMaxChange = nextProps.max !== this.props.max;
-        const didBoundsChange = didMinChange || didMaxChange;
-
-        const sanitizedValue =
-            value !== NumericInput.VALUE_EMPTY
-                ? this.getSanitizedValue(value, /* delta */ 0, nextProps.min, nextProps.max)
-                : NumericInput.VALUE_EMPTY;
-
-        const stepMaxPrecision = this.getStepMaxPrecision(nextProps);
-
-        // if a new min and max were provided that cause the existing value to fall
-        // outside of the new bounds, then clamp the value to the new valid range.
-        if (didBoundsChange && sanitizedValue !== this.state.value) {
-            this.setState({ stepMaxPrecision, value: sanitizedValue });
-            this.invokeValueCallback(sanitizedValue, this.props.onValueChange);
-        } else {
-            this.setState({ stepMaxPrecision, value });
-        }
-    }
 
     public render() {
         const { buttonPosition, className, fill, large } = this.props;
@@ -255,9 +278,16 @@ export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumeri
         );
     }
 
-    public componentDidUpdate() {
+    public componentDidUpdate(prevProps: INumericInputProps, prevState: INumericInputState) {
+        super.componentDidUpdate(prevProps, prevState);
         if (this.state.shouldSelectAfterUpdate) {
             this.inputElement.setSelectionRange(0, this.state.value.length);
+        }
+
+        const didControlledValueChange = this.props.value !== prevProps.value;
+
+        if (!didControlledValueChange && this.state.value !== prevState.value) {
+            this.invokeValueCallback(this.state.value, this.props.onValueChange);
         }
     }
 
@@ -393,9 +423,6 @@ export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumeri
             const { value } = e.target as HTMLInputElement;
             const sanitizedValue = this.getSanitizedValue(value);
             this.setState({ value: sanitizedValue });
-            if (value !== sanitizedValue) {
-                this.invokeValueCallback(sanitizedValue, this.props.onValueChange);
-            }
         }
 
         Utils.safeInvoke(this.props.onBlur, e);
@@ -459,15 +486,11 @@ export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumeri
         }
 
         this.setState({ shouldSelectAfterUpdate: false, value: nextValue });
-        this.invokeValueCallback(nextValue, this.props.onValueChange);
     };
 
     private invokeValueCallback(value: string, callback: (valueAsNumber: number, valueAsString: string) => void) {
         Utils.safeInvoke(callback, +value, value);
     }
-
-    // Value Helpers
-    // =============
 
     private incrementValue(delta: number) {
         // pretend we're incrementing from 0 if currValue is empty
@@ -475,7 +498,6 @@ export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumeri
         const nextValue = this.getSanitizedValue(currValue, delta);
 
         this.setState({ shouldSelectAfterUpdate: this.props.selectAllOnIncrement, value: nextValue });
-        this.invokeValueCallback(nextValue, this.props.onValueChange);
 
         return nextValue;
     }
@@ -492,20 +514,14 @@ export class NumericInput extends AbstractPureComponent<HTMLInputProps & INumeri
         }
     }
 
-    private getSanitizedValue(value: string, delta = 0, min = this.props.min, max = this.props.max) {
-        if (!isValueNumeric(value)) {
-            return NumericInput.VALUE_EMPTY;
-        }
-        const nextValue = toMaxPrecision(parseFloat(value) + delta, this.state.stepMaxPrecision);
-        return clampValue(nextValue, min, max).toString();
-    }
-
-    private getStepMaxPrecision(props: HTMLInputProps & INumericInputProps) {
-        if (props.minorStepSize != null) {
-            return Utils.countDecimalPlaces(props.minorStepSize);
-        } else {
-            return Utils.countDecimalPlaces(props.stepSize);
-        }
+    private getSanitizedValue(value: string, delta = 0) {
+        return NumericInput.getSanitizedValue(
+            value,
+            this.state.stepMaxPrecision,
+            this.props.min,
+            this.props.max,
+            delta,
+        );
     }
 
     private updateDelta(direction: IncrementDirection, e: React.MouseEvent | React.KeyboardEvent) {

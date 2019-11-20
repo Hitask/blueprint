@@ -16,8 +16,8 @@
 
 import classNames from "classnames";
 import * as React from "react";
-
-import * as Classes from "../../common/classes";
+import { polyfill } from "react-lifecycles-compat";
+import { AbstractPureComponent2, Classes } from "../../common";
 import {
     DISPLAYNAME_PREFIX,
     HTMLInputProps,
@@ -84,7 +84,8 @@ export interface IInputGroupState {
     rightElementWidth: number;
 }
 
-export class InputGroup extends React.PureComponent<IInputGroupProps & HTMLInputProps, IInputGroupState> {
+@polyfill
+export class InputGroup extends AbstractPureComponent2<IInputGroupProps & HTMLInputProps, IInputGroupState> {
     public static displayName = `${DISPLAYNAME_PREFIX}.InputGroup`;
 
     public state: IInputGroupState = {
@@ -128,11 +129,13 @@ export class InputGroup extends React.PureComponent<IInputGroupProps & HTMLInput
     }
 
     public componentDidMount() {
-        this.updateInputWidth();
-    }
-
-    public componentDidUpdate() {
-        this.updateInputWidth();
+        if (this.rightElement != null) {
+            const { clientWidth } = this.rightElement;
+            // small threshold to prevent infinite loops
+            if (Math.abs(clientWidth - this.state.rightElementWidth) > 2) {
+                this.setState({ rightElementWidth: clientWidth });
+            }
+        }
     }
 
     private maybeRenderRightElement() {
@@ -145,17 +148,5 @@ export class InputGroup extends React.PureComponent<IInputGroupProps & HTMLInput
                 {rightElement}
             </span>
         );
-    }
-
-    private updateInputWidth() {
-        if (this.rightElement != null) {
-            const { clientWidth } = this.rightElement;
-            // small threshold to prevent infinite loops
-            if (Math.abs(clientWidth - this.state.rightElementWidth) > 2) {
-                this.setState({ rightElementWidth: clientWidth });
-            }
-        } else {
-            this.setState({ rightElementWidth: DEFAULT_RIGHT_ELEMENT_WIDTH });
-        }
     }
 }

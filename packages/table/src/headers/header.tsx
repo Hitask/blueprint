@@ -239,8 +239,11 @@ export class Header extends React.Component<IInternalHeaderProps, IHeaderState> 
         this.state = { hasValidSelection: this.isSelectedRegionsControlledAndNonEmpty(props) };
     }
 
-    public componentWillReceiveProps(nextProps?: IInternalHeaderProps) {
-        this.setState({ hasValidSelection: this.isSelectedRegionsControlledAndNonEmpty(nextProps) });
+    public componentDidUpdate(_: IInternalHeaderProps, prevState: IHeaderState) {
+        const nextHasValidSection = this.isSelectedRegionsControlledAndNonEmpty(this.props);
+        if (prevState.hasValidSelection !== nextHasValidSection) {
+            this.setState({ hasValidSelection: nextHasValidSection });
+        }
     }
 
     public shouldComponentUpdate(nextProps?: IInternalHeaderProps, nextState?: IHeaderState) {
@@ -303,6 +306,9 @@ export class Header extends React.Component<IInternalHeaderProps, IHeaderState> 
         const { getIndexClass, selectedRegions } = this.props;
 
         const cell = this.props.headerCellRenderer(index);
+        if (cell == null) {
+            return null;
+        }
 
         const isLoading = cell.props.loading != null ? cell.props.loading : this.props.loading;
         const isSelected = this.props.isCellSelected(index);

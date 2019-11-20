@@ -16,12 +16,10 @@
 
 import classNames from "classnames";
 import * as React from "react";
+import { polyfill } from "react-lifecycles-compat";
 
-import { AbstractPureComponent } from "../../common/abstractPureComponent";
-import * as Classes from "../../common/classes";
-import * as Keys from "../../common/keys";
+import { AbstractPureComponent2, Classes, Keys, Utils } from "../../common";
 import { DISPLAYNAME_PREFIX, HTMLInputProps, IIntentProps, IProps, MaybeElement } from "../../common/props";
-import * as Utils from "../../common/utils";
 import { Icon, IconName } from "../icon/icon";
 import { ITagProps, Tag } from "../tag/tag";
 
@@ -198,12 +196,14 @@ export interface ITagInputState {
     activeIndex: number;
     inputValue: string;
     isInputFocused: boolean;
+    prevInputValueProp?: string;
 }
 
 /** special value for absence of active tag */
 const NONE = -1;
 
-export class TagInput extends AbstractPureComponent<ITagInputProps, ITagInputState> {
+@polyfill
+export class TagInput extends AbstractPureComponent2<ITagInputProps, ITagInputState> {
     public static displayName = `${DISPLAYNAME_PREFIX}.TagInput`;
 
     public static defaultProps: Partial<ITagInputProps> & object = {
@@ -214,6 +214,19 @@ export class TagInput extends AbstractPureComponent<ITagInputProps, ITagInputSta
         submitKey: Keys.ENTER,
         tagProps: {},
     };
+
+    public static getDerivedStateFromProps(
+        props: Readonly<ITagInputProps>,
+        state: Readonly<ITagInputState>,
+    ): Partial<ITagInputState> | null {
+        if (props.inputValue !== state.prevInputValueProp) {
+            return {
+                inputValue: props.inputValue,
+                prevInputValueProp: props.inputValue,
+            };
+        }
+        return null;
+    }
 
     public state: ITagInputState = {
         activeIndex: NONE,
@@ -228,14 +241,6 @@ export class TagInput extends AbstractPureComponent<ITagInputProps, ITagInputSta
             Utils.safeInvoke(this.props.inputRef, ref);
         },
     };
-
-    public componentWillReceiveProps(nextProps: HTMLInputProps & ITagInputProps) {
-        super.componentWillReceiveProps(nextProps);
-
-        if (nextProps.inputValue !== this.props.inputValue) {
-            this.setState({ inputValue: nextProps.inputValue || "" });
-        }
-    }
 
     public render() {
         const { className, disabled, fill, inputProps, intent, large, leftIcon, placeholder, values } = this.props;
