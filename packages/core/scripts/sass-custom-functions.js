@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ * Copyright 2019 Palantir Technologies, Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-import "../configureDom4";
+const inliner = require("sass-inline-svg");
 
-import { Classes } from "../";
-
-export function isDarkTheme(element: Element | Text | null): boolean {
-    return element instanceof Element && element.closest(`.${Classes.DARK}`) != null;
-}
+module.exports = {
+    /**
+     * Sass function to inline a UI icon svg and change its path color.
+     *
+     * Usage:
+     * svg-icon("16px/icon-name.svg", (path: (fill: $color)) )
+     */
+    "svg-icon": inliner("../../resources/icons", {
+        // run through SVGO first
+        optimize: true,
+        // minimal "uri" encoding is smaller than base64
+        encodingFormat: "uri"
+    }),
+};

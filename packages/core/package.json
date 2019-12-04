@@ -1,6 +1,6 @@
 {
   "name": "@hitask/blueprint-core",
-  "version": "3.20.0",
+  "version": "3.22.0",
   "description": "Core styles & components",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -9,7 +9,10 @@
   "style": "lib/css/blueprint.css",
   "unpkg": "dist/core.bundle.js",
   "sideEffects": [
-    "*.css"
+    "*.css",
+    "lib/esm/common/configureDom4.js",
+    "lib/esnext/common/configureDom4.js",
+    "lib/cjs/common/configureDom4.js"
   ],
   "bin": {
     "upgrade-blueprint-2.0.0-rename": "./scripts/upgrade-blueprint-2.0.0-rename.sh",
@@ -21,7 +24,7 @@
     "compile:esm": "tsc -p ./src",
     "compile:cjs": "tsc -p ./src -m commonjs --outDir lib/cjs",
     "compile:esnext": "tsc -p ./src -t esnext --outDir lib/esnext",
-    "compile:css": "sass-compile ./src --functions ./scripts/sass-inline-svg.js",
+    "compile:css": "sass-compile ./src --functions ./scripts/sass-custom-functions.js",
     "dev": "run-p \"compile:esm -- --watch\" \"compile:css -- --watch\"",
     "dist": "run-s \"dist:*\"",
     "dist:bundle": "cross-env NODE_ENV=production webpack",
