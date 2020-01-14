@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
-    <title>hi-reports</title>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>topmenu/icon/reports</title>
     <desc>Created with Sketch.</desc>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="hi-reports" fill="#4A4A4A">
-            <path d="M0,14 L0,13 L16,13 L16,14 L0,14 Z M12,7 L16,7 L16,11 L12,11 L12,7 Z M13,8 L13,10 L15,10 L15,8 L13,8 Z M0,5 L4,5 L4,11 L0,11 L0,5 Z M1,6 L1,10 L3,10 L3,6 L1,6 Z M6,0 L10,0 L10,11 L6,11 L6,0 Z M7,1 L7,10 L9,10 L9,1 L7,1 Z" id="Combined-Shape"></path>
+    <g id="topmenu/icon/reports" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="analytics-net" transform="translate(-0.473389, 0.000000)">
+            <rect id="Rectangle" stroke="#626262" x="0.973388672" y="0.5" width="15" height="15" rx="2"></rect>
+            <path d="M1.36424486,10.1607102 L4.11357223,7.23707382 C4.57502346,6.78840778 5.30140416,6.65102554 5.927669,6.90888756 L6.954932,7.38531473 C7.97196032,7.79343119 9.10564427,7.66806026 9.98129368,7.06298335 L11.414005,5.95630491 C12.1499126,5.4262844 12.9882692,5.0117179 13.8805029,4.74015278 L16.1749112,4.11897559 L15.9134867,3.15375168 L13.6042021,3.77920623 C12.5921675,4.08698414 11.654613,4.55060391 10.8158579,5.15509481 L9.39124375,6.25605873 C8.81358727,6.65435389 8.03306158,6.74067003 7.35102545,6.46748503 L6.32821722,5.99286709 C5.31470169,5.57505045 4.16422755,5.79264256 3.40050545,6.53632307 L0.635755135,9.47565346 L1.36424486,10.1607102 Z" id="Path" fill="#626262" fill-rule="nonzero"></path>
+            <polygon id="Path" fill="#626262" fill-rule="nonzero" points="4.26405858 6.34036364 4.26405858 15.0743408 5.26405858 15.0743408 5.26405858 6.34036364"></polygon>
+            <polygon id="Path" fill="#626262" fill-rule="nonzero" points="8.02510836 7.10235674 8.02209952 15.0741521 9.02209945 15.0745295 9.02510829 7.10273417"></polygon>
+            <polygon id="Path" fill="#626262" fill-rule="nonzero" points="11.7861581 4.84581818 11.7861581 15.0743408 12.7861581 15.0743408 12.7861581 4.84581818"></polygon>
+            <polygon id="Path" fill="#626262" fill-rule="nonzero" points="1.00300884 10.3181818 16.0472078 10.3181818 16.0472078 9.31818182 1.00300884 9.31818182"></polygon>
+            <polygon id="Path" fill="#626262" fill-rule="nonzero" points="9.25324755 7.40909091 16.0472078 7.40909091 16.0472078 6.40909091 9.25324755 6.40909091"></polygon>
+            <polygon id="Path" fill="#626262" fill-rule="nonzero" points="1.00300884 13.2272727 16.0472078 13.2272727 16.0472078 12.2272727 1.00300884 12.2272727"></polygon>
         </g>
     </g>
 </svg>

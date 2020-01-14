@@ -37,7 +37,8 @@ To test changes in projects of [hitask-web](https://gitlab.com/hitask/hitask-web
 
 When changes are ready to be published, do:
 
-* run `yarn verify` - Compile and test libs. Continue only after successful complete
-* Merge `master` branch to `custom-publish` branch
+* Push master branch. Check that all tests in [Circle CI](https://circleci.com/gh/HiTask/workflows/blueprint) are passed
+* run `yarn verify` - Compile and test libs locally
+* Merge `master` branch to `custom-publish` branch. See that `@hitask/` package names prefix is preserved after merge
 * Update versions of packages that were changed (together with packages that depend on changed packages). Commit to `custom-publish`
 * Run `npm publish --access=public` in each package with updated version
