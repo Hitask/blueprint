@@ -114,7 +114,7 @@ jobs:
     docker: *docker-node-browsers
     environment:
       JUNIT_REPORT_PATH: reports
-    parallelism: 6
+    parallelism: 4
     steps:
       - checkout
       - restore_cache: *restore-node-modules-cache
