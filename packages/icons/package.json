@@ -25,10 +25,10 @@
     "dist:css": "css-dist lib/css/*.css",
     "dist:variables": "generate-css-variables generated/_icon-variables.scss",
     "dist:verify": "assert-package-layout",
-    "lint": "run-p lint:scss lint:ts",
+    "lint": "run-p lint:scss lint:es",
     "lint:scss": "sass-lint",
-    "lint:ts": "ts-lint",
-    "lint-fix": "ts-lint --fix",
+    "lint:es": "es-lint",
+    "lint-fix": "es-lint --fix",
     "test": "run-s test:typeCheck test:iso",
     "test:typeCheck": "tsc -p ./test",
     "test:iso": "mocha test/isotest.js",
@@ -39,7 +39,7 @@
     "tslib": "~1.9.0"
   },
   "devDependencies": {
-    "@blueprintjs/node-build-scripts": "^0.11.0",
+    "@blueprintjs/node-build-scripts": "^1.0.0",
     "@blueprintjs/test-commons": "^0.10.1",
     "enzyme": "^3.10.0",
     "mocha": "^6.2.0",
