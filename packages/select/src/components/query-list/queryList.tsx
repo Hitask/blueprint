@@ -179,7 +179,7 @@ export class QueryList<T> extends AbstractComponent2<IQueryListProps<T>, IQueryL
     }
 
     public render() {
-        const { className, items, renderer, itemListRenderer = this.renderItemList } = this.props;
+        const { className, items, renderer, itemListClassName, itemListRenderer = this.renderItemList } = this.props;
         const { createNewItem, ...spreadableState } = this.state;
         return renderer({
             ...spreadableState,
@@ -191,6 +191,7 @@ export class QueryList<T> extends AbstractComponent2<IQueryListProps<T>, IQueryL
             handleQueryChange: this.handleQueryChange,
             itemList: itemListRenderer({
                 ...spreadableState,
+                className: itemListClassName,
                 items,
                 itemsParentRef: this.refHandlers.itemsParent,
                 renderItem: this.renderItem,
@@ -301,7 +302,7 @@ export class QueryList<T> extends AbstractComponent2<IQueryListProps<T>, IQueryL
             return null;
         }
         return (
-            <Menu ulRef={listProps.itemsParentRef}>
+            <Menu ulRef={listProps.itemsParentRef} className={listProps.className}>
                 {menuContent}
                 {createItemView}
             </Menu>

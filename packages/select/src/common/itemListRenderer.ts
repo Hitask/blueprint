@@ -60,6 +60,11 @@ export interface IItemListRendererProps<T> {
      * to the owner component's `itemRenderer` prop.
      */
     renderItem: (item: T, index: number) => JSX.Element | null;
+
+    /**
+     * A space-delimited list of class names applied to list of items
+     */
+    className?: string;
 }
 
 /** Type alias for a function that renders the list of items. */
