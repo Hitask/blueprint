@@ -210,6 +210,11 @@ export interface IListItemsProps<T> extends IProps {
      * handler to the relevant element in your `renderer` implementation.
      */
     query?: string;
+
+    /**
+     * A space-delimited list of class names applied to list of items
+     */
+    itemListClassName?: string;
 }
 
 /**
