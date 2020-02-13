@@ -19,6 +19,16 @@
   overflow: visible;
   vertical-align: middle;
 
+  &.#{$ns}-spinner-colored {
+    .#{$ns}-spinner-head {
+      stroke: $progress-head-color;
+    }
+
+    .#{$ns}-spinner-track {
+      stroke: $progress-track-color;
+    }
+  }
+
   svg {
     display: block;
   }
@@ -30,12 +40,7 @@
   .#{$ns}-spinner-head {
     transform-origin: center;
     transition: stroke-dashoffset ($pt-transition-duration * 2) $pt-transition-ease;
-    stroke: $progress-head-color;
     stroke-linecap: round;
-  }
-
-  .#{$ns}-spinner-track {
-    stroke: $progress-track-color;
   }
 }
 
@@ -48,7 +53,7 @@
   }
 }
 
-.#{$ns}-dark .#{$ns}-spinner {
+.#{$ns}-dark .#{$ns}-spinner-colored {
   .#{$ns}-spinner-head {
     stroke: $dark-progress-head-color;
   }

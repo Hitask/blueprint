@@ -37,6 +37,18 @@ const MIN_STROKE_WIDTH = 16;
 
 export interface ISpinnerProps extends IProps, IIntentProps {
     /**
+     * Whether spinner has default colors
+     *
+     * @default true
+     */
+    colored?: boolean;
+
+    /**
+     * Stroke color applied to spinner head.
+     */
+    headStroke?: string;
+
+    /**
      * Width and height of the spinner in pixels. The size cannot be less than
      * 10px.
      *
@@ -55,6 +67,11 @@ export interface ISpinnerProps extends IProps, IIntentProps {
      * @default "div"
      */
     tagName?: keyof JSX.IntrinsicElements;
+
+    /**
+     * Stroke color applied to spinner track.
+     */
+    trackStroke?: string;
 
     /**
      * A value between 0 and 1 (inclusive) representing how far along the operation is.
@@ -80,13 +97,16 @@ export class Spinner extends AbstractPureComponent2<ISpinnerProps, {}> {
     }
 
     public render() {
-        const { className, intent, value, tagName = "div" } = this.props;
+        const { className, intent, value, tagName = "div", colored, trackStroke, headStroke } = this.props;
         const size = this.getSize();
 
         const classes = classNames(
             Classes.SPINNER,
             Classes.intentClass(intent),
-            { [Classes.SPINNER_NO_SPIN]: value != null },
+            {
+                [Classes.SPINNER_NO_SPIN]: value != null,
+                [Classes.SPINNER_COLORED]: colored !== false,
+            },
             className,
         );
 
@@ -109,13 +129,14 @@ export class Spinner extends AbstractPureComponent2<ISpinnerProps, {}> {
                     strokeWidth={strokeWidth.toFixed(2)}
                     viewBox={this.getViewBox(strokeWidth)}
                 >
-                    <path className={Classes.SPINNER_TRACK} d={SPINNER_TRACK} />
+                    <path className={Classes.SPINNER_TRACK} d={SPINNER_TRACK} stroke={trackStroke} />
                     <path
                         className={Classes.SPINNER_HEAD}
                         d={SPINNER_TRACK}
                         pathLength={PATH_LENGTH}
                         strokeDasharray={`${PATH_LENGTH} ${PATH_LENGTH}`}
                         strokeDashoffset={strokeOffset}
+                        stroke={headStroke}
                     />
                 </svg>,
             ),
