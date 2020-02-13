@@ -237,6 +237,7 @@ export const SPINNER = `${NS}-spinner`;
 export const SPINNER_ANIMATION = `${SPINNER}-animation`;
 export const SPINNER_HEAD = `${SPINNER}-head`;
 export const SPINNER_NO_SPIN = `${NS}-no-spin`;
+export const SPINNER_COLORED = `${SPINNER}-colored`;
 export const SPINNER_TRACK = `${SPINNER}-track`;
 
 export const TAB = `${NS}-tab`;
