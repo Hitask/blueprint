@@ -51,8 +51,9 @@ $tag-round-adjustment: 2px !default;
   .#{$ns}-dark & {
     @include pt-tag-interactive($dark-tag-default-color, 1);
 
-    background-color: $dark-tag-default-color;
-    color: $pt-text-color;
+    background-color: #4a4a4a;
+    color: #a2b8c8;
+    border-color: #7a8090;
 
     > #{$icon-classes} {
       fill: currentColor;
