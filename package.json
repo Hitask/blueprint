@@ -30,7 +30,7 @@
     "site": "npm-run-all site:clean -p copy:* -s serve",
     "site:clean": "git clean -xdfq site/",
     "test": "lerna run --parallel test",
-    "verify-build": "npm-run-all -s compile dist:libs dist:apps",
+    "verify-libs": "npm-run-all -s compile dist:libs",
     "verify": "npm-run-all -s compile dist:libs dist:apps -p test lint"
   },
   "dependencies": {

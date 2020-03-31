@@ -11,8 +11,8 @@ $menu-item-border-radius: $pt-border-radius - 1 !default;
 // applied to it (#2177). Also, line-height should be an even value, or content
 // will be misaligned by one pixel (Chrome quirk).
 $menu-item-line-height-factor: 1.4;
-$menu-item-line-height: round($pt-font-size * $menu-item-line-height-factor);
-$menu-item-line-height-large: round($pt-font-size-large * $menu-item-line-height-factor);
+$menu-item-line-height: round($pt-font-size-px * $menu-item-line-height-factor);
+$menu-item-line-height-large: round($pt-font-size-px-large * $menu-item-line-height-factor);
 
 $menu-min-width: $pt-grid-size * 18 !default;
 $menu-item-padding: ($pt-button-height - $pt-icon-size-standard) / 2 !default;
@@ -35,7 +35,7 @@ $dark-menu-item-color-active: $dark-minimal-button-background-color-active !defa
   @include pt-flex-container(row, $menu-item-padding);
   align-items: flex-start;
   border-radius: $menu-item-border-radius;
-  max-width: 25rem;
+  max-width: 250px;
   overflow: hidden;
   padding: $menu-item-padding-vertical $menu-item-padding;
   text-decoration: none;

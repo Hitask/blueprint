@@ -295,7 +295,7 @@ Styleguide preformatted
   padding: ($pt-grid-size * 1.3) ($pt-grid-size * 1.5) ($pt-grid-size * 1.2);
   line-height: 1.4;
   color: $pt-text-color;
-  font-size: $pt-font-size - 1px;
+  font-size: $pt-font-size - 0.1rem;
   word-break: break-all;
   word-wrap: break-word;
 
