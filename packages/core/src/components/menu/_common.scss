@@ -35,7 +35,7 @@ $dark-menu-item-color-active: $dark-minimal-button-background-color-active !defa
   @include pt-flex-container(row, $menu-item-padding);
   align-items: flex-start;
   border-radius: $menu-item-border-radius;
-  max-width: 25rem;
+  max-width: 250px;
   overflow: hidden;
   padding: $menu-item-padding-vertical $menu-item-padding;
   text-decoration: none;
