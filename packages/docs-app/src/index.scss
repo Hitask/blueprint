@@ -28,6 +28,10 @@ Licensed under the Apache License, Version 2.0.
 @import "styles/welcome";
 
 
+html {
+  font-size: 10px;
+}
+
 .docs-releases-menu .#{$ns}-menu {
   min-width: 270px;
 }
