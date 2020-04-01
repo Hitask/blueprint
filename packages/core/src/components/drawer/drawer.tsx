@@ -48,6 +48,11 @@ export interface IDrawerProps extends IOverlayableProps, IBackdropProps, IProps 
     isOpen: boolean;
 
     /**
+     * A space-delimited list of class names to pass along to a overlay component
+     */
+    overlayClassName?: string;
+
+    /**
      * Position of a drawer. All angled positions will be casted into pure positions
      * (TOP, BOTTOM, LEFT or RIGHT).
      * @default Position.RIGHT
@@ -129,8 +134,9 @@ export class Drawer extends AbstractPureComponent2<IDrawerProps, {}> {
                       ...style,
                       [(realPosition ? isPositionHorizontal(realPosition) : vertical) ? "height" : "width"]: size,
                   };
+        const { overlayClassName, ...restProps } = this.props;
         return (
-            <Overlay {...this.props} className={Classes.OVERLAY_CONTAINER}>
+            <Overlay {...restProps} className={classNames(Classes.OVERLAY_CONTAINER, overlayClassName)}>
                 <div className={classes} style={styleProp}>
                     {this.maybeRenderHeader()}
                     {this.props.children}
